@@ -1,5 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
-import { useLocation } from 'react-router-dom';
+import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
 
 // Map of tab root paths to their last visited paths
 type NavigationHistory = Record<string, string>;
@@ -11,36 +10,28 @@ interface NavigationHistoryContextType {
 
 const NavigationHistoryContext = createContext<NavigationHistoryContextType | null>(null);
 
-export function NavigationHistoryProvider({ children }: { children: ReactNode }) {
-  const location = useLocation();
-  const [history, setHistory] = useState<NavigationHistory>({});
+// Tab roots for matching
+const TAB_ROOTS = ['/', '/components', '/icons', '/brand', '/tokens'];
 
-  // Track path changes and update history for the current tab
-  useEffect(() => {
-    const currentPath = location.pathname;
-    
-    // Find which tab this path belongs to
-    const tabs = ['/components', '/icons', '/illustrations', '/tokens', '/patterns'];
-    const matchingTab = tabs.find(tab => currentPath.startsWith(tab));
-    
-    if (matchingTab && currentPath !== matchingTab) {
-      // We're on a sub-page, save it
-      setHistory(prev => ({
-        ...prev,
-        [matchingTab]: currentPath
-      }));
-    }
-  }, [location.pathname]);
+function getTabForPath(path: string): string | null {
+  // Exact match for home
+  if (path === '/') return '/';
+  // Find matching tab (longest match first to handle nested routes)
+  return TAB_ROOTS.filter(tab => tab !== '/').find(tab => path.startsWith(tab)) || null;
+}
+
+export function NavigationHistoryProvider({ children }: { children: ReactNode }) {
+  const [history, setHistory] = useState<NavigationHistory>({});
 
   const getLastPath = useCallback((tabRoot: string): string => {
     return history[tabRoot] || tabRoot;
   }, [history]);
 
   const handleTabClick = useCallback((tabRoot: string, currentPath: string): string | null => {
-    const lastPath = history[tabRoot];
+    const currentTab = getTabForPath(currentPath);
+    const isOnSameTab = currentTab === tabRoot;
     const isOnTabRoot = currentPath === tabRoot;
     const isOnTabSubpage = currentPath.startsWith(tabRoot) && currentPath !== tabRoot;
-    const isOnDifferentTab = !currentPath.startsWith(tabRoot);
 
     if (isOnTabRoot) {
       // Already on root - scroll to top
@@ -49,7 +40,7 @@ export function NavigationHistoryProvider({ children }: { children: ReactNode })
     }
     
     if (isOnTabSubpage) {
-      // On a subpage of this tab - go to root and clear history
+      // On a subpage of this tab - go to root and clear history for this tab
       setHistory(prev => {
         const newHistory = { ...prev };
         delete newHistory[tabRoot];
@@ -58,13 +49,17 @@ export function NavigationHistoryProvider({ children }: { children: ReactNode })
       return tabRoot;
     }
     
-    if (isOnDifferentTab && lastPath && lastPath !== tabRoot) {
-      // Coming from different tab - go to last visited path
-      return lastPath;
+    // Coming from a different tab - save current path for the tab we're leaving
+    if (currentTab && !isOnSameTab) {
+      setHistory(prev => ({
+        ...prev,
+        [currentTab]: currentPath
+      }));
     }
     
-    // Default - go to tab root
-    return tabRoot;
+    // Go to saved path for target tab, or tab root if none saved
+    const savedPath = history[tabRoot];
+    return savedPath || tabRoot;
   }, [history]);
 
   return (
