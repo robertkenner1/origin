@@ -1,0 +1,865 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ==========================================================================
+   Font Face Declarations
+   ========================================================================== */
+
+/* GlyphSans */
+@font-face {
+  font-family: 'GlyphSans';
+  src: url('/fonts/GlyphSans-Regular.woff2') format('woff2'),
+       url('/fonts/GlyphSans-Regular.woff') format('woff'),
+       url('/fonts/GlyphSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GlyphSans';
+  src: url('/fonts/GlyphSans-Italic.woff2') format('woff2'),
+       url('/fonts/GlyphSans-Italic.woff') format('woff'),
+       url('/fonts/GlyphSans-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GlyphSans';
+  src: url('/fonts/GlyphSans-Medium.woff2') format('woff2'),
+       url('/fonts/GlyphSans-Medium.woff') format('woff'),
+       url('/fonts/GlyphSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GlyphSans';
+  src: url('/fonts/GlyphSans-MediumItalic.woff2') format('woff2'),
+       url('/fonts/GlyphSans-MediumItalic.woff') format('woff'),
+       url('/fonts/GlyphSans-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GlyphSans';
+  src: url('/fonts/GlyphSans-Bold.woff2') format('woff2'),
+       url('/fonts/GlyphSans-Bold.woff') format('woff'),
+       url('/fonts/GlyphSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GlyphSans';
+  src: url('/fonts/GlyphSans-BoldItalic.woff2') format('woff2'),
+       url('/fonts/GlyphSans-BoldItalic.woff') format('woff'),
+       url('/fonts/GlyphSans-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Inter */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Thin.woff2') format('woff2'),
+       url('/fonts/Inter-Thin.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-ThinItalic.woff2') format('woff2'),
+       url('/fonts/Inter-ThinItalic.woff') format('woff');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-ExtraLight.woff2') format('woff2'),
+       url('/fonts/Inter-ExtraLight.woff') format('woff');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-ExtraLightItalic.woff2') format('woff2'),
+       url('/fonts/Inter-ExtraLightItalic.woff') format('woff');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Light.woff2') format('woff2'),
+       url('/fonts/Inter-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-LightItalic.woff2') format('woff2'),
+       url('/fonts/Inter-LightItalic.woff') format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Regular.woff2') format('woff2'),
+       url('/fonts/Inter-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Italic.woff2') format('woff2'),
+       url('/fonts/Inter-Italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Medium.woff2') format('woff2'),
+       url('/fonts/Inter-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-MediumItalic.woff2') format('woff2'),
+       url('/fonts/Inter-MediumItalic.woff') format('woff');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-SemiBold.woff2') format('woff2'),
+       url('/fonts/Inter-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-SemiBoldItalic.woff2') format('woff2'),
+       url('/fonts/Inter-SemiBoldItalic.woff') format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Bold.woff2') format('woff2'),
+       url('/fonts/Inter-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-BoldItalic.woff2') format('woff2'),
+       url('/fonts/Inter-BoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-ExtraBold.woff2') format('woff2'),
+       url('/fonts/Inter-ExtraBold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-ExtraBoldItalic.woff2') format('woff2'),
+       url('/fonts/Inter-ExtraBoldItalic.woff') format('woff');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Black.woff2') format('woff2'),
+       url('/fonts/Inter-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-BlackItalic.woff2') format('woff2'),
+       url('/fonts/Inter-BlackItalic.woff') format('woff');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* MatterforGrammarly */
+@font-face {
+  font-family: 'Matter';
+  src: url('/fonts/MatterforGrammarly-Regular.woff2') format('woff2'),
+       url('/fonts/MatterforGrammarly-Regular.woff') format('woff'),
+       url('/fonts/MatterforGrammarly-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Matter';
+  src: url('/fonts/MatterforGrammarly-Medium.woff2') format('woff2'),
+       url('/fonts/MatterforGrammarly-Medium.woff') format('woff'),
+       url('/fonts/MatterforGrammarly-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Matter';
+  src: url('/fonts/MatterforGrammarly-SemiBold.woff2') format('woff2'),
+       url('/fonts/MatterforGrammarly-SemiBold.woff') format('woff'),
+       url('/fonts/MatterforGrammarly-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Matter';
+  src: url('/fonts/MatterforGrammarly-Bold.woff2') format('woff2'),
+       url('/fonts/MatterforGrammarly-Bold.woff') format('woff'),
+       url('/fonts/MatterforGrammarly-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Matter';
+  src: url('/fonts/MatterforGrammarly-Heavy.woff2') format('woff2'),
+       url('/fonts/MatterforGrammarly-Heavy.woff') format('woff'),
+       url('/fonts/MatterforGrammarly-Heavy.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* SuperSans */
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-Hairline.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-HairlineItalic.otf') format('opentype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-Thin.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-ThinItalic.otf') format('opentype');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-LightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-RegularItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-Book.otf') format('opentype');
+  font-weight: 450;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-BookItalic.otf') format('opentype');
+  font-weight: 450;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-MediumItalic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-SemiBoldItalic.otf') format('opentype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans';
+  src: url('/fonts/SuperSans-BlackItalic.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* SuperSans Condensed */
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-Hairline.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-HairlineItalic.otf') format('opentype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-Thin.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-ThinItalic.otf') format('opentype');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-LightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-RegularItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-Book.otf') format('opentype');
+  font-weight: 450;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-BookItalic.otf') format('opentype');
+  font-weight: 450;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-MediumItalic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-SemiBoldItalic.otf') format('opentype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Condensed';
+  src: url('/fonts/SuperSansCondensed-BlackItalic.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* SuperSans Mono */
+@font-face {
+  font-family: 'SuperSans Mono';
+  src: url('/fonts/SuperSansMono-Hairline.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Mono';
+  src: url('/fonts/SuperSansMono-Thin.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Mono';
+  src: url('/fonts/SuperSansMono-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Mono';
+  src: url('/fonts/SuperSansMono-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Mono';
+  src: url('/fonts/SuperSansMono-Book.otf') format('opentype');
+  font-weight: 450;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Mono';
+  src: url('/fonts/SuperSansMono-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Mono';
+  src: url('/fonts/SuperSansMono-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Mono';
+  src: url('/fonts/SuperSansMono-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSans Mono';
+  src: url('/fonts/SuperSansMono-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* SuperSerif */
+@font-face {
+  font-family: 'SuperSerif';
+  src: url('/fonts/SuperSerif-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSerif';
+  src: url('/fonts/SuperSerif-ThinItalic.otf') format('opentype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSerif';
+  src: url('/fonts/SuperSerif-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSerif';
+  src: url('/fonts/SuperSerif-LightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSerif';
+  src: url('/fonts/SuperSerif-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSerif';
+  src: url('/fonts/SuperSerif-RegularItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSerif';
+  src: url('/fonts/SuperSerif-Book.otf') format('opentype');
+  font-weight: 450;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSerif';
+  src: url('/fonts/SuperSerif-BookItalic.otf') format('opentype');
+  font-weight: 450;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSerif';
+  src: url('/fonts/SuperSerif-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSerif';
+  src: url('/fonts/SuperSerif-MediumItalic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSerif';
+  src: url('/fonts/SuperSerif-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSerif';
+  src: url('/fonts/SuperSerif-SemiBoldItalic.otf') format('opentype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSerif';
+  src: url('/fonts/SuperSerif-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuperSerif';
+  src: url('/fonts/SuperSerif-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@theme inline {
+  /* Font Stacks */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Matter", ui-sans-serif, system-ui, sans-serif;
+  --font-glyph: "GlyphSans", ui-sans-serif, system-ui, sans-serif;
+  --font-super: "SuperSans", ui-sans-serif, system-ui, sans-serif;
+  --font-super-condensed: "SuperSans Condensed", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "SuperSans Mono", ui-monospace, monospace;
+  --font-serif: "SuperSerif", ui-serif, Georgia, serif;
+  
+  /* Origin Design System Colors */
+  --color-background: #ffffff;
+  --color-foreground: #141413;
+  --color-muted: #f5f5f5;
+  --color-muted-foreground: #73716d;
+  --color-border: #dedbd5;
+  --color-border-strong: #8d8a86;
+  --color-primary: #714cb6;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f2f0eb;
+  --color-secondary-foreground: #141413;
+  --color-accent: #602639;
+  --color-accent-foreground: #ffffff;
+  --color-subdued: #fcfaf7;
+  
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: #ffffff;
+  --foreground: #141413;
+  --card: #ffffff;
+  --card-foreground: #141413;
+  --popover: #ffffff;
+  --popover-foreground: #141413;
+  --primary: #714cb6;
+  --primary-foreground: #ffffff;
+  --secondary: #f2f0eb;
+  --secondary-foreground: #141413;
+  --muted: #f5f5f5;
+  --muted-foreground: #73716d;
+  --accent: #f2f0eb;
+  --accent-foreground: #141413;
+  --destructive: #dc2626;
+  --border: #dedbd5;
+  --input: #dedbd5;
+  --ring: #714cb6;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+    margin: 0;
+    min-height: 100vh;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Custom scrollbar styles */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-border-strong);
+}
