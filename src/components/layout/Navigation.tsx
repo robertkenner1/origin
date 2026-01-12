@@ -13,7 +13,6 @@ const navItems = [
       { name: 'Overview', path: '/getting-started' },
       { name: 'Introduction to Origin', path: '/getting-started/introduction' },
       { name: 'JavaScript', path: '/getting-started/javascript' },
-      { name: 'Styling Custom Components', path: '/getting-started/styling' },
     ]
   },
   { name: 'Components', path: '/components' },
@@ -29,6 +28,15 @@ const navItems = [
     ]
   },
   { name: 'Tokens', path: '/tokens' },
+  { 
+    name: 'Contributing', 
+    path: '/contributing',
+    subItems: [
+      { name: 'Overview', path: '/contributing' },
+      { name: 'Styling Custom Components', path: '/contributing/styling' },
+      { name: 'Publishing Components', path: '/contributing/publishing' },
+    ]
+  },
 ];
 
 export function Navigation() {

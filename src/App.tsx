@@ -4,7 +4,6 @@ import { HomePage } from '@/pages/HomePage';
 import { GettingStartedPage } from '@/pages/GettingStartedPage';
 import { IntroductionPage } from '@/pages/getting-started/IntroductionPage';
 import { JavaScriptPage } from '@/pages/getting-started/JavaScriptPage';
-import { StylingPage } from '@/pages/getting-started/StylingPage';
 import { ComponentsPage } from '@/pages/ComponentsPage';
 import { ComponentDetailPage } from '@/pages/ComponentDetailPage';
 import { IconsPage } from '@/pages/IconsPage';
@@ -14,6 +13,9 @@ import { BrandLogoPage } from '@/pages/brand/LogoPage';
 import { BrandTypographyPage } from '@/pages/brand/TypographyPage';
 import { BrandColorPage } from '@/pages/brand/ColorPage';
 import { TokensPage } from '@/pages/TokensPage';
+import { ContributingPage } from '@/pages/ContributingPage';
+import { StylingPage } from '@/pages/contributing/StylingPage';
+import { PublishingPage } from '@/pages/contributing/PublishingPage';
 import { NavigationHistoryProvider } from '@/context/NavigationHistoryContext';
 import { StickyFilterProvider } from '@/context/StickyFilterContext';
 
@@ -41,7 +43,6 @@ function App() {
               <Route path="/getting-started" element={<GettingStartedPage />} />
               <Route path="/getting-started/introduction" element={<IntroductionPage />} />
               <Route path="/getting-started/javascript" element={<JavaScriptPage />} />
-              <Route path="/getting-started/styling" element={<StylingPage />} />
               <Route path="/components" element={<ComponentsWithModal />} />
               <Route path="/components/:componentId" element={<ComponentsWithModal />} />
               <Route path="/icons" element={<IconsPage />} />
@@ -51,6 +52,9 @@ function App() {
               <Route path="/brand/typography" element={<BrandTypographyPage />} />
               <Route path="/brand/color" element={<BrandColorPage />} />
               <Route path="/tokens" element={<TokensPage />} />
+              <Route path="/contributing" element={<ContributingPage />} />
+              <Route path="/contributing/styling" element={<StylingPage />} />
+              <Route path="/contributing/publishing" element={<PublishingPage />} />
             </Routes>
           </Layout>
         </StickyFilterProvider>

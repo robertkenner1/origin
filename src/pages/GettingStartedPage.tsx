@@ -38,12 +38,6 @@ export function GettingStartedPage() {
               </div>
             </div>
 
-            <h2>Contributions</h2>
-            <p>
-              Please follow our <a href="#" className="text-primary hover:underline">contribution guidelines</a> if 
-              you're interested in contributing a new component or updating an existing one.
-            </p>
-
             <h2>Support</h2>
             <p>
               For any questions about development or components, see our <a href="#" className="text-primary hover:underline">support guide</a>.

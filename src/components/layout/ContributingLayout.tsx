@@ -1,13 +1,13 @@
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
-const gettingStartedPages = [
-  { name: 'Overview', path: '/getting-started' },
-  { name: 'Introduction to Origin', path: '/getting-started/introduction' },
-  { name: 'JavaScript', path: '/getting-started/javascript' },
+const contributingPages = [
+  { name: 'Overview', path: '/contributing' },
+  { name: 'Styling Custom Components', path: '/contributing/styling' },
+  { name: 'Publishing Components', path: '/contributing/publishing' },
 ];
 
-export function GettingStartedLayout({ children }: { children: React.ReactNode }) {
+export function ContributingLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
 
   return (
@@ -16,7 +16,7 @@ export function GettingStartedLayout({ children }: { children: React.ReactNode }
         {/* Sidebar Navigation */}
         <aside className="w-56 flex-shrink-0">
           <nav className="sticky top-24 space-y-1">
-            {gettingStartedPages.map((page) => {
+            {contributingPages.map((page) => {
               const isActive = location.pathname === page.path;
               return (
                 <Link

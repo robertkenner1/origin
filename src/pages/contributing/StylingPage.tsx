@@ -1,8 +1,8 @@
-import { GettingStartedLayout } from '@/components/layout/GettingStartedLayout';
+import { ContributingLayout } from '@/components/layout/ContributingLayout';
 
 export function StylingPage() {
   return (
-    <GettingStartedLayout>
+    <ContributingLayout>
       <div className="bg-white rounded-2xl p-12 shadow-sm">
         <div className="prose prose-sm max-w-none">
             <h1>Styling Custom Components with GDS</h1>
@@ -258,6 +258,6 @@ export function StylingPage() {
             </p>
           </div>
         </div>
-    </GettingStartedLayout>
+    </ContributingLayout>
   );
 }
