@@ -48,14 +48,41 @@ export function TokenCard({
         {/* Preview (e.g., color swatch) */}
         {preview}
         
-        {/* Label / Copied state */}
-        <span 
-          className={cn(
-            "text-xs font-medium transition-all duration-300 truncate",
-            copied ? "text-foreground" : "text-foreground group-hover:text-foreground"
-          )}
-        >
-          {copied ? 'Copied!' : label}
+        {/* Label / Copied state with copy icon */}
+        <span className="flex items-center gap-1.5">
+          <span 
+            className={cn(
+              "text-xs font-medium transition-all duration-300 truncate",
+              copied ? "text-foreground" : "text-foreground"
+            )}
+          >
+            {copied ? 'Copied!' : label}
+          </span>
+          {/* Copy icon - appears on hover, checkmark when copied */}
+          <span className="relative h-3 w-3 flex-shrink-0">
+            <svg 
+              className={cn(
+                "absolute inset-0 h-3 w-3 text-muted-foreground transition-all duration-200",
+                copied ? "opacity-0 scale-50" : "opacity-0 group-hover:opacity-100"
+              )} 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            <svg 
+              className={cn(
+                "absolute inset-0 h-3 w-3 text-foreground transition-all duration-200",
+                copied ? "opacity-100 scale-100" : "opacity-0 scale-50"
+              )} 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </span>
         </span>
       </button>
     );
@@ -77,15 +104,42 @@ export function TokenCard({
         </div>
       )}
       
-      {/* Label / Copied state */}
-      <span 
-        className={cn(
-          "text-[10px] font-medium transition-all duration-300 truncate text-center w-full",
-          copied ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"
-        )}
-      >
-        {copied ? 'Copied!' : label}
-      </span>
+      {/* Label / Copied state with copy icon */}
+      <div className="flex items-center justify-center gap-1 w-full">
+        <span 
+          className={cn(
+            "text-[10px] font-medium transition-all duration-300 truncate text-center",
+            copied ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"
+          )}
+        >
+          {copied ? 'Copied!' : label}
+        </span>
+        {/* Copy icon - appears on hover, checkmark when copied */}
+        <span className="relative h-2.5 w-2.5 flex-shrink-0">
+          <svg 
+            className={cn(
+              "absolute inset-0 h-2.5 w-2.5 text-muted-foreground transition-all duration-200",
+              copied ? "opacity-0 scale-50" : "opacity-0 group-hover:opacity-100"
+            )} 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+          <svg 
+            className={cn(
+              "absolute inset-0 h-2.5 w-2.5 text-foreground transition-all duration-200",
+              copied ? "opacity-100 scale-100" : "opacity-0 scale-50"
+            )} 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </span>
+      </div>
     </button>
   );
 }
@@ -131,15 +185,42 @@ export function TokenCardLarge({
         {preview}
       </div>
       
-      {/* Label / Copied state */}
-      <span 
-        className={cn(
-          "text-xs font-medium transition-all duration-300 truncate text-center w-full",
-          copied ? "text-foreground" : "text-foreground group-hover:text-foreground"
-        )}
-      >
-        {copied ? 'Copied!' : label}
-      </span>
+      {/* Label / Copied state with copy icon */}
+      <div className="flex items-center justify-center gap-1.5 w-full">
+        <span 
+          className={cn(
+            "text-xs font-medium transition-all duration-300 truncate text-center",
+            copied ? "text-foreground" : "text-foreground group-hover:text-foreground"
+          )}
+        >
+          {copied ? 'Copied!' : label}
+        </span>
+        {/* Copy icon - appears on hover, checkmark when copied */}
+        <span className="relative h-3 w-3 flex-shrink-0">
+          <svg 
+            className={cn(
+              "absolute inset-0 h-3 w-3 text-muted-foreground transition-all duration-200",
+              copied ? "opacity-0 scale-50" : "opacity-0 group-hover:opacity-100"
+            )} 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+          <svg 
+            className={cn(
+              "absolute inset-0 h-3 w-3 text-foreground transition-all duration-200",
+              copied ? "opacity-100 scale-100" : "opacity-0 scale-50"
+            )} 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </span>
+      </div>
     </button>
   );
 }
