@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import { StickyFilterBar } from '@/components/StickyFilterBar';
+import { TokenCard, TokenCardLarge } from '@/components/TokenCard';
 
 // Token categories
 const categories = [
@@ -418,15 +419,18 @@ export function TokensPage() {
               {filteredTokens.semanticColor.map((token) => {
                 const isWhiteish = ['#fff', '#ffffff', '#ffffff00'].includes(token.value.toLowerCase());
                 return (
-                  <div key={token.name} className="group flex items-center gap-2 rounded-full bg-white pl-1.5 pr-3 py-1.5 border border-border/50 hover:bg-[#fafafa] hover:border-border transition-colors duration-200 cursor-pointer">
-                    <div 
-                      className={cn("h-5 w-5 rounded-full flex-shrink-0", isWhiteish && "ring-1 ring-border/30")}
-                      style={{ backgroundColor: token.value }}
-                    />
-                    <span className="text-xs font-medium text-foreground group-hover:text-foreground transition-colors truncate" title={token.name}>
-                      {token.name.split('.').slice(-2).join('.')}
-                    </span>
-                  </div>
+                  <TokenCard
+                    key={token.name}
+                    copyValue={token.name}
+                    label={token.name.split('.').slice(-2).join('.')}
+                    variant="pill"
+                    preview={
+                      <div 
+                        className={cn("h-5 w-5 rounded-full flex-shrink-0", isWhiteish && "ring-1 ring-border/30")}
+                        style={{ backgroundColor: token.value }}
+                      />
+                    }
+                  />
                 );
               })}
             </div>
@@ -441,19 +445,22 @@ export function TokensPage() {
               {filteredTokens.coreColor.map((token) => {
                 const isWhiteish = ['#fff', '#ffffff', '#ffffff00'].includes(token.value.toLowerCase());
                 return (
-                  <div key={token.name} className="group flex items-center gap-2 rounded-full bg-white pl-1.5 pr-3 py-1.5 border border-border/50 hover:bg-[#fafafa] hover:border-border transition-colors duration-200 cursor-pointer">
-                    <div 
-                      className={cn(
-                        "h-5 w-5 rounded-full flex-shrink-0",
-                        isWhiteish && "ring-1 ring-border/30",
-                        token.value.toLowerCase() === '#ffffff00' && "bg-[url('data:image/svg+xml,%3Csvg%20width%3D%228%22%20height%3D%228%22%20viewBox%3D%220%200%208%208%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%224%22%20height%3D%224%22%20fill%3D%22%23ccc%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%224%22%20height%3D%224%22%20fill%3D%22%23ccc%22%2F%3E%3C%2Fsvg%3E')]"
-                      )}
-                      style={{ backgroundColor: token.value.toLowerCase() === '#ffffff00' ? undefined : token.value }}
-                    />
-                    <span className="text-xs font-medium text-foreground group-hover:text-foreground transition-colors truncate">
-                      {token.name}
-                    </span>
-                  </div>
+                  <TokenCard
+                    key={token.name}
+                    copyValue={token.name}
+                    label={token.name}
+                    variant="pill"
+                    preview={
+                      <div 
+                        className={cn(
+                          "h-5 w-5 rounded-full flex-shrink-0",
+                          isWhiteish && "ring-1 ring-border/30",
+                          token.value.toLowerCase() === '#ffffff00' && "bg-[url('data:image/svg+xml,%3Csvg%20width%3D%228%22%20height%3D%228%22%20viewBox%3D%220%200%208%208%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%224%22%20height%3D%224%22%20fill%3D%22%23ccc%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%224%22%20height%3D%224%22%20fill%3D%22%23ccc%22%2F%3E%3C%2Fsvg%3E')]"
+                        )}
+                        style={{ backgroundColor: token.value.toLowerCase() === '#ffffff00' ? undefined : token.value }}
+                      />
+                    }
+                  />
                 );
               })}
             </div>
@@ -469,17 +476,17 @@ export function TokensPage() {
                 const pxMatch = token.value.match(/(\d+)\s*px/);
                 const pxValue = pxMatch ? parseInt(pxMatch[1]) : 0;
                 return (
-                  <div key={token.name} className="group flex flex-col items-center gap-3 rounded-xl bg-white p-4 border border-border/50 hover:bg-[#fafafa] hover:border-border transition-colors duration-200 cursor-pointer">
-                    <div className="h-12 flex items-center justify-center">
+                  <TokenCardLarge
+                    key={token.name}
+                    copyValue={token.name}
+                    label={token.name}
+                    preview={
                       <div 
                         className="w-12 h-12 bg-primary"
                         style={{ borderRadius: `${pxValue}px` }}
                       />
-                    </div>
-                    <span className="text-xs font-medium text-foreground group-hover:text-foreground transition-colors truncate w-full text-center">
-                      {token.name}
-                    </span>
-                  </div>
+                    }
+                  />
                 );
               })}
             </div>
@@ -501,17 +508,17 @@ export function TokensPage() {
                   'ElevationHigh': '0px 2px 12px 0.5px rgba(0,0,0,0.12)',
                 };
                 return (
-                  <div key={token.name} className="group flex flex-col items-center gap-3 rounded-xl bg-white p-4 border border-border/50 hover:bg-[#fafafa] hover:border-border transition-colors duration-200 cursor-pointer">
-                    <div className="h-12 flex items-center justify-center">
+                  <TokenCardLarge
+                    key={token.name}
+                    copyValue={token.name}
+                    label={token.name}
+                    preview={
                       <div 
                         className="w-12 h-12 bg-white rounded-lg"
                         style={{ boxShadow: shadowMap[token.name] || '0px 1px 4px rgba(0,0,0,0.1)' }}
                       />
-                    </div>
-                    <span className="text-xs font-medium text-foreground group-hover:text-foreground transition-colors truncate w-full text-center">
-                      {token.name}
-                    </span>
-                  </div>
+                    }
+                  />
                 );
               })}
             </div>
@@ -527,17 +534,19 @@ export function TokensPage() {
                 const pxMatch = token.value.match(/(\d+)\s*px/);
                 const pxValue = pxMatch ? parseInt(pxMatch[1]) : 0;
                 return (
-                  <div key={token.name} className="group flex flex-col items-center gap-3 rounded-xl bg-white p-4 border border-border/50 hover:bg-[#fafafa] hover:border-border transition-colors duration-200 cursor-pointer">
-                    <div className="h-12 flex items-end justify-center">
-                      <div 
-                        className="bg-primary rounded-sm"
-                        style={{ width: `${Math.max(pxValue, 2)}px`, height: '32px' }}
-                      />
-                    </div>
-                    <span className="text-xs font-medium text-foreground group-hover:text-foreground transition-colors truncate w-full text-center">
-                      {token.name}
-                    </span>
-                  </div>
+                  <TokenCardLarge
+                    key={token.name}
+                    copyValue={token.name}
+                    label={token.name}
+                    preview={
+                      <div className="h-12 flex items-end justify-center">
+                        <div 
+                          className="bg-primary rounded-sm"
+                          style={{ width: `${Math.max(pxValue, 2)}px`, height: '32px' }}
+                        />
+                      </div>
+                    }
+                  />
                 );
               })}
             </div>
@@ -553,17 +562,17 @@ export function TokensPage() {
                 const pxMatch = token.value.match(/(\d+)/);
                 const pxValue = pxMatch ? parseInt(pxMatch[1]) : 0;
                 return (
-                  <div key={token.name} className="group flex flex-col items-center gap-3 rounded-xl bg-white p-4 border border-border/50 hover:bg-[#fafafa] hover:border-border transition-colors duration-200 cursor-pointer">
-                    <div className="h-12 flex items-center justify-center">
+                  <TokenCardLarge
+                    key={token.name}
+                    copyValue={token.name}
+                    label={token.name}
+                    preview={
                       <div 
                         className="w-10 h-10 bg-primary rounded-full"
                         style={{ filter: `blur(${pxValue}px)` }}
                       />
-                    </div>
-                    <span className="text-xs font-medium text-foreground group-hover:text-foreground transition-colors truncate w-full text-center">
-                      {token.name}
-                    </span>
-                  </div>
+                    }
+                  />
                 );
               })}
             </div>
@@ -577,12 +586,12 @@ export function TokensPage() {
             <p className="text-sm text-muted-foreground mb-4">409 icons from the Superhuman Iconography set</p>
             <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-9 gap-3">
               {filteredTokens.iconography.map((icon) => (
-                <div key={icon} className="group flex flex-col items-center gap-2 rounded-xl bg-white p-3 border border-border/50 hover:bg-[#fafafa] hover:border-border transition-colors duration-200 cursor-pointer">
-                  <div className="h-8 w-8 flex items-center justify-center">
-                    <IconDisplay name={icon} />
-                  </div>
-                  <span className="text-[10px] font-medium text-muted-foreground group-hover:text-foreground transition-colors truncate w-full text-center">{icon}</span>
-                </div>
+                <TokenCard
+                  key={icon}
+                  copyValue={icon}
+                  label={icon}
+                  preview={<IconDisplay name={icon} />}
+                />
               ))}
             </div>
           </section>

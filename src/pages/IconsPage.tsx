@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import { StickyFilterBar } from '@/components/StickyFilterBar';
+import { TokenCard } from '@/components/TokenCard';
 
 // Superhuman Iconography - 409 production icons organized by functional category
 const iconCategories: Record<string, string[]> = {
@@ -275,18 +276,12 @@ export function IconsPage() {
         {filteredIcons.length > 0 ? (
           <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-9 xl:grid-cols-11 gap-3">
             {filteredIcons.map((icon) => (
-              <div
+              <TokenCard
                 key={`${icon.category}-${icon.name}`}
-                className="group flex flex-col items-center gap-2 rounded-xl bg-white p-3 border border-border/50 hover:bg-[#fafafa] hover:border-border transition-colors duration-200 cursor-pointer"
-                title={`${icon.category} / ${icon.name}`}
-              >
-                <div className="flex h-8 w-8 items-center justify-center">
-                  <IconDisplay name={icon.name} />
-                </div>
-                <span className="text-[10px] font-medium text-muted-foreground group-hover:text-foreground transition-colors truncate w-full text-center">
-                  {icon.name}
-                </span>
-              </div>
+                copyValue={icon.name}
+                label={icon.name}
+                preview={<IconDisplay name={icon.name} />}
+              />
             ))}
           </div>
         ) : (
