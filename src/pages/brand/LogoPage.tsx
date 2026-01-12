@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 export function BrandLogoPage() {
   return (
-    <div className="min-h-screen bg-white animate-fade-in">
+    <div className="min-h-screen bg-background animate-fade-in">
       <div className="container mx-auto px-6 pt-12 pb-12">
         <div className="mb-8">
           <Link 
