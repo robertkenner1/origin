@@ -49,45 +49,13 @@ export function TokenCard({
         {preview}
         
         {/* Label / Copied state */}
-        <span className="flex items-center gap-1.5 overflow-hidden">
-          <span 
-            className={cn(
-              "text-xs font-medium transition-all duration-300 truncate",
-              copied ? "text-foreground" : "text-foreground group-hover:text-foreground"
-            )}
-          >
-            {copied ? 'Copied' : label}
-          </span>
-          
-          {/* Copy / Check icon */}
-          <span className="relative h-3.5 w-3.5 flex-shrink-0 overflow-hidden">
-            {/* Copy icon - visible on hover when not copied */}
-            <svg 
-              className={cn(
-                "absolute inset-0 h-3.5 w-3.5 text-muted-foreground transition-all duration-200",
-                copied 
-                  ? "opacity-0 scale-50" 
-                  : "opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100"
-              )} 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-            </svg>
-            {/* Check icon - visible when copied */}
-            <svg 
-              className={cn(
-                "absolute inset-0 h-3.5 w-3.5 text-foreground transition-all duration-300",
-                copied ? "opacity-100 scale-100" : "opacity-0 scale-50"
-              )} 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          </span>
+        <span 
+          className={cn(
+            "text-xs font-medium transition-all duration-300 truncate",
+            copied ? "text-foreground" : "text-foreground group-hover:text-foreground"
+          )}
+        >
+          {copied ? 'Copied!' : label}
         </span>
       </button>
     );
@@ -109,47 +77,15 @@ export function TokenCard({
         </div>
       )}
       
-      {/* Label row with copy indicator */}
-      <div className="flex items-center justify-center gap-1 w-full min-h-[16px]">
-        <span 
-          className={cn(
-            "text-[10px] font-medium transition-all duration-300 truncate text-center",
-            copied ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"
-          )}
-        >
-          {copied ? 'Copied' : label}
-        </span>
-        
-        {/* Copy / Check icon */}
-        <span className="relative h-3 w-3 flex-shrink-0 overflow-hidden">
-          {/* Copy icon - visible on hover when not copied */}
-          <svg 
-            className={cn(
-              "absolute inset-0 h-3 w-3 text-muted-foreground transition-all duration-200",
-              copied 
-                ? "opacity-0 scale-50" 
-                : "opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100"
-            )} 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-          </svg>
-          {/* Check icon - visible when copied */}
-          <svg 
-            className={cn(
-              "absolute inset-0 h-3 w-3 text-foreground transition-all duration-300",
-              copied ? "opacity-100 scale-100" : "opacity-0 scale-50"
-            )} 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-        </span>
-      </div>
+      {/* Label / Copied state */}
+      <span 
+        className={cn(
+          "text-[10px] font-medium transition-all duration-300 truncate text-center w-full",
+          copied ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"
+        )}
+      >
+        {copied ? 'Copied!' : label}
+      </span>
     </button>
   );
 }
@@ -195,45 +131,15 @@ export function TokenCardLarge({
         {preview}
       </div>
       
-      {/* Label row with copy indicator */}
-      <div className="flex items-center justify-center gap-1.5 w-full">
-        <span 
-          className={cn(
-            "text-xs font-medium transition-all duration-300 truncate text-center",
-            copied ? "text-foreground" : "text-foreground group-hover:text-foreground"
-          )}
-        >
-          {copied ? 'Copied' : label}
-        </span>
-        
-        {/* Copy / Check icon */}
-        <span className="relative h-3.5 w-3.5 flex-shrink-0 overflow-hidden">
-          <svg 
-            className={cn(
-              "absolute inset-0 h-3.5 w-3.5 text-muted-foreground transition-all duration-200",
-              copied 
-                ? "opacity-0 scale-50" 
-                : "opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100"
-            )} 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-          </svg>
-          <svg 
-            className={cn(
-              "absolute inset-0 h-3.5 w-3.5 text-foreground transition-all duration-300",
-              copied ? "opacity-100 scale-100" : "opacity-0 scale-50"
-            )} 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-        </span>
-      </div>
+      {/* Label / Copied state */}
+      <span 
+        className={cn(
+          "text-xs font-medium transition-all duration-300 truncate text-center w-full",
+          copied ? "text-foreground" : "text-foreground group-hover:text-foreground"
+        )}
+      >
+        {copied ? 'Copied!' : label}
+      </span>
     </button>
   );
 }
