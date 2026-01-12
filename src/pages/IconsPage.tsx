@@ -237,10 +237,10 @@ export function IconsPage() {
             }}
             onClick={() => handleCategoryClick(category)}
             className={cn(
-              "inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 whitespace-nowrap",
+              "inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 whitespace-nowrap bg-white",
               activeCategory === category
-                ? "bg-primary text-primary-foreground border border-primary"
-                : "bg-white text-muted-foreground hover:bg-[#fafafa] hover:border-border border border-border/50"
+                ? "text-foreground border-2 border-foreground"
+                : "text-muted-foreground border border-border/50 hover:text-foreground hover:border-foreground/50"
             )}
           >
             {category}
