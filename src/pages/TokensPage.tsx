@@ -262,7 +262,7 @@ function IconDisplay({ name: _name }: { name: string }) {
   );
 }
 
-// Iconography tokens - Superhuman icon set (409 icons)
+// Iconography tokens - Superhuman icon set
 const iconographyTokens = [
   // Arrows
   'arrow-clockwise', 'arrow-counter-clockwise', 'arrow-down', 'arrow-down-bars',
@@ -583,7 +583,6 @@ export function TokensPage() {
         {filteredTokens.iconography.length > 0 && (
           <section className="mb-12">
             <h2 className="text-xl font-semibold mb-4">Iconography</h2>
-            <p className="text-sm text-muted-foreground mb-4">409 icons from the Superhuman Iconography set</p>
             <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-9 gap-3">
               {filteredTokens.iconography.map((icon) => (
                 <TokenCard

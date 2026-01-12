@@ -218,7 +218,7 @@ export function IconsPage() {
         <input
           ref={inputRef}
           type="text"
-          placeholder="Search 409 icons"
+          placeholder="Search icons"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-64 rounded-full border-2 border-transparent bg-white py-2 pl-9 pr-3 text-sm placeholder:text-muted-foreground hover:border-foreground focus:border-foreground focus:outline-none"
@@ -255,7 +255,6 @@ export function IconsPage() {
       <div className="container mx-auto px-6 pt-12">
         <div className="mb-4">
           <h1 className="text-3xl font-bold tracking-tight">Icons</h1>
-          <p className="text-muted-foreground mt-1">409 production-ready icons from the Superhuman Iconography set</p>
         </div>
       </div>
 
