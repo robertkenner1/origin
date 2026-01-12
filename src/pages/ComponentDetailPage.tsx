@@ -3,7 +3,6 @@ import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { ComponentTile } from '@/components/ComponentTile';
-import { CodeBlock } from '@/components/ui/code-block';
 import type { ComponentControls } from '@/components/ComponentPreview';
 import { components as componentsList } from './ComponentsPage';
 
@@ -1492,8 +1491,9 @@ export function ComponentDetailPage() {
   const { componentId } = useParams<{ componentId: string }>();
   const location = useLocation();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('Code');
-  const [previewBg, setPreviewBg] = useState<'white' | 'transparent'>('transparent');
+  const [activeTab, setActiveTab] = useState('Design');
+  const [codeCopied, setCodeCopied] = useState(false);
+  const [previewBg, setPreviewBg] = useState<'white' | 'transparent'>('white');
   const component = componentId ? componentData[componentId] : null;
   const controlsConfig = componentId ? componentControlsConfig[componentId] : null;
   const modalRef = useRef<HTMLDivElement>(null);
@@ -1815,7 +1815,7 @@ export function ComponentDetailPage() {
       {/* Modal */}
       <div 
         ref={modalRef}
-        className="relative z-10 w-full max-w-[1400px] max-h-[90vh] mx-6 bg-white rounded-2xl shadow-2xl overflow-y-auto modal-scrollbar animate-modal-in"
+        className="relative z-10 w-full max-w-[1400px] max-h-[90vh] mx-6 bg-background rounded-2xl shadow-2xl overflow-y-auto modal-scrollbar animate-modal-in"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -1824,8 +1824,10 @@ export function ComponentDetailPage() {
           className="absolute right-4 top-4 z-20 p-2 rounded-full bg-white/80 hover:bg-white border border-border/50 shadow-sm transition-colors"
           aria-label="Close"
         >
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          <svg className="h-5 w-5" viewBox="0 0 20 20" fill="none">
+            <g transform="translate(3.47, 3.47)">
+              <path d="M13.0605 1.06055L7.59082 6.53027L13.0605 12L12 13.0605L6.53027 7.59082L1.06055 13.0605L0 12L5.46973 6.53027L0 1.06055L1.06055 0L6.53027 5.46973L12 0L13.0605 1.06055Z" fill="currentColor"/>
+            </g>
           </svg>
         </button>
         
@@ -1972,6 +1974,28 @@ export function ComponentDetailPage() {
                     );
                   })}
                 </div>
+                
+                {/* Copy code button */}
+                <button
+                  onClick={async () => {
+                    if (codeCopied) return;
+                    try {
+                      await navigator.clipboard.writeText(generateUsageCode());
+                      setCodeCopied(true);
+                      setTimeout(() => setCodeCopied(false), 1200);
+                    } catch (err) {
+                      console.error('Failed to copy:', err);
+                    }
+                  }}
+                  className={cn(
+                    "w-full mt-3 flex items-center justify-center rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200",
+                    codeCopied 
+                      ? "bg-secondary text-secondary-foreground" 
+                      : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                  )}
+                >
+                  {codeCopied ? 'Copied!' : 'Copy code'}
+                </button>
               </div>
               );
             })()}
@@ -1982,17 +2006,12 @@ export function ComponentDetailPage() {
         <div className="mt-12 border-b border-border">
           <div className="flex justify-center gap-2">
             {[
-              { name: 'Code', icon: (
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                </svg>
-              )},
               { name: 'Design', icon: (
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                 </svg>
               )},
-              { name: 'A11y', icon: (
+              { name: 'Accessibility', icon: (
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
@@ -2025,31 +2044,6 @@ export function ComponentDetailPage() {
 
         {/* Tab Content */}
         <div className="py-8">
-              {activeTab === 'Code' && (
-                <div className="space-y-8">
-                  {/* Installation */}
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-3">Installation</h3>
-                    <CodeBlock>
-                      <code className="text-sm text-foreground font-mono">
-                        {component.installation}
-                      </code>
-                    </CodeBlock>
-                  </div>
-
-                  {/* Usage Code */}
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-3">Usage</h3>
-                    <CodeBlock language="tsx">
-                      <pre className="text-sm text-foreground font-mono whitespace-pre">
-                        {generateUsageCode()}
-                      </pre>
-                    </CodeBlock>
-                  </div>
-
-                </div>
-              )}
-
               {activeTab === 'Design' && (
                 <div className="space-y-10">
                   {/* Variants */}
@@ -2164,7 +2158,7 @@ export function ComponentDetailPage() {
                 </div>
               )}
 
-              {activeTab === 'A11y' && (
+              {activeTab === 'Accessibility' && (
                 <div className="space-y-8">
                   {/* Keyboard Navigation */}
                   <div>

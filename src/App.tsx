@@ -1,6 +1,10 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { HomePage } from '@/pages/HomePage';
+import { GettingStartedPage } from '@/pages/GettingStartedPage';
+import { IntroductionPage } from '@/pages/getting-started/IntroductionPage';
+import { JavaScriptPage } from '@/pages/getting-started/JavaScriptPage';
+import { StylingPage } from '@/pages/getting-started/StylingPage';
 import { ComponentsPage } from '@/pages/ComponentsPage';
 import { ComponentDetailPage } from '@/pages/ComponentDetailPage';
 import { IconsPage } from '@/pages/IconsPage';
@@ -34,6 +38,10 @@ function App() {
           <Layout>
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/getting-started" element={<GettingStartedPage />} />
+              <Route path="/getting-started/introduction" element={<IntroductionPage />} />
+              <Route path="/getting-started/javascript" element={<JavaScriptPage />} />
+              <Route path="/getting-started/styling" element={<StylingPage />} />
               <Route path="/components" element={<ComponentsWithModal />} />
               <Route path="/components/:componentId" element={<ComponentsWithModal />} />
               <Route path="/icons" element={<IconsPage />} />

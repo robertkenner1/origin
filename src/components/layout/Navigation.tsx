@@ -6,9 +6,28 @@ import { useStickyFilter } from '@/context/StickyFilterContext';
 
 const navItems = [
   { name: 'Home', path: '/' },
+  { 
+    name: 'Getting Started', 
+    path: '/getting-started',
+    subItems: [
+      { name: 'Overview', path: '/getting-started' },
+      { name: 'Introduction to Origin', path: '/getting-started/introduction' },
+      { name: 'JavaScript', path: '/getting-started/javascript' },
+      { name: 'Styling Custom Components', path: '/getting-started/styling' },
+    ]
+  },
   { name: 'Components', path: '/components' },
   { name: 'Icons', path: '/icons' },
-  { name: 'Brand', path: '/brand' },
+  { 
+    name: 'Brand', 
+    path: '/brand',
+    subItems: [
+      { name: 'Illustrations', path: '/brand/illustrations' },
+      { name: 'Logo', path: '/brand/logo' },
+      { name: 'Typography', path: '/brand/typography' },
+      { name: 'Color', path: '/brand/color' },
+    ]
+  },
   { name: 'Tokens', path: '/tokens' },
 ];
 
@@ -22,6 +41,7 @@ export function Navigation() {
   const tabRefs = useRef<Map<string, HTMLAnchorElement>>(new Map());
   const [indicator, setIndicator] = useState({ left: 0, width: 0 });
   const [isInitialized, setIsInitialized] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const getActiveIndex = () => {
     return navItems.findIndex(item => 
@@ -67,6 +87,16 @@ export function Navigation() {
     return () => window.removeEventListener('resize', updateIndicator);
   }, []);
 
+  // Handle scroll to add background
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const onTabClick = (e: React.MouseEvent, item: { name: string; path: string }) => {
     e.preventDefault();
     const targetPath = handleTabClick(item.path, location.pathname);
@@ -77,7 +107,10 @@ export function Navigation() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b-[1px] border-border/30 bg-white">
+    <header className={cn(
+      "sticky top-0 z-50 w-full border-b-[1px] border-border/30 transition-colors duration-200",
+      isScrolled ? "bg-background" : "bg-transparent"
+    )}>
       <div className="container mx-auto h-16 px-6 relative">
         {/* Navigation Content */}
         <div 
@@ -98,12 +131,13 @@ export function Navigation() {
             {/* Animated pill indicator */}
             <div
               className={cn(
-                "absolute h-8 bg-muted rounded-full",
+                "absolute h-8 rounded-full",
                 isInitialized ? "transition-all duration-300 ease-out" : ""
               )}
               style={{
                 left: indicator.left,
                 width: indicator.width,
+                backgroundColor: 'var(--color-neutral-10)',
               }}
             />
             

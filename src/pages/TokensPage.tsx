@@ -424,6 +424,7 @@ export function TokensPage() {
                     copyValue={token.name}
                     label={token.name.split('.').slice(-2).join('.')}
                     variant="pill"
+                    swatchColor={token.value}
                     preview={
                       <div 
                         className={cn("h-5 w-5 rounded-full flex-shrink-0", isWhiteish && "ring-1 ring-border/30")}
@@ -450,6 +451,7 @@ export function TokensPage() {
                     copyValue={token.name}
                     label={token.name}
                     variant="pill"
+                    swatchColor={token.value}
                     preview={
                       <div 
                         className={cn(

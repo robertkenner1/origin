@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { StickyFilterBar } from '@/components/StickyFilterBar';
+import { TokenCard } from '@/components/TokenCard';
 
 // Illustration data
 const illustrationCategories = {
@@ -196,17 +197,17 @@ export function BrandIllustrationsPage() {
         {filteredIllustrations.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
             {filteredIllustrations.map((illustration, index) => (
-              <div
+              <TokenCard
                 key={`${illustration.category}-${illustration.name}-${index}`}
-                className="group flex flex-col items-center gap-2 rounded-xl bg-white p-4 border border-transparent hover:border-border/50 transition-colors duration-200"
-              >
-                <div className="flex h-14 w-14 items-center justify-center">
-                  <IllustrationPlaceholder name={illustration.name} category={illustration.category} />
-                </div>
-                <span className="text-xs font-medium text-foreground truncate w-full text-center capitalize">
-                  {illustration.name.replace(/-/g, ' ')}
-                </span>
-              </div>
+                copyValue={illustration.name}
+                label={illustration.name.replace(/-/g, ' ')}
+                variant="card"
+                preview={
+                  <div className="h-14 w-14">
+                    <IllustrationPlaceholder name={illustration.name} category={illustration.category} />
+                  </div>
+                }
+              />
             ))}
           </div>
         ) : (
