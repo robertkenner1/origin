@@ -198,7 +198,7 @@ export function BrandIllustrationsPage() {
             {filteredIllustrations.map((illustration, index) => (
               <div
                 key={`${illustration.category}-${illustration.name}-${index}`}
-                className="group flex flex-col items-center gap-2 rounded-xl bg-white p-4 border border-border/50 hover:bg-[#fafafa] hover:border-border transition-colors duration-200"
+                className="group flex flex-col items-center gap-2 rounded-xl bg-white p-4 border border-transparent hover:border-border/50 transition-colors duration-200"
               >
                 <div className="flex h-14 w-14 items-center justify-center">
                   <IllustrationPlaceholder name={illustration.name} category={illustration.category} />

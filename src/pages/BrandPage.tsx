@@ -127,7 +127,7 @@ export function BrandPage() {
             <Link
               key={category.id}
               to={`/brand/${category.id}`}
-              className="group flex flex-col items-center gap-3 rounded-xl bg-white p-5 border border-border/50 hover:bg-[#fafafa] hover:border-border transition-colors duration-200 cursor-pointer"
+              className="group flex flex-col items-center gap-3 rounded-xl bg-white p-5 border border-transparent hover:border-border/50 transition-colors duration-200 cursor-pointer"
             >
               {/* Preview Area */}
               <div className="flex h-64 w-full items-center justify-center">
