@@ -190,7 +190,7 @@ export function ComponentsPage() {
             className={cn(
               "inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 bg-white border-2",
               activeCategory === category
-                ? "text-foreground border-foreground"
+                ? "text-foreground border-transparent"
                 : "text-muted-foreground border-border/40 hover:text-foreground hover:border-foreground/50"
             )}
           >

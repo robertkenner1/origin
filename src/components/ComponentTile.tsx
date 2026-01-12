@@ -69,7 +69,7 @@ export function ComponentTile({ name, preview, category }: ComponentTileProps) {
     <Link 
       to={`/components/${toSlug(name)}`}
       state={{ fromSearch: location.search }}
-      className="group flex flex-col items-center gap-3 rounded-xl bg-white p-5 border border-border/50 hover:bg-[#fafafa] hover:border-border transition-colors duration-200 cursor-pointer"
+      className="group flex flex-col items-center gap-3 rounded-xl bg-white p-5 border border-transparent hover:border-border/50 transition-colors duration-200 cursor-pointer"
     >
       {/* Component Preview Area */}
       <div className="flex aspect-square w-full items-center justify-center rounded-lg bg-[#fafafa] overflow-hidden">

@@ -41,7 +41,7 @@ export function TokenCard({
       <button
         onClick={handleCopy}
         className={cn(
-          "group flex items-center gap-2 rounded-full bg-white pl-1.5 pr-3 py-1.5 border border-border/50 hover:bg-[#fafafa] hover:border-border transition-colors duration-200 cursor-pointer",
+          "group flex items-center gap-2 rounded-full bg-white pl-1.5 pr-3 py-1.5 border border-transparent hover:border-border/50 transition-colors duration-200 cursor-pointer",
           className
         )}
       >
@@ -66,7 +66,7 @@ export function TokenCard({
     <button
       onClick={handleCopy}
       className={cn(
-        "group flex flex-col items-center gap-2 rounded-xl bg-white p-3 border border-border/50 hover:bg-[#fafafa] hover:border-border transition-colors duration-200 cursor-pointer text-left w-full",
+        "group flex flex-col items-center gap-2 rounded-xl bg-white p-3 border border-transparent hover:border-border/50 transition-colors duration-200 cursor-pointer text-left w-full",
         className
       )}
     >
@@ -122,7 +122,7 @@ export function TokenCardLarge({
     <button
       onClick={handleCopy}
       className={cn(
-        "group flex flex-col items-center gap-3 rounded-xl bg-white p-4 border border-border/50 hover:bg-[#fafafa] hover:border-border transition-colors duration-200 cursor-pointer text-left w-full",
+        "group flex flex-col items-center gap-3 rounded-xl bg-white p-4 border border-transparent hover:border-border/50 transition-colors duration-200 cursor-pointer text-left w-full",
         className
       )}
     >
