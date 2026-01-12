@@ -374,7 +374,7 @@ export function TokensPage() {
           placeholder="Search tokens"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-64 rounded-full border border-border bg-white py-2 pl-9 pr-3 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+          className="w-64 rounded-full border-2 border-transparent bg-white py-2 pl-9 pr-3 text-sm placeholder:text-muted-foreground hover:border-foreground focus:border-foreground focus:outline-none"
         />
       </div>
       <div className="flex items-center gap-2">
@@ -385,8 +385,8 @@ export function TokensPage() {
             className={cn(
               "inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 bg-white border-2",
               activeCategory === category
-                ? "text-foreground border-transparent"
-                : "text-muted-foreground border-border/40 hover:text-foreground hover:border-foreground/50"
+                ? "text-foreground border-foreground"
+                : "text-muted-foreground border-transparent hover:text-foreground hover:border-foreground"
             )}
           >
             {category}
