@@ -1,11 +1,116 @@
-import { useParams, Link, useLocation } from 'react-router-dom';
-import { useState, useMemo, useEffect } from 'react';
+import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { ComponentTile } from '@/components/ComponentTile';
 import { CodeBlock } from '@/components/ui/code-block';
 import type { ComponentControls } from '@/components/ComponentPreview';
 import { components as componentsList } from './ComponentsPage';
+
+// Prop carousel row with wheel-like slide animation
+function PropCarouselRow({
+  propName,
+  options,
+  currentIndex,
+  currentValue,
+  onChange,
+}: {
+  propName: string;
+  options: string[];
+  currentIndex: number;
+  currentValue: string;
+  onChange: (value: string) => void;
+}) {
+  const [animDirection, setAnimDirection] = useState<'left' | 'right' | null>(null);
+  const [prevValue, setPrevValue] = useState(currentValue);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const goToPrev = () => {
+    if (options.length === 0) return;
+    setPrevValue(currentValue);
+    setAnimDirection('left'); // Click left = wheel rotates left = new enters from left
+    setIsAnimating(true);
+    const newIndex = currentIndex <= 0 ? options.length - 1 : currentIndex - 1;
+    onChange(options[newIndex]);
+  };
+
+  const goToNext = () => {
+    if (options.length === 0) return;
+    setPrevValue(currentValue);
+    setAnimDirection('right'); // Click right = wheel rotates right = new enters from right
+    setIsAnimating(true);
+    const newIndex = currentIndex >= options.length - 1 ? 0 : currentIndex + 1;
+    onChange(options[newIndex]);
+  };
+
+  useEffect(() => {
+    if (isAnimating) {
+      const timer = setTimeout(() => {
+        setIsAnimating(false);
+      }, 200);
+      return () => clearTimeout(timer);
+    }
+  }, [isAnimating]);
+
+  return (
+    <div className="group flex items-center gap-1 py-1.5">
+      <span className="font-medium text-xs text-muted-foreground w-14 shrink-0">{propName}</span>
+      <div className="ml-auto flex items-center gap-0.5">
+        <button
+          onClick={goToPrev}
+          className="p-1 rounded text-muted-foreground/50 group-hover:text-foreground hover:bg-border/50 transition-colors"
+          aria-label={`Previous ${propName}`}
+        >
+          <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <div className="w-16 text-center overflow-hidden relative h-4">
+          {/* Exiting value */}
+          <span 
+            className={cn(
+              "absolute inset-0 flex items-center justify-center text-xs font-medium text-foreground transition-all duration-200 ease-out",
+              // When clicking right: old exits to LEFT
+              isAnimating && animDirection === 'right' && "-translate-x-full opacity-0",
+              // When clicking left: old exits to RIGHT
+              isAnimating && animDirection === 'left' && "translate-x-full opacity-0",
+              !isAnimating && "translate-x-0 opacity-0"
+            )}
+          >
+            {prevValue}
+          </span>
+          {/* Entering value */}
+          <span 
+            className={cn(
+              "absolute inset-0 flex items-center justify-center text-xs font-medium text-foreground transition-all duration-200 ease-out",
+              // When clicking right: new enters from RIGHT (starts at right, animates to center)
+              isAnimating && animDirection === 'right' && "animate-slide-in-right",
+              // When clicking left: new enters from LEFT (starts at left, animates to center)
+              isAnimating && animDirection === 'left' && "animate-slide-in-left",
+              !isAnimating && "translate-x-0 opacity-100"
+            )}
+            style={isAnimating ? {
+              animation: animDirection === 'right' 
+                ? 'slideInFromRight 200ms ease-out forwards'
+                : 'slideInFromLeft 200ms ease-out forwards'
+            } : undefined}
+          >
+            {currentValue}
+          </span>
+        </div>
+        <button
+          onClick={goToNext}
+          className="p-1 rounded text-muted-foreground/50 group-hover:text-foreground hover:bg-border/50 transition-colors"
+          aria-label={`Next ${propName}`}
+        >
+          <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+}
 
 // Related component mappings - components that are similar or often used together
 const relatedComponentsMap: Record<string, string[]> = {
@@ -1386,13 +1491,42 @@ function SaveButton() {
 export function ComponentDetailPage() {
   const { componentId } = useParams<{ componentId: string }>();
   const location = useLocation();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('Code');
   const [previewBg, setPreviewBg] = useState<'white' | 'transparent'>('transparent');
   const component = componentId ? componentData[componentId] : null;
   const controlsConfig = componentId ? componentControlsConfig[componentId] : null;
+  const modalRef = useRef<HTMLDivElement>(null);
   
   // Get the search params from where the user came from
   const backToComponentsUrl = `/components${(location.state as { fromSearch?: string })?.fromSearch || ''}`;
+  
+  // Close modal handler
+  const handleClose = useCallback(() => {
+    navigate(backToComponentsUrl);
+  }, [navigate, backToComponentsUrl]);
+  
+  // Close on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleClose();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [handleClose]);
+  
+  // Prevent body scroll when modal is open - with scrollbar compensation to prevent layout shift
+  useEffect(() => {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    };
+  }, []);
   
   const defaultControls: ComponentControls = {
     variant: controlsConfig?.variant?.[0] || 'primary',
@@ -1647,17 +1781,23 @@ export function ComponentDetailPage() {
 
   if (!component) {
     return (
-      <div className="min-h-screen bg-white animate-fade-in">
-        <div className="container mx-auto px-6 py-12">
-          <Link 
-            to={backToComponentsUrl} 
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-8"
+      <div className="fixed inset-0 z-50 flex items-center justify-center">
+        {/* Backdrop */}
+        <div 
+          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+          onClick={handleClose}
+        />
+        {/* Modal */}
+        <div className="relative z-10 w-full max-w-4xl mx-4 bg-white rounded-2xl shadow-2xl p-8">
+          <button
+            onClick={handleClose}
+            className="absolute right-4 top-4 p-2 rounded-full hover:bg-muted transition-colors"
+            aria-label="Close"
           >
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
-            Back to Components
-          </Link>
+          </button>
           <h1 className="text-2xl font-bold">Component not found</h1>
         </div>
       </div>
@@ -1665,19 +1805,31 @@ export function ComponentDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white animate-fade-in">
-      <div className="container mx-auto px-6 py-8">
-        {/* Back Link */}
-        <Link 
-          to={backToComponentsUrl} 
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Backdrop */}
+      <div 
+        className="absolute inset-0 bg-black/60 animate-backdrop-in"
+        onClick={handleClose}
+      />
+      
+      {/* Modal */}
+      <div 
+        ref={modalRef}
+        className="relative z-10 w-full max-w-[1400px] max-h-[90vh] mx-6 bg-white rounded-2xl shadow-2xl overflow-y-auto modal-scrollbar animate-modal-in"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close button */}
+        <button
+          onClick={handleClose}
+          className="absolute right-4 top-4 z-20 p-2 rounded-full bg-white/80 hover:bg-white border border-border/50 shadow-sm transition-colors"
+          aria-label="Close"
         >
-          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
-          Back to Components
-        </Link>
-
+        </button>
+        
+        <div className="p-8">
         {/* Header */}
         <div className="mb-6">
           <div className="flex items-center gap-3 mb-2">
@@ -1807,44 +1959,16 @@ export function ComponentDetailPage() {
                     if (options.length === 0) return null;
                     
                     const currentIndex = options.indexOf(currentValue);
-                    const goToPrev = () => {
-                      if (options.length === 0) return;
-                      const newIndex = currentIndex <= 0 ? options.length - 1 : currentIndex - 1;
-                      handleChange(options[newIndex]);
-                    };
-                    const goToNext = () => {
-                      if (options.length === 0) return;
-                      const newIndex = currentIndex >= options.length - 1 ? 0 : currentIndex + 1;
-                      handleChange(options[newIndex]);
-                    };
                     
                     return (
-                      <div key={prop.name} className="group flex items-center gap-1 py-1.5">
-                        <span className="font-medium text-xs text-muted-foreground w-14 shrink-0">{prop.name}</span>
-                        <div className="ml-auto flex items-center gap-0.5">
-                          <button
-                            onClick={goToPrev}
-                            className="p-1 rounded text-muted-foreground/50 group-hover:text-foreground hover:bg-border/50 transition-colors"
-                            aria-label={`Previous ${prop.name}`}
-                          >
-                            <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                            </svg>
-                          </button>
-                          <span className="w-12 text-center text-xs font-medium text-foreground truncate">
-                            {currentValue}
-                          </span>
-                          <button
-                            onClick={goToNext}
-                            className="p-1 rounded text-muted-foreground/50 group-hover:text-foreground hover:bg-border/50 transition-colors"
-                            aria-label={`Next ${prop.name}`}
-                          >
-                            <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
+                      <PropCarouselRow
+                        key={prop.name}
+                        propName={prop.name}
+                        options={options}
+                        currentIndex={currentIndex}
+                        currentValue={currentValue}
+                        onChange={handleChange}
+                      />
                     );
                   })}
                 </div>
@@ -2125,6 +2249,7 @@ export function ComponentDetailPage() {
 
         {/* Related Components */}
         <RelatedComponents currentComponentId={componentId || ''} />
+        </div>
       </div>
     </div>
   );

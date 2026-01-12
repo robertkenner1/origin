@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { HomePage } from '@/pages/HomePage';
 import { ComponentsPage } from '@/pages/ComponentsPage';
@@ -13,6 +13,19 @@ import { TokensPage } from '@/pages/TokensPage';
 import { NavigationHistoryProvider } from '@/context/NavigationHistoryContext';
 import { StickyFilterProvider } from '@/context/StickyFilterContext';
 
+// Component to handle the components page with modal overlay
+function ComponentsWithModal() {
+  const location = useLocation();
+  const isDetailPage = location.pathname.startsWith('/components/') && location.pathname !== '/components';
+  
+  return (
+    <>
+      <ComponentsPage />
+      {isDetailPage && <ComponentDetailPage />}
+    </>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
@@ -21,8 +34,8 @@ function App() {
           <Layout>
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/components" element={<ComponentsPage />} />
-              <Route path="/components/:componentId" element={<ComponentDetailPage />} />
+              <Route path="/components" element={<ComponentsWithModal />} />
+              <Route path="/components/:componentId" element={<ComponentsWithModal />} />
               <Route path="/icons" element={<IconsPage />} />
               <Route path="/brand" element={<BrandPage />} />
               <Route path="/brand/illustrations" element={<BrandIllustrationsPage />} />

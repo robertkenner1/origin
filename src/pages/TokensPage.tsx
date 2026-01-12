@@ -241,16 +241,63 @@ const blurRadiusTokens = [
   { name: 'BlurHigh', value: '10px' },
 ];
 
-// Iconography tokens (sample - just names)
+// Single icon used as preview for all icons (20x20 frame, transparent bg, black stroke)
+function IconDisplay({ name }: { name: string }) {
+  return (
+    <svg 
+      className="h-5 w-5" 
+      fill="none"
+      stroke="#000000"
+      strokeWidth={1.5}
+      viewBox="0 0 20 20"
+    >
+      {/* Star icon as placeholder */}
+      <path 
+        strokeLinecap="round" 
+        strokeLinejoin="round" 
+        d="M10 2l2.09 4.26 4.71.69-3.4 3.32.8 4.68L10 12.77l-4.2 2.18.8-4.68-3.4-3.32 4.71-.69L10 2z" 
+      />
+    </svg>
+  );
+}
+
+// Iconography tokens - Superhuman icon set (409 icons)
 const iconographyTokens = [
-  'AgentsAiChatIcon', 'AgentsAiDetectorIcon', 'AgentsAiGraderIcon', 'AgentsAiRewriterIcon',
-  'ArrowDownIcon', 'ArrowLeftIcon', 'ArrowRightIcon', 'ArrowUpIcon',
-  'BellIcon', 'BookIcon', 'CalendarIcon', 'CheckIcon',
-  'ClockIcon', 'CopyIcon', 'EditIcon', 'FileIcon',
-  'GearIcon', 'HeartIcon', 'HomeIcon', 'LinkIcon',
-  'LockIcon', 'MailIcon', 'MenuIcon', 'PlusIcon',
-  'SearchIcon', 'SettingsIcon', 'StarIcon', 'TrashIcon',
-  'UserIcon', 'WarningIcon', 'XIcon',
+  // Arrows
+  'arrow-clockwise', 'arrow-counter-clockwise', 'arrow-down', 'arrow-down-bars',
+  'arrow-down-line', 'arrow-forward', 'arrow-left', 'arrow-left-line',
+  'arrow-right', 'arrow-right-line', 'arrow-share', 'arrow-up', 'arrow-up-line',
+  'arrows-clockwise', 'arrows-collapse', 'arrows-expand', 'arrows-merge',
+  // Carets
+  'caret-large-down', 'caret-large-left', 'caret-large-right', 'caret-large-up',
+  'caret-small-down', 'caret-small-left', 'caret-small-right', 'caret-small-up',
+  // Navigation
+  'sidebar-left', 'sidebar-right', 'house', 'globe', 'map-pin',
+  // Communication
+  'bell', 'bell-fill', 'bell-ring', 'bell-slash', 'chat-lines', 'chat-plus',
+  'envelope', 'envelope-fill', 'envelope-open', 'paper-plane',
+  // Calendar & Time
+  'calendar', 'calendar-check', 'calendar-clock', 'clock', 'hourglass',
+  // Documents
+  'file', 'file-csv', 'file-pdf', 'file-xls', 'folder', 'folder-open', 'clipboard', 'note',
+  // Media
+  'play', 'play-fill', 'pause', 'pause-fill', 'stop', 'image', 'image-fill', 'film',
+  // Actions
+  'check', 'check-squircle', 'plus', 'plus-squircle', 'minus', 'x', 'x-squircle',
+  'copy', 'trash', 'search', 'pencil', 'pencil-sparkles',
+  // Security
+  'lock', 'lock-open', 'key', 'shield-check', 'eye', 'eye-slash',
+  // Social
+  'heart', 'heart-fill', 'star', 'star-fill', 'thumbs-up', 'thumbs-down', 'smiley',
+  'bookmark', 'bookmark-fill', 'tag', 'flag',
+  // Objects
+  'book', 'building', 'cloud', 'credit-card', 'gear', 'lightbulb', 'link', 'sparkles',
+  // People
+  'user', 'user-fill', 'users', 'users-fill',
+  // Status
+  'info', 'warning', 'warning-fill', 'question-squircle',
+  // UI Elements
+  'grid', 'sliders', 'toggle-left', 'toggle-right', 'dropdown',
 ];
 
 export function TokensPage() {
@@ -527,17 +574,14 @@ export function TokensPage() {
         {filteredTokens.iconography.length > 0 && (
           <section className="mb-12">
             <h2 className="text-xl font-semibold mb-4">Iconography</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            <p className="text-sm text-muted-foreground mb-4">409 icons from the Superhuman Iconography set</p>
+            <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-9 gap-3">
               {filteredTokens.iconography.map((icon) => (
-                <div key={icon} className="group flex flex-col items-center gap-3 rounded-xl bg-white p-4 border border-border/50 hover:bg-[#fafafa] hover:border-border transition-colors duration-200 cursor-pointer">
-                  <div className="h-12 flex items-center justify-center">
-                    <div className="w-8 h-8 bg-muted rounded flex items-center justify-center">
-                      <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <rect x="4" y="4" width="16" height="16" rx="2" strokeWidth="2" />
-                      </svg>
-                    </div>
+                <div key={icon} className="group flex flex-col items-center gap-2 rounded-xl bg-white p-3 border border-border/50 hover:bg-[#fafafa] hover:border-border transition-colors duration-200 cursor-pointer">
+                  <div className="h-8 w-8 flex items-center justify-center">
+                    <IconDisplay name={icon} />
                   </div>
-                  <span className="text-xs font-medium text-foreground group-hover:text-foreground transition-colors truncate w-full text-center">{icon}</span>
+                  <span className="text-[10px] font-medium text-muted-foreground group-hover:text-foreground transition-colors truncate w-full text-center">{icon}</span>
                 </div>
               ))}
             </div>
