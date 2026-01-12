@@ -242,7 +242,7 @@ const blurRadiusTokens = [
 ];
 
 // Single icon used as preview for all icons (20x20 frame, transparent bg, black stroke)
-function IconDisplay({ name }: { name: string }) {
+function IconDisplay({ name: _name }: { name: string }) {
   return (
     <svg 
       className="h-5 w-5" 
