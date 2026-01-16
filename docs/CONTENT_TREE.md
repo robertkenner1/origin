@@ -2,119 +2,53 @@
 Last updated: January 16, 2026
 
 ## Legend
-🟦 Top-level navigation tab
-🟨 Sub-page with secondary nav
-✅ Live
-🚧 Placeholder content
-📋 Future/planned
+✅ Live  |  🚧 Placeholder  |  📋 Future/planned
 
 ---
 
-## Structure
+## Tree View
 
-### 🟦 HOME
-Path: /
-Status: ✅ Live
-Type: Landing page
-Content: Empty (future: Getting Started card)
-
----
-
-### 🟦 GETTING STARTED
-Path: /getting-started
-Status: ✅ Live
-Type: Hub page with sidebar nav
-Sub-pages: 3
-
-  🟨 Overview
-  Path: /getting-started
-  Status: ✅ Live
-  Content: What's available, libraries, support links
-  
-  🟨 Introduction to Origin
-  Path: /getting-started/introduction
-  Status: 🚧 Placeholder
-  Content: Glossary (Principles, Foundations, Tokens, Components, Patterns, Templates, Partners)
-  
-  🟨 JavaScript
-  Path: /getting-started/javascript
-  Status: ✅ Live
-  Content: Installation, setup, usage (React components, tokens, CSS variables)
-
----
-
-### 🟦 COMPONENTS
-Path: /components
-Status: ✅ Live
-Type: Grid with filters + modal overlay
-Content: Component cards that open detail modal with Design/Accessibility/Content tabs
-
----
-
-### 🟦 ICONS
-Path: /icons
-Status: ✅ Live
-Type: Grid with filters + copy interaction
-Content: 20px icon previews, copyable code, search
-
----
-
-### 🟦 BRAND
-Path: /brand
-Status: ✅ Live
-Type: Hub page with category cards
-Sub-pages: 4
-
-  🟨 Illustrations
-  Path: /brand/illustrations
-  Status: ✅ Live
-  Content: Spot, Empty, Success illustrations with filters
-  
-  🟨 Logo
-  Path: /brand/logo
-  Status: 🚧 Placeholder
-  Content: Brand marks, lockups, usage guidelines
-  
-  🟨 Typography
-  Path: /brand/typography
-  Status: 🚧 Placeholder
-  Content: Type scale, font families, pairing guidelines
-  
-  🟨 Color
-  Path: /brand/color
-  Status: 🚧 Placeholder
-  Content: Brand palette, accessibility, usage guidelines
-
----
-
-### 🟦 TOKENS
-Path: /tokens
-Status: ✅ Live
-Type: Grid with filters + copy interaction
-Content: Design tokens (colors, spacing, typography) with copyable code
-
----
-
-### 🟦 CONTRIBUTING
-Path: /contributing
-Status: ✅ Live
-Type: Hub page with sidebar nav
-Sub-pages: 3
-
-  🟨 Overview
-  Path: /contributing
-  Status: ✅ Live
-  Content: How to add/update/propose components, guidelines overview
-  
-  🟨 Styling Custom Components
-  Path: /contributing/styling
-  Status: ✅ Live
-  Content: GDS decision tree, creating custom components when system doesn't fit
-  
-  🟨 Publishing Components
-  Path: /contributing/publishing
-  Status: ✅ Live
-  Content: Figma branching workflow, FAQ for designers
+```
+Origin Toolkit
+│
+├── Home ✅
+│   └── / (Landing page, future: Getting Started card)
+│
+├── Getting Started ✅
+│   ├── Overview ✅
+│   │   └── /getting-started (What's available, libraries, support links)
+│   ├── Introduction to Origin 🚧
+│   │   └── /getting-started/introduction (Glossary: Principles, Foundations, Tokens, etc.)
+│   └── JavaScript ✅
+│       └── /getting-started/javascript (Installation, setup, React components, tokens)
+│
+├── Components ✅
+│   └── /components (Grid with filters + modal overlay for details)
+│
+├── Icons ✅
+│   └── /icons (Grid with filters + copy interaction, 20px previews)
+│
+├── Brand ✅
+│   ├── Illustrations ✅
+│   │   └── /brand/illustrations (Spot, Empty, Success with filters)
+│   ├── Logo 🚧
+│   │   └── /brand/logo (Brand marks, lockups, usage guidelines)
+│   ├── Typography 🚧
+│   │   └── /brand/typography (Type scale, font families, pairing)
+│   └── Color 🚧
+│       └── /brand/color (Brand palette, accessibility, usage)
+│
+├── Tokens ✅
+│   └── /tokens (Grid with filters + copy interaction, design tokens)
+│
+└── Contributing ✅
+    ├── Overview ✅
+    │   └── /contributing (How to add/update/propose components)
+    ├── Styling Custom Components ✅
+    │   └── /contributing/styling (GDS decision tree, creating custom components)
+    └── Publishing Components ✅
+        └── /contributing/publishing (Figma branching workflow, designer FAQ)
+```
 
 ---
 
