@@ -1,29 +1,25 @@
-# Origin Toolkit - Content Tree
-
-```
 Origin Toolkit
 │
-├── Home ✅
+├── Home
 │
-├── Getting Started ✅
-│   ├── Overview ✅
-│   ├── Introduction to Origin 🚧
-│   └── JavaScript ✅
+├── Getting Started
+│   ├── Overview
+│   ├── Introduction to Origin
+│   └── JavaScript
 │
-├── Components ✅
+├── Components
 │
-├── Icons ✅
+├── Icons
 │
-├── Brand ✅
-│   ├── Illustrations ✅
-│   ├── Logo 🚧
-│   ├── Typography 🚧
-│   └── Color 🚧
+├── Brand
+│   ├── Illustrations
+│   ├── Logo
+│   ├── Typography
+│   └── Color
 │
-├── Tokens ✅
+├── Tokens
 │
-└── Contributing ✅
-    ├── Overview ✅
-    ├── Styling Custom Components ✅
-    └── Publishing Components ✅
-```
+└── Contributing
+    ├── Overview
+    ├── Styling Custom Components
+    └── Publishing Components
