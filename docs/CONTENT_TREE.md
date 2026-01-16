@@ -1,4 +1,4 @@
-Origin Toolkit (Current)
+Origin Toolkit
 │
 ├── Home
 │

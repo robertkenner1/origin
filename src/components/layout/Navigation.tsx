@@ -29,6 +29,30 @@ const navItems = [
   },
   { name: 'Tokens', path: '/tokens' },
   { 
+    name: 'Accessibility', 
+    path: '/accessibility',
+    subItems: [
+      { name: 'Overview', path: '/accessibility' },
+      { name: 'Live Announcer', path: '/accessibility/live-announcer' },
+      { name: 'Portal Container Provider', path: '/accessibility/portal-container' },
+      { name: 'Screen Reader Only', path: '/accessibility/screen-reader' },
+      { name: 'Theme Provider', path: '/accessibility/theme-provider' },
+      { name: 'Content Design', path: '/accessibility/content-design' },
+    ]
+  },
+  { 
+    name: 'Patterns', 
+    path: '/patterns',
+    subItems: [
+      { name: 'Overview', path: '/patterns' },
+      { name: 'Unified Platform Experience', path: '/patterns/unified-platform' },
+      { name: 'Forms', path: '/patterns/forms' },
+      { name: 'Empty States', path: '/patterns/empty-states' },
+      { name: 'Disabled & Hidden States', path: '/patterns/disabled-states' },
+      { name: 'Pro Plan Branding', path: '/patterns/pro-plan' },
+    ]
+  },
+  { 
     name: 'Contributing', 
     path: '/contributing',
     subItems: [

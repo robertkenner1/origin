@@ -13,6 +13,18 @@ import { BrandLogoPage } from '@/pages/brand/LogoPage';
 import { BrandTypographyPage } from '@/pages/brand/TypographyPage';
 import { BrandColorPage } from '@/pages/brand/ColorPage';
 import { TokensPage } from '@/pages/TokensPage';
+import { AccessibilityOverviewPage } from '@/pages/accessibility/OverviewPage';
+import { LiveAnnouncerPage } from '@/pages/accessibility/LiveAnnouncerPage';
+import { PortalContainerPage } from '@/pages/accessibility/PortalContainerPage';
+import { ScreenReaderPage } from '@/pages/accessibility/ScreenReaderPage';
+import { ThemeProviderPage } from '@/pages/accessibility/ThemeProviderPage';
+import { ContentDesignPage } from '@/pages/accessibility/ContentDesignPage';
+import { PatternsOverviewPage } from '@/pages/patterns/OverviewPage';
+import { UnifiedPlatformPage } from '@/pages/patterns/UnifiedPlatformPage';
+import { FormsPage } from '@/pages/patterns/FormsPage';
+import { EmptyStatesPage } from '@/pages/patterns/EmptyStatesPage';
+import { DisabledStatesPage } from '@/pages/patterns/DisabledStatesPage';
+import { ProPlanPage } from '@/pages/patterns/ProPlanPage';
 import { ContributingPage } from '@/pages/ContributingPage';
 import { StylingPage } from '@/pages/contributing/StylingPage';
 import { PublishingPage } from '@/pages/contributing/PublishingPage';
@@ -52,6 +64,18 @@ function App() {
               <Route path="/brand/typography" element={<BrandTypographyPage />} />
               <Route path="/brand/color" element={<BrandColorPage />} />
               <Route path="/tokens" element={<TokensPage />} />
+              <Route path="/accessibility" element={<AccessibilityOverviewPage />} />
+              <Route path="/accessibility/live-announcer" element={<LiveAnnouncerPage />} />
+              <Route path="/accessibility/portal-container" element={<PortalContainerPage />} />
+              <Route path="/accessibility/screen-reader" element={<ScreenReaderPage />} />
+              <Route path="/accessibility/theme-provider" element={<ThemeProviderPage />} />
+              <Route path="/accessibility/content-design" element={<ContentDesignPage />} />
+              <Route path="/patterns" element={<PatternsOverviewPage />} />
+              <Route path="/patterns/unified-platform" element={<UnifiedPlatformPage />} />
+              <Route path="/patterns/forms" element={<FormsPage />} />
+              <Route path="/patterns/empty-states" element={<EmptyStatesPage />} />
+              <Route path="/patterns/disabled-states" element={<DisabledStatesPage />} />
+              <Route path="/patterns/pro-plan" element={<ProPlanPage />} />
               <Route path="/contributing" element={<ContributingPage />} />
               <Route path="/contributing/styling" element={<StylingPage />} />
               <Route path="/contributing/publishing" element={<PublishingPage />} />

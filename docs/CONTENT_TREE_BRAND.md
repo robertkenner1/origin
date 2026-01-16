@@ -1,8 +1,4 @@
-Origin Toolkit (Future Evolution - Inspired by design.cash.app)
-
-CONCEPT: Separate the "brand story" from "practical application"
-
-───────────────────────────────────────────────────────────
+Superhuman Brand Guidelines
 
 BRAND (External - storytelling, history, making of)
 │
