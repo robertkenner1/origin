@@ -1,6 +1,6 @@
 export function ContributingPage() {
   return (
-    <div className="container mx-auto px-6 py-12">
+    <div className="w-full px-6 py-12 max-w-[1400px] mx-auto">
       <div className="prose prose-sm max-w-none">
           <h1>Contributing to Origin</h1>
           <p>

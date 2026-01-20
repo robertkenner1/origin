@@ -174,7 +174,7 @@ export function BrandIllustrationsPage() {
 
   return (
     <div className="min-h-screen bg-background animate-fade-in">
-      <div className="container mx-auto px-6 pt-12">
+      <div className="w-full px-6 pt-12 max-w-[1400px] mx-auto">
         <div className="mb-4">
           <Link 
             to="/brand" 
@@ -193,7 +193,7 @@ export function BrandIllustrationsPage() {
         {filterContent}
       </StickyFilterBar>
 
-      <div className="container mx-auto px-6 pt-4 pb-12">
+      <div className="w-full px-6 pt-4 pb-12 max-w-[1400px] mx-auto">
         {filteredIllustrations.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
             {filteredIllustrations.map((illustration, index) => (

@@ -145,7 +145,7 @@ export function Navigation() {
       "sticky top-0 z-50 w-full transition-all duration-300",
       isScrolled ? "bg-white border-b-[1px] border-border/30" : "bg-transparent border-b-[1px] border-transparent"
     )}>
-      <div className="container mx-auto h-16 px-6 relative">
+      <div className="w-full h-16 px-6 relative max-w-[1400px] mx-auto">
         {/* Navigation Content */}
         <div 
           className={cn(

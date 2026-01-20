@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 export function BrandTypographyPage() {
   return (
     <div className="min-h-screen bg-background animate-fade-in">
-      <div className="container mx-auto px-6 pt-12 pb-12">
+      <div className="w-full px-6 pt-12 pb-12 max-w-[1400px] mx-auto">
         <div className="mb-8">
           <Link 
             to="/brand" 
