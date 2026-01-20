@@ -281,63 +281,63 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                     More
                   </span>
                 </button>
+                
+                {/* More Menu Dropdown */}
+                <AnimatePresence>
+                  {moreMenuOpen && (
+                    <motion.div
+                      data-more-menu
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -10 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute left-0 bottom-full mb-2 w-[240px] bg-background border border-border rounded-lg shadow-lg overflow-hidden z-50"
+                    >
+                      <div className="py-2">
+                        {unpinnedCollections.map((collection) => {
+                          const Icon = collection.icon;
+                          const isSinglePage = collection.children.length === 1 && 
+                                              collection.children[0].title === collection.title;
+                          const path = collection.children[0]?.path || '/';
+                          
+                          return (
+                            <Link
+                              key={collection.id}
+                              to={path}
+                              onClick={() => setMoreMenuOpen(false)}
+                              className="flex items-center gap-3 px-4 py-2 hover:bg-[var(--color-neutral-10)]/50 transition-colors"
+                            >
+                              {Icon && <Icon className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />}
+                              <span className="text-sm">{collection.title}</span>
+                            </Link>
+                          );
+                        })}
+                        
+                        {/* Divider if there are unpinned collections */}
+                        {unpinnedCollections.length > 0 && (
+                          <div className="my-1 border-t border-border" />
+                        )}
+                        
+                        {/* Manage collections option */}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSettingsOpen(true);
+                            setMoreMenuOpen(false);
+                          }}
+                          className="flex items-center gap-3 px-4 py-2 w-full hover:bg-[var(--color-neutral-10)]/50 transition-colors text-left"
+                        >
+                          <Library className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
+                          <span className="text-sm">Manage collections</span>
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </nav>
           </div>
         </aside>
-        
-        {/* More Menu Dropdown */}
-        <AnimatePresence>
-          {moreMenuOpen && (
-            <motion.div
-              data-more-menu
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -10 }}
-              transition={{ duration: 0.15 }}
-              className="fixed left-[84px] bottom-[60px] w-[240px] bg-background border border-border rounded-lg shadow-lg overflow-hidden z-50"
-            >
-              <div className="py-2">
-                {unpinnedCollections.map((collection) => {
-                  const Icon = collection.icon;
-                  const isSinglePage = collection.children.length === 1 && 
-                                      collection.children[0].title === collection.title;
-                  const path = collection.children[0]?.path || '/';
-                  
-                  return (
-                    <Link
-                      key={collection.id}
-                      to={path}
-                      onClick={() => setMoreMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-2 hover:bg-[var(--color-neutral-10)]/50 transition-colors"
-                    >
-                      {Icon && <Icon className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />}
-                      <span className="text-sm">{collection.title}</span>
-                    </Link>
-                  );
-                })}
-                
-                {/* Divider if there are unpinned collections */}
-                {unpinnedCollections.length > 0 && (
-                  <div className="my-1 border-t border-border" />
-                )}
-                
-                {/* Manage collections option */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSettingsOpen(true);
-                    setMoreMenuOpen(false);
-                  }}
-                  className="flex items-center gap-3 px-4 py-2 w-full hover:bg-[var(--color-neutral-10)]/50 transition-colors text-left"
-                >
-                  <Library className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
-                  <span className="text-sm">Manage collections</span>
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* Secondary Navigation - Pinned (flex sibling) */}
         {isPinned && pinnedItem && pinnedItem.children?.length && (() => {
