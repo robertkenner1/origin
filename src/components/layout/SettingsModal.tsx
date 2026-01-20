@@ -9,11 +9,11 @@ import {
   DialogClose,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Pin, GripVertical, Lock } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { GripVertical, Lock } from 'lucide-react';
 import { ALL_COLLECTIONS, getDefaultCollectionIds, type Collection } from './navigationConfig';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { motion } from 'framer-motion';
 
 type SettingsModalProps = {
   open: boolean;
@@ -101,33 +101,18 @@ const DraggableCollectionItem = ({
         <span className="text-sm">{collection.title}</span>
       </div>
       
-      <button
-        type="button"
-        onClick={() => onToggle(collection.id)}
-        disabled={isHome}
-        className={`p-1.5 rounded transition-colors ${
-          !isHome ? 'hover:bg-[var(--color-neutral-10)]/80' : ''
-        }`}
-        aria-label={isHome ? 'Locked' : isEnabled ? 'Unpin' : 'Pin'}
-      >
-        {isHome ? (
-          <Lock 
-            className="w-4 h-4 text-muted-foreground/40"
-            strokeWidth={1.5}
-          />
-        ) : (
-          <motion.div
-            animate={{ rotate: isEnabled ? 0 : 45 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-          >
-            <Pin 
-              className="w-4 h-4 text-foreground"
-              strokeWidth={1.5}
-              fill={isEnabled ? 'currentColor' : 'none'}
-            />
-          </motion.div>
-        )}
-      </button>
+      {isHome ? (
+        <Lock 
+          className="w-4 h-4 text-muted-foreground/40"
+          strokeWidth={1.5}
+        />
+      ) : (
+        <Switch
+          checked={isEnabled}
+          onCheckedChange={() => onToggle(collection.id)}
+          aria-label={isEnabled ? 'Enabled' : 'Disabled'}
+        />
+      )}
     </div>
   );
 };
@@ -209,7 +194,7 @@ export function SettingsModal({
           <DialogHeader>
             <DialogTitle>Manage collections</DialogTitle>
             <DialogDescription>
-              Pin or unpin collections to customize your navigation bar. Unpinned collections appear in the More menu. Drag to reorder.
+              Enable or disable collections to customize your navigation bar. Disabled collections appear in the More menu. Drag to reorder.
             </DialogDescription>
           </DialogHeader>
 
