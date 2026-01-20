@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Pin, GripVertical, Lock } from 'lucide-react';
-import { ALL_COLLECTIONS, type Collection } from './navigationConfig';
+import { ALL_COLLECTIONS, getDefaultCollectionIds, type Collection } from './navigationConfig';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { motion } from 'framer-motion';
@@ -186,9 +186,10 @@ export function SettingsModal({
 
   const handleReset = () => {
     const defaultOrder = ALL_COLLECTIONS.map(c => c.id);
+    const defaultEnabled = getDefaultCollectionIds();
     setOrderedCollectionIds(defaultOrder);
-    setPinnedCollectionIds(new Set(defaultOrder));
-    onCollectionsChange(defaultOrder);
+    setPinnedCollectionIds(new Set(defaultEnabled));
+    onCollectionsChange(defaultEnabled);
   };
 
   const pinnedCollections = orderedCollectionIds
@@ -251,7 +252,7 @@ export function SettingsModal({
               variant="ghost" 
               onClick={handleReset}
             >
-              Pin all collections
+              Reset to default
             </Button>
             <DialogClose asChild>
               <Button variant="outline">
