@@ -2,14 +2,12 @@ import { useState, useRef, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogFooter,
   DialogClose,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
 import { GripVertical, Lock } from 'lucide-react';
 import { ALL_COLLECTIONS, getDefaultCollectionIds, type Collection } from './navigationConfig';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
@@ -197,31 +195,17 @@ export function SettingsModal({
         <DialogContent className="sm:max-w-[600px] p-8" hideCloseButton>
           <DialogHeader>
             <DialogTitle>Customize sidebar</DialogTitle>
-            <DialogDescription>
-              Enable or disable collections to customize your navigation bar. Disabled collections appear in the More menu. Drag to reorder.
-            </DialogDescription>
           </DialogHeader>
 
-          {/* Show Labels Toggle */}
-          <div className="pt-6 pb-4 border-b border-border">
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <label htmlFor="show-labels" className="text-sm font-medium">
-                  Show labels
-                </label>
-                <p className="text-xs text-muted-foreground">
-                  Display text labels below navigation icons
-                </p>
-              </div>
-              <Switch
-                id="show-labels"
-                checked={showLabels}
-                onCheckedChange={onShowLabelsChange}
-              />
+          {/* Collections Section */}
+          <div className="pt-6 pb-6 space-y-3">
+            <div>
+              <h3 className="text-sm font-semibold mb-1">Show these collections in the navigation bar:</h3>
+              <p className="text-xs text-muted-foreground">
+                Disabled collections appear in the More menu. Drag to reorder.
+              </p>
             </div>
-          </div>
-
-          <div className="pt-4 pb-6">
+            
             <div className="space-y-1">
               {pinnedCollections.map((collection, index) => {
                 const isHome = collection.id === 'home';
@@ -252,6 +236,42 @@ export function SettingsModal({
                   />
                 );
               })}
+            </div>
+          </div>
+
+          {/* Navigation Appearance Section */}
+          <div className="py-6 border-t border-border space-y-3">
+            <h3 className="text-sm font-semibold">Navigation Appearance</h3>
+            
+            <div className="space-y-3">
+              <label className="flex items-start gap-3 cursor-pointer group">
+                <input
+                  type="radio"
+                  name="nav-appearance"
+                  checked={showLabels}
+                  onChange={() => onShowLabelsChange(true)}
+                  className="mt-0.5 w-4 h-4 text-foreground focus:ring-2 focus:ring-foreground cursor-pointer"
+                />
+                <div className="flex-1">
+                  <div className="text-sm font-medium group-hover:text-foreground transition-colors">Icons & text</div>
+                </div>
+              </label>
+              
+              <label className="flex items-start gap-3 cursor-pointer group">
+                <input
+                  type="radio"
+                  name="nav-appearance"
+                  checked={!showLabels}
+                  onChange={() => onShowLabelsChange(false)}
+                  className="mt-0.5 w-4 h-4 text-foreground focus:ring-2 focus:ring-foreground cursor-pointer"
+                />
+                <div className="flex-1">
+                  <div className="text-sm font-medium group-hover:text-foreground transition-colors">Icons only</div>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Makes navigation tabs smaller and more compact.
+                  </p>
+                </div>
+              </label>
             </div>
           </div>
 
