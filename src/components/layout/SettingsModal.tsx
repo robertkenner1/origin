@@ -9,6 +9,7 @@ import {
   DialogClose,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 import { GripVertical, Lock } from 'lucide-react';
 import { ALL_COLLECTIONS, getDefaultCollectionIds, type Collection } from './navigationConfig';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
