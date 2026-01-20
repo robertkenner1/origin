@@ -459,7 +459,10 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
       {/* Secondary Navigation - Hover flyout (absolute positioned outside container) */}
       {!isPinned && hoveredItem && hoveredItem.children?.length && (
         <motion.div 
-          className="absolute left-[84px] top-0 h-screen w-[240px] z-30 flex flex-col bg-background overflow-hidden"
+          className={cn(
+            "absolute top-0 h-screen w-[240px] z-30 flex flex-col bg-background overflow-hidden transition-all duration-200",
+            showLabels ? "left-[84px]" : "left-[60px]"
+          )}
           style={{
             boxShadow: '4px 0 12px -2px rgba(0, 0, 0, 0.08)',
             borderRight: '1px solid var(--color-border)',
