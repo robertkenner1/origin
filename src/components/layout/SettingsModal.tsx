@@ -209,7 +209,7 @@ export function SettingsModal({
           <DialogHeader>
             <DialogTitle>Manage collections</DialogTitle>
             <DialogDescription>
-              Pin or unpin collections to customize your navigation bar. Drag to reorder.
+              Pin or unpin collections to customize your navigation bar. Unpinned collections appear in the More menu. Drag to reorder.
             </DialogDescription>
           </DialogHeader>
 

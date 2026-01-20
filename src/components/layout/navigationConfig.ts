@@ -126,7 +126,7 @@ export const ALL_COLLECTIONS: Collection[] = [
       { title: 'Introduction to Origin', path: '/getting-started/introduction' },
       { title: 'JavaScript', path: '/getting-started/javascript' },
     ],
-    defaultVisible: true,
+    defaultVisible: false,
   },
   {
     id: 'contributing',
@@ -139,7 +139,7 @@ export const ALL_COLLECTIONS: Collection[] = [
       { title: 'Styling Custom Components', path: '/contributing/styling' },
       { title: 'Publishing Components', path: '/contributing/publishing' },
     ],
-    defaultVisible: true,
+    defaultVisible: false,
   },
   {
     id: 'accessibility',
@@ -171,7 +171,7 @@ export const ALL_COLLECTIONS: Collection[] = [
       { title: 'Disabled & Hidden States', path: '/patterns/disabled-states' },
       { title: 'Pro Plan Branding', path: '/patterns/pro-plan' },
     ],
-    defaultVisible: true,
+    defaultVisible: false,
   },
 ];
 

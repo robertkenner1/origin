@@ -1,8 +1,8 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Pin, Library } from 'lucide-react';
-import { getNavigationFromCollections, getDefaultCollectionIds, type NavItem } from './navigationConfig';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Pin, Library, MoreHorizontal } from 'lucide-react';
+import { getNavigationFromCollections, getDefaultCollectionIds, ALL_COLLECTIONS, type NavItem } from './navigationConfig';
 import { SettingsModal } from './SettingsModal';
 import { cn } from '@/lib/utils';
 
@@ -30,10 +30,16 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
   // Get navigation based on enabled collections
   const navigationItems = getNavigationFromCollections(enabledCollections);
   
+  // Get unpinned collections for the More menu
+  const unpinnedCollections = ALL_COLLECTIONS.filter(
+    collection => !enabledCollections.includes(collection.id)
+  );
+  
   const [hoveredItem, setHoveredItem] = useState<NavItem | null>(null);
   const [isPinned, setIsPinned] = useState(false);
   const [pinnedItem, setPinnedItem] = useState<NavItem | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [moreMenuOpen, setMoreMenuOpen] = useState(false);
   const hoverTimeoutRef = useRef<number | null>(null);
   const isOverSecondaryNav = useRef(false);
   
@@ -45,6 +51,22 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
       // Ignore localStorage errors
     }
   };
+
+  // Close More menu when clicking outside
+  useEffect(() => {
+    if (!moreMenuOpen) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      // Check if click is outside the More button and menu
+      if (!target.closest('[data-more-menu]') && !target.closest('[data-more-button]')) {
+        setMoreMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [moreMenuOpen]);
 
   const handlePrimaryClick = (item: NavItem) => {
     // If item has no children, just navigate normally (Link handles it)
@@ -228,9 +250,78 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                   </Link>
                 );
               })}
+              
+              {/* More button - shows unpinned collections */}
+              {unpinnedCollections.length > 0 && (
+                <div className="relative">
+                  <button
+                    type="button"
+                    data-more-button
+                    onClick={() => setMoreMenuOpen(!moreMenuOpen)}
+                    className="flex flex-col items-center gap-0.5 text-foreground group transition-all"
+                    aria-label="More"
+                  >
+                    <div className={cn(
+                      'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
+                      moreMenuOpen
+                        ? 'bg-[var(--color-neutral-10)]'
+                        : 'group-hover:bg-[var(--color-neutral-10)]/50'
+                    )}>
+                      <MoreHorizontal className={cn(
+                        'w-5 h-5 flex-shrink-0 transition-transform',
+                        moreMenuOpen ? '' : 'opacity-80 group-hover:scale-105'
+                      )} strokeWidth={1.5} />
+                    </div>
+                    <span 
+                      className={cn(
+                        'leading-tight text-center transition-colors',
+                        moreMenuOpen ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
+                      )}
+                      style={{ fontSize: '10.5px' }}
+                    >
+                      More
+                    </span>
+                  </button>
+                </div>
+              )}
             </nav>
           </div>
         </aside>
+        
+        {/* More Menu Dropdown */}
+        <AnimatePresence>
+          {moreMenuOpen && unpinnedCollections.length > 0 && (
+            <motion.div
+              data-more-menu
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              transition={{ duration: 0.15 }}
+              className="fixed left-[84px] bottom-[60px] w-[240px] bg-background border border-border rounded-lg shadow-lg overflow-hidden z-50"
+            >
+              <div className="py-2">
+                {unpinnedCollections.map((collection) => {
+                  const Icon = collection.icon;
+                  const isSinglePage = collection.children.length === 1 && 
+                                      collection.children[0].title === collection.title;
+                  const path = collection.children[0]?.path || '/';
+                  
+                  return (
+                    <Link
+                      key={collection.id}
+                      to={path}
+                      onClick={() => setMoreMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-2 hover:bg-[var(--color-neutral-10)]/50 transition-colors"
+                    >
+                      {Icon && <Icon className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />}
+                      <span className="text-sm">{collection.title}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Secondary Navigation - Pinned (flex sibling) */}
         {isPinned && pinnedItem && pinnedItem.children?.length && (() => {
