@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Pin, Library, MoreHorizontal } from 'lucide-react';
@@ -51,22 +51,6 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
       // Ignore localStorage errors
     }
   };
-
-  // Close More menu when clicking outside
-  useEffect(() => {
-    if (!moreMenuOpen) return;
-
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      // Check if click is outside the More button and menu
-      if (!target.closest('[data-more-menu]') && !target.closest('[data-more-button]')) {
-        setMoreMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [moreMenuOpen]);
 
   const handlePrimaryClick = (item: NavItem) => {
     // If item has no children, just navigate normally (Link handles it)
@@ -252,11 +236,13 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
               })}
               
               {/* More button - shows unpinned collections and settings */}
-              <div className="relative">
+              <div 
+                className="relative"
+                onMouseEnter={() => setMoreMenuOpen(true)}
+                onMouseLeave={() => setMoreMenuOpen(false)}
+              >
                 <button
                   type="button"
-                  data-more-button
-                  onClick={() => setMoreMenuOpen(!moreMenuOpen)}
                   className="flex flex-col items-center gap-0.5 text-foreground group transition-all"
                   aria-label="More"
                 >
@@ -286,12 +272,11 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                 <AnimatePresence>
                   {moreMenuOpen && (
                     <motion.div
-                      data-more-menu
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -10 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute left-0 bottom-full mb-2 w-[240px] bg-background border border-border rounded-lg shadow-lg overflow-hidden z-[9999]"
+                      className="absolute left-full ml-2 top-0 w-[240px] bg-background border border-border rounded-lg shadow-lg overflow-hidden z-50"
                     >
                       <div className="py-2">
                         {unpinnedCollections.map((collection) => {
