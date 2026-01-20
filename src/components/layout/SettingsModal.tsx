@@ -131,7 +131,7 @@ export function SettingsModal({
 
         {/* Collections Section */}
         <div className="pt-3 pb-6 space-y-3">
-          <h3 className="text-sm font-semibold">Show these tabs in the sidebar</h3>
+          <h3 className="text-sm font-medium text-muted-foreground">Show these tabs in the sidebar</h3>
           
           <div className="space-y-1">
             {sortedCollections.map((collection) => {
