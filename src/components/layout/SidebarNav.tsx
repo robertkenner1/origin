@@ -189,15 +189,23 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
       {/* Container for Primary and Secondary Nav */}
       <div 
         className={cn(
-          'h-screen flex bg-background border-r border-border',
-          isPinned && pinnedItem ? 'w-[324px]' : 'w-[84px]'
+          'h-screen flex bg-background border-r border-border transition-all duration-200',
+          isPinned && pinnedItem 
+            ? showLabels ? 'w-[324px]' : 'w-[300px]'
+            : showLabels ? 'w-[84px]' : 'w-[60px]'
         )}
         onMouseLeave={handleMouseLeave}
       >
         {/* Primary Navigation Sidebar */}
-        <aside className="w-[84px] h-screen flex flex-col flex-shrink-0 relative z-20 border-r border-border">
+        <aside className={cn(
+          "h-screen flex flex-col flex-shrink-0 relative z-20 border-r border-border transition-all duration-200",
+          showLabels ? "w-[84px]" : "w-[60px]"
+        )}>
           {/* Header */}
-          <div className="px-[12px] pt-[20px] pb-[4px] flex flex-col items-center">
+          <div className={cn(
+            "pt-[20px] pb-[4px] flex flex-col items-center transition-all duration-200",
+            showLabels ? "px-[12px]" : "px-[6px]"
+          )}>
             <Link
               to="/"
               className="w-8 h-8 flex items-center justify-center flex-shrink-0 cursor-pointer"
