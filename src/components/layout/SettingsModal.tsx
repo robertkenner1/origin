@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogFooter,
@@ -195,6 +196,9 @@ export function SettingsModal({
         <DialogContent className="sm:max-w-[600px] p-8" hideCloseButton>
           <DialogHeader>
             <DialogTitle>Customize sidebar</DialogTitle>
+            <DialogDescription className="sr-only">
+              Configure which collections appear in your navigation bar and choose between icons with text or icons only.
+            </DialogDescription>
           </DialogHeader>
 
           {/* Collections Section */}
