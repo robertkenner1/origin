@@ -130,7 +130,9 @@ export function SettingsModal({
         </DialogHeader>
 
         {/* Collections Section */}
-        <div className="pt-3 pb-6">
+        <div className="pt-3 pb-6 space-y-3">
+          <h3 className="text-sm font-semibold">Collections</h3>
+          
           <div className="space-y-1">
             {sortedCollections.map((collection) => {
               const isHome = collection.id === 'home';
