@@ -251,46 +251,44 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                 );
               })}
               
-              {/* More button - shows unpinned collections */}
-              {unpinnedCollections.length > 0 && (
-                <div className="relative">
-                  <button
-                    type="button"
-                    data-more-button
-                    onClick={() => setMoreMenuOpen(!moreMenuOpen)}
-                    className="flex flex-col items-center gap-0.5 text-foreground group transition-all"
-                    aria-label="More"
+              {/* More button - shows unpinned collections and settings */}
+              <div className="relative">
+                <button
+                  type="button"
+                  data-more-button
+                  onClick={() => setMoreMenuOpen(!moreMenuOpen)}
+                  className="flex flex-col items-center gap-0.5 text-foreground group transition-all"
+                  aria-label="More"
+                >
+                  <div className={cn(
+                    'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
+                    moreMenuOpen
+                      ? 'bg-[var(--color-neutral-10)]'
+                      : 'group-hover:bg-[var(--color-neutral-10)]/50'
+                  )}>
+                    <MoreHorizontal className={cn(
+                      'w-5 h-5 flex-shrink-0 transition-transform',
+                      moreMenuOpen ? '' : 'opacity-80 group-hover:scale-105'
+                    )} strokeWidth={1.5} />
+                  </div>
+                  <span 
+                    className={cn(
+                      'leading-tight text-center transition-colors',
+                      moreMenuOpen ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
+                    )}
+                    style={{ fontSize: '10.5px' }}
                   >
-                    <div className={cn(
-                      'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
-                      moreMenuOpen
-                        ? 'bg-[var(--color-neutral-10)]'
-                        : 'group-hover:bg-[var(--color-neutral-10)]/50'
-                    )}>
-                      <MoreHorizontal className={cn(
-                        'w-5 h-5 flex-shrink-0 transition-transform',
-                        moreMenuOpen ? '' : 'opacity-80 group-hover:scale-105'
-                      )} strokeWidth={1.5} />
-                    </div>
-                    <span 
-                      className={cn(
-                        'leading-tight text-center transition-colors',
-                        moreMenuOpen ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
-                      )}
-                      style={{ fontSize: '10.5px' }}
-                    >
-                      More
-                    </span>
-                  </button>
-                </div>
-              )}
+                    More
+                  </span>
+                </button>
+              </div>
             </nav>
           </div>
         </aside>
         
         {/* More Menu Dropdown */}
         <AnimatePresence>
-          {moreMenuOpen && unpinnedCollections.length > 0 && (
+          {moreMenuOpen && (
             <motion.div
               data-more-menu
               initial={{ opacity: 0, x: -10 }}
@@ -318,6 +316,24 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                     </Link>
                   );
                 })}
+                
+                {/* Divider if there are unpinned collections */}
+                {unpinnedCollections.length > 0 && (
+                  <div className="my-1 border-t border-border" />
+                )}
+                
+                {/* Manage collections option */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSettingsOpen(true);
+                    setMoreMenuOpen(false);
+                  }}
+                  className="flex items-center gap-3 px-4 py-2 w-full hover:bg-[var(--color-neutral-10)]/50 transition-colors text-left"
+                >
+                  <Library className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
+                  <span className="text-sm">Manage collections</span>
+                </button>
               </div>
             </motion.div>
           )}
@@ -346,38 +362,24 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
               {/* Global Header */}
               <div className="px-5 pt-4 pb-3 flex items-center justify-between">
                 <h3 className="font-medium text-foreground">{displayItem.title}</h3>
-                <div className="flex items-center gap-1">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSettingsOpen(true);
-                    }}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    className="p-1.5 rounded-md transition-colors text-muted-foreground hover:bg-[var(--color-neutral-10)]/50 hover:text-foreground"
-                    aria-label="Manage collections"
+                <button
+                  type="button"
+                  onClick={handlePinToggle}
+                  className="p-1.5 rounded-md transition-colors bg-[var(--color-neutral-10)] hover:bg-[var(--color-neutral-10)]/80"
+                  aria-label="Unpin sidebar"
+                >
+                  <motion.div
+                    initial={{ rotate: 45 }}
+                    animate={{ rotate: 0 }}
+                    transition={{ duration: 0.2, ease: 'easeOut' }}
                   >
-                    <Library className="w-4 h-4" strokeWidth={1.5} />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handlePinToggle}
-                    className="p-1.5 rounded-md transition-colors bg-[var(--color-neutral-10)] hover:bg-[var(--color-neutral-10)]/80"
-                    aria-label="Unpin sidebar"
-                  >
-                    <motion.div
-                      initial={{ rotate: 45 }}
-                      animate={{ rotate: 0 }}
-                      transition={{ duration: 0.2, ease: 'easeOut' }}
-                    >
-                      <Pin 
-                        className="w-4 h-4" 
-                        strokeWidth={1.5}
-                        fill="currentColor"
-                      />
-                    </motion.div>
-                  </button>
-                </div>
+                    <Pin 
+                      className="w-4 h-4" 
+                      strokeWidth={1.5}
+                      fill="currentColor"
+                    />
+                  </motion.div>
+                </button>
               </div>
               
               {/* Tab-specific content */}
@@ -413,38 +415,24 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
           {/* Global Header */}
           <div className="px-5 pt-4 pb-3 flex items-center justify-between">
             <h3 className="font-medium text-foreground">{hoveredItem.title}</h3>
-            <div className="flex items-center gap-1">
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSettingsOpen(true);
-                }}
-                onMouseDown={(e) => e.stopPropagation()}
-                className="p-1.5 rounded-md transition-colors text-muted-foreground hover:bg-[var(--color-neutral-10)]/50 hover:text-foreground"
-                aria-label="Manage collections"
+            <button
+              type="button"
+              onClick={handlePinToggle}
+              className="p-1.5 rounded-md transition-colors text-muted-foreground hover:bg-[var(--color-neutral-10)]/50 hover:text-foreground"
+              aria-label="Pin sidebar"
+            >
+              <motion.div
+                initial={{ rotate: 0 }}
+                animate={{ rotate: 45 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
               >
-                <Library className="w-4 h-4" strokeWidth={1.5} />
-              </button>
-              <button
-                type="button"
-                onClick={handlePinToggle}
-                className="p-1.5 rounded-md transition-colors text-muted-foreground hover:bg-[var(--color-neutral-10)]/50 hover:text-foreground"
-                aria-label="Pin sidebar"
-              >
-                <motion.div
-                  initial={{ rotate: 0 }}
-                  animate={{ rotate: 45 }}
-                  transition={{ duration: 0.2, ease: 'easeOut' }}
-                >
-                  <Pin 
-                    className="w-4 h-4" 
-                    strokeWidth={1.5}
-                    fill="none"
-                  />
-                </motion.div>
-              </button>
-            </div>
+                <Pin 
+                  className="w-4 h-4" 
+                  strokeWidth={1.5}
+                  fill="none"
+                />
+              </motion.div>
+            </button>
           </div>
           
           {/* Tab-specific content */}
