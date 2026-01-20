@@ -88,7 +88,14 @@ export const ALL_COLLECTIONS: Collection[] = [
     label: 'Tokens',
     icon: Layers,
     description: 'Design tokens',
-    children: [{ title: 'Tokens', path: '/tokens' }],
+    children: [
+      { title: 'Overview', path: '/tokens' },
+      { title: 'Color', path: '/tokens/color' },
+      { title: 'Typography', path: '/tokens/typography' },
+      { title: 'Spacing', path: '/tokens/spacing' },
+      { title: 'Shadows', path: '/tokens/shadows' },
+      { title: 'Border Radius', path: '/tokens/radius' },
+    ],
     defaultVisible: true,
   },
   {
@@ -97,7 +104,12 @@ export const ALL_COLLECTIONS: Collection[] = [
     label: 'Icons',
     icon: Image,
     description: 'Icon library',
-    children: [{ title: 'Icons', path: '/icons' }],
+    children: [
+      { title: 'Browse', path: '/icons' },
+      { title: 'Usage Guidelines', path: '/icons/guidelines' },
+      { title: 'Icon Sets', path: '/icons/sets' },
+      { title: 'Accessibility', path: '/icons/accessibility' },
+    ],
     defaultVisible: true,
   },
   {

@@ -77,13 +77,15 @@ export function SidebarNav({ onNavigate, onPinnedChange, onShowLabelsChange }: S
   };
 
   const handlePrimaryClick = (item: NavItem) => {
-    // If item has no children, just navigate normally (Link handles it)
-    if (!item.children?.length) {
-      onNavigate?.(item);
+    // If item has no children or only one child, just navigate to it
+    if (!item.children?.length || item.children.length === 1) {
+      const targetPath = item.children?.[0]?.path || item.path;
+      navigate(targetPath);
+      onNavigate?.(item.children?.[0] || item);
       return;
     }
 
-    // If item has children, navigate to the first child
+    // If item has multiple children, navigate to the first child
     const firstChild = item.children[0];
     if (firstChild) {
       navigate(firstChild.path);
@@ -106,8 +108,8 @@ export function SidebarNav({ onNavigate, onPinnedChange, onShowLabelsChange }: S
       clearTimeout(hoverTimeoutRef.current);
     }
 
-    // Only show hover menu if item has children
-    if (item.children?.length) {
+    // Only show hover menu if item has multiple children (more than 1)
+    if (item.children && item.children.length > 1) {
       setHoveredItem(item);
     }
   };
@@ -138,25 +140,43 @@ export function SidebarNav({ onNavigate, onPinnedChange, onShowLabelsChange }: S
 
   const handlePinToggle = () => {
     if (!isPinned) {
-      // We're pinning - save the hovered item
+      // We're pinning - save the hovered item and navigate to it
       if (hoveredItem && hoveredItem.children?.length) {
         setPinnedItem(hoveredItem);
         setIsPinned(true);
         onPinnedChange?.(true);
+        // Navigate to the first child of the pinned item
+        if (hoveredItem.children?.[0]) {
+          navigate(hoveredItem.children[0].path);
+          onNavigate?.(hoveredItem.children[0]);
+        }
         // Keep hoveredItem if user is still over the secondary nav
         if (!isOverSecondaryNav.current) {
           setHoveredItem(null);
         }
       }
     } else {
-      // Unpinning - keep the item visible if user is still hovering over it
-      const itemToKeep = pinnedItem;
-      setIsPinned(false);
-      onPinnedChange?.(false);
-      setPinnedItem(null);
-      // If user is still over the secondary nav, keep it as hovered
-      if (isOverSecondaryNav.current && itemToKeep) {
-        setHoveredItem(itemToKeep);
+      // Already pinned - check if hovering over a different item
+      if (hoveredItem && hoveredItem.title !== pinnedItem?.title) {
+        // Pin the new hovered item instead and navigate to its first child
+        setPinnedItem(hoveredItem);
+        // Stay pinned
+        setIsPinned(true);
+        // Navigate to the first child of the new pinned item
+        if (hoveredItem.children?.[0]) {
+          navigate(hoveredItem.children[0].path);
+          onNavigate?.(hoveredItem.children[0]);
+        }
+      } else {
+        // Same item or no hover - unpin
+        const itemToKeep = pinnedItem;
+        setIsPinned(false);
+        onPinnedChange?.(false);
+        setPinnedItem(null);
+        // If user is still over the secondary nav, keep it as hovered
+        if (isOverSecondaryNav.current && itemToKeep) {
+          setHoveredItem(itemToKeep);
+        }
       }
     }
   };
@@ -191,7 +211,9 @@ export function SidebarNav({ onNavigate, onPinnedChange, onShowLabelsChange }: S
       {/* Container for Primary and Secondary Nav */}
       <div 
         className={cn(
-          'h-screen flex bg-background border-r border-border transition-all duration-200',
+          'h-screen flex bg-background transition-all duration-200',
+          // Only show border when secondary nav is NOT showing
+          !(hoveredItem || isPinned) && 'border-r border-border',
           isPinned && pinnedItem 
             ? showLabels ? 'w-[324px]' : 'w-[300px]'
             : showLabels ? 'w-[84px]' : 'w-[60px]'
@@ -200,7 +222,7 @@ export function SidebarNav({ onNavigate, onPinnedChange, onShowLabelsChange }: S
       >
         {/* Primary Navigation Sidebar */}
         <aside className={cn(
-          "h-screen flex flex-col flex-shrink-0 relative z-20 border-r border-border transition-all duration-200",
+          "h-screen flex flex-col flex-shrink-0 relative z-20 transition-all duration-200",
           showLabels ? "w-[84px]" : "w-[60px]"
         )}>
           {/* Header */}
@@ -309,12 +331,9 @@ export function SidebarNav({ onNavigate, onPinnedChange, onShowLabelsChange }: S
                     if (moreButtonRef.current) {
                       setMoreButtonRect(moreButtonRef.current.getBoundingClientRect());
                     }
-                    // Close secondary nav when More menu opens
-                    setHoveredItem(null);
-                    if (isPinned) {
-                      setIsPinned(false);
-                      setPinnedItem(null);
-                      onPinnedChange?.(false);
+                    // Only close secondary nav when it's not pinned (just hovering)
+                    if (!isPinned) {
+                      setHoveredItem(null);
                     }
                     setMoreMenuOpen(true);
                   }}
@@ -371,8 +390,10 @@ export function SidebarNav({ onNavigate, onPinnedChange, onShowLabelsChange }: S
                 top: `${moreButtonRect.top}px`,
               }}
               onMouseEnter={() => {
-                // Ensure secondary nav stays closed while More menu is open
-                setHoveredItem(null);
+                // Only close secondary nav if it's not pinned
+                if (!isPinned) {
+                  setHoveredItem(null);
+                }
                 setMoreMenuOpen(true);
               }}
               onMouseLeave={() => setMoreMenuOpen(false)}
@@ -420,7 +441,7 @@ export function SidebarNav({ onNavigate, onPinnedChange, onShowLabelsChange }: S
         </AnimatePresence>
 
         {/* Secondary Navigation - Pinned (flex sibling) */}
-        {isPinned && pinnedItem && pinnedItem.children?.length && (() => {
+        {isPinned && pinnedItem && pinnedItem.children && pinnedItem.children.length > 1 && (() => {
           const displayItem = hoveredItem || pinnedItem;
           return (
             <motion.div 
@@ -470,31 +491,33 @@ export function SidebarNav({ onNavigate, onPinnedChange, onShowLabelsChange }: S
       </div>
 
       {/* Secondary Navigation - Hover flyout (absolute positioned outside container) */}
-      {!isPinned && hoveredItem && hoveredItem.children?.length && (
-        <motion.div 
-          className={cn(
-            "absolute top-0 h-screen w-[240px] z-30 flex flex-col bg-background overflow-hidden transition-all duration-200",
-            showLabels ? "left-[84px]" : "left-[60px]"
-          )}
-          style={{
-            boxShadow: '4px 0 12px -2px rgba(0, 0, 0, 0.08)',
-            borderRight: '1px solid var(--color-border)',
-            clipPath: 'inset(0 -20px 0 0)'
-          }}
-          animate={{ paddingTop: -5 }}
-          exit={{ paddingTop: 10 }}
-          transition={{ duration: 0.2, ease: 'easeOut' }}
-          onMouseEnter={() => {
-            isOverSecondaryNav.current = true;
-            if (hoverTimeoutRef.current) {
-              clearTimeout(hoverTimeoutRef.current);
-            }
-          }}
-          onMouseLeave={() => {
-            isOverSecondaryNav.current = false;
-            handleMouseLeave();
-          }}
-        >
+      <AnimatePresence>
+        {!isPinned && hoveredItem && hoveredItem.children && hoveredItem.children.length > 1 && (
+          <motion.div 
+            className={cn(
+              "absolute top-0 h-screen w-[240px] z-30 flex flex-col bg-background overflow-hidden transition-all duration-200",
+              showLabels ? "left-[84px]" : "left-[60px]"
+            )}
+            style={{
+              boxShadow: '4px 0 12px -2px rgba(0, 0, 0, 0.08)',
+              borderRight: '1px solid var(--color-border)',
+              clipPath: 'inset(0 -20px 0 0)'
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15, ease: 'easeInOut' }}
+            onMouseEnter={() => {
+              isOverSecondaryNav.current = true;
+              if (hoverTimeoutRef.current) {
+                clearTimeout(hoverTimeoutRef.current);
+              }
+            }}
+            onMouseLeave={() => {
+              isOverSecondaryNav.current = false;
+              handleMouseLeave();
+            }}
+          >
           {/* Global Header */}
           <div className="px-5 pt-4 pb-3 flex items-center justify-between">
             <h3 className="font-medium text-foreground">{hoveredItem.title}</h3>
@@ -521,7 +544,8 @@ export function SidebarNav({ onNavigate, onPinnedChange, onShowLabelsChange }: S
           {/* Tab-specific content */}
           {renderSecondaryNavList(hoveredItem)}
         </motion.div>
-      )}
+        )}
+      </AnimatePresence>
       
       <SettingsModal
         open={settingsOpen}
