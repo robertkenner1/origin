@@ -192,7 +192,7 @@ export function SettingsModal({
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="sm:max-w-[600px] p-8" hideCloseButton>
           <DialogHeader>
-            <DialogTitle>Manage collections</DialogTitle>
+            <DialogTitle>Customize sidebar</DialogTitle>
             <DialogDescription>
               Enable or disable collections to customize your navigation bar. Disabled collections appear in the More menu. Drag to reorder.
             </DialogDescription>

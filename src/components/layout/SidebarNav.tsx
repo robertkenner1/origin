@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Pin, Library, MoreHorizontal } from 'lucide-react';
+import { Pin, SlidersHorizontal, MoreHorizontal } from 'lucide-react';
 import { getNavigationFromCollections, getDefaultCollectionIds, ALL_COLLECTIONS, type NavItem } from './navigationConfig';
 import { SettingsModal } from './SettingsModal';
 import { cn } from '@/lib/utils';
@@ -243,16 +243,16 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                   type="button"
                   onClick={() => setSettingsOpen(true)}
                   className="flex flex-col items-center gap-0.5 text-foreground group transition-all"
-                  aria-label="Manage collections"
+                  aria-label="Customize sidebar"
                 >
                   <div className="w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all group-hover:bg-[var(--color-neutral-10)]/50">
-                    <Library className="w-5 h-5 flex-shrink-0 transition-transform opacity-80 group-hover:scale-105" strokeWidth={1.5} />
+                    <SlidersHorizontal className="w-5 h-5 flex-shrink-0 transition-transform opacity-80 group-hover:scale-105" strokeWidth={1.5} />
                   </div>
                   <span 
                     className="leading-tight text-center transition-colors text-muted-foreground group-hover:text-foreground"
                     style={{ fontSize: '10.5px' }}
                   >
-                    Manage
+                    Customize
                   </span>
                 </button>
               ) : (
@@ -340,7 +340,7 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                   <div className="my-1 border-t border-border" />
                 )}
                 
-                {/* Manage collections option */}
+                {/* Customize sidebar option */}
                 <button
                   type="button"
                   onClick={() => {
@@ -349,8 +349,8 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                   }}
                   className="flex items-center gap-3 px-4 py-2 w-full hover:bg-[var(--color-neutral-10)]/50 transition-colors text-left"
                 >
-                  <Library className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
-                  <span className="text-sm">Manage collections</span>
+                  <SlidersHorizontal className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
+                  <span className="text-sm">Customize sidebar</span>
                 </button>
               </div>
             </motion.div>
