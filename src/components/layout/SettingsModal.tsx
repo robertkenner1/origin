@@ -53,7 +53,7 @@ const DraggableCollectionItem = ({
   const [{ isOver }, drop] = useDrop({
     accept: 'collection',
     canDrop: () => isEnabled,
-    hover: (item: { index: number }, monitor) => {
+    hover: (item: { index: number }) => {
       if (!ref.current) return;
       if (!isEnabled) return;
       
@@ -86,7 +86,7 @@ const DraggableCollectionItem = ({
       <div className="flex items-center gap-3">
         {canDrag ? (
           <div
-            ref={drag}
+            ref={drag as unknown as React.Ref<HTMLDivElement>}
             className="cursor-grab active:cursor-grabbing"
           >
             <GripVertical 

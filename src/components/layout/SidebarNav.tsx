@@ -32,9 +32,8 @@ export function SidebarNav({ onNavigate }: SidebarNavProps) {
   const [hoveredItem, setHoveredItem] = useState<NavItem | null>(null);
   const [isPinned, setIsPinned] = useState(false);
   const [pinnedItem, setPinnedItem] = useState<NavItem | null>(null);
-  const [isLogoHovered, setIsLogoHovered] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hoverTimeoutRef = useRef<number | null>(null);
   const isOverSecondaryNav = useRef(false);
   
   const handleCollectionsChange = (collectionIds: string[]) => {
