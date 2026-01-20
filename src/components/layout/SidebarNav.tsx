@@ -10,9 +10,10 @@ const ENABLED_COLLECTIONS_KEY = 'origin-enabled-collections';
 
 type SidebarNavProps = {
   onNavigate?: (item: NavItem) => void;
+  onPinnedChange?: (isPinned: boolean) => void;
 };
 
-export function SidebarNav({ onNavigate }: SidebarNavProps) {
+export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
   const location = useLocation();
   const navigate = useNavigate();
   
@@ -111,6 +112,7 @@ export function SidebarNav({ onNavigate }: SidebarNavProps) {
       if (hoveredItem && hoveredItem.children?.length) {
         setPinnedItem(hoveredItem);
         setIsPinned(true);
+        onPinnedChange?.(true);
         // Keep hoveredItem if user is still over the secondary nav
         if (!isOverSecondaryNav.current) {
           setHoveredItem(null);
@@ -120,6 +122,7 @@ export function SidebarNav({ onNavigate }: SidebarNavProps) {
       // Unpinning - keep the item visible if user is still hovering over it
       const itemToKeep = pinnedItem;
       setIsPinned(false);
+      onPinnedChange?.(false);
       setPinnedItem(null);
       // If user is still over the secondary nav, keep it as hovered
       if (isOverSecondaryNav.current && itemToKeep) {
