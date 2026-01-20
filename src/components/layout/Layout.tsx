@@ -21,6 +21,9 @@ export function Layout({ children }: LayoutProps) {
   const marginLeft = isSecondaryNavPinned 
     ? `${primaryNavWidth + secondaryNavWidth}px` 
     : `${primaryNavWidth}px`;
+  
+  // Calculate content max-width: when labels are hidden, content can be wider
+  const contentMaxWidth = showLabels ? '1400px' : '1424px'; // Extra 24px when labels are hidden
 
   return (
     <div className="min-h-screen bg-background">
@@ -32,7 +35,12 @@ export function Layout({ children }: LayoutProps) {
         className="transition-all duration-300 ease-in-out"
         style={{ marginLeft }}
       >
-        {children}
+        <div 
+          className="transition-all duration-300 ease-in-out"
+          style={{ maxWidth: contentMaxWidth, margin: '0 auto' }}
+        >
+          {children}
+        </div>
       </main>
     </div>
   );

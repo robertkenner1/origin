@@ -1748,14 +1748,14 @@ export function ComponentDetailPage() {
 
   if (!component) {
     return (
-      <div className="w-full px-6 py-12 max-w-[1400px] mx-auto">
+      <div className="w-full px-6 py-12">
         <h1 className="text-2xl font-bold">Component not found</h1>
       </div>
     );
   }
 
   return (
-    <div className="w-full px-6 py-12 max-w-[1400px] mx-auto">
+    <div className="w-full px-6 py-12">
       <div className="max-w-[1400px] mx-auto">
         {/* Header */}
         <div className="mb-6">

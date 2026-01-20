@@ -1,6 +1,6 @@
 export function PublishingPage() {
   return (
-    <div className="w-full px-6 py-12 max-w-[1400px] mx-auto">
+    <div className="w-full px-6 py-12">
       <div className="prose prose-sm max-w-none">
           <h1>Publish components through the Origin Figma library</h1>
           <p>

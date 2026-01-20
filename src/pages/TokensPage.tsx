@@ -398,7 +398,7 @@ export function TokensPage() {
 
   return (
     <div className="min-h-screen bg-background animate-fade-in">
-      <div className="w-full px-6 pt-12 max-w-[1400px] mx-auto">
+      <div className="w-full px-6 pt-12">
         {/* Header */}
         <div className="mb-4">
           <h1 className="text-3xl font-bold tracking-tight">Tokens</h1>
@@ -410,7 +410,7 @@ export function TokensPage() {
         {filterContent}
       </StickyFilterBar>
 
-      <div className="w-full px-6 pt-4 pb-12 max-w-[1400px] mx-auto">
+      <div className="w-full px-6 pt-4 pb-12">
         {/* Semantic Color Tokens */}
         {filteredTokens.semanticColor.length > 0 && (
           <section className="mb-12">

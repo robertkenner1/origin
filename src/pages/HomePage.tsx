@@ -3,7 +3,7 @@ import skeletonLoaderPreview from '../../img/Short-form loading.png';
 export function HomePage() {
   return (
     <div className="min-h-screen bg-background animate-fade-in">
-      <div className="w-full px-6 py-12 max-w-[1400px] mx-auto">
+      <div className="w-full px-6 py-12">
         {/* Hero Section */}
         <section className="relative overflow-hidden mb-16" style={{
           background: 'linear-gradient(to right, #FFE5D9 0%, #F8D5E8 30%, #E5D5F8 60%, #D5E0FF 100%)',

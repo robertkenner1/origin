@@ -17,7 +17,7 @@ export function StickyFilterBar({ children }: StickyFilterBarProps) {
 
   return (
     <div ref={ref} className="py-3">
-      <div className="w-full px-6 max-w-[1400px] mx-auto">
+      <div className="w-full px-6">
         {children}
       </div>
     </div>
