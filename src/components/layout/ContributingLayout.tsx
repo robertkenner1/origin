@@ -12,9 +12,9 @@ export function ContributingLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <div className="min-h-screen bg-background animate-fade-in">
-      <div className="container mx-auto px-6 py-12 flex gap-8">
+      <div className="flex">
         {/* Sidebar Navigation */}
-        <aside className="w-56 flex-shrink-0">
+        <aside className="w-56 flex-shrink-0 px-6 py-12">
           <nav className="sticky top-24 space-y-1">
             {contributingPages.map((page) => {
               const isActive = location.pathname === page.path;
@@ -37,8 +37,11 @@ export function ContributingLayout({ children }: { children: React.ReactNode }) 
           </nav>
         </aside>
 
+        {/* Divider */}
+        <div className="border-l border-border"></div>
+
         {/* Main Content */}
-        <main className="flex-1 min-w-0">
+        <main className="flex-1 min-w-0 py-12 px-6">
           {children}
         </main>
       </div>

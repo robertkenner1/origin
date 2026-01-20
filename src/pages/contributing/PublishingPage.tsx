@@ -1,10 +1,7 @@
-import { ContributingLayout } from '@/components/layout/ContributingLayout';
-
 export function PublishingPage() {
   return (
-    <ContributingLayout>
-      <div className="bg-white rounded-2xl p-12 shadow-sm">
-        <div className="prose prose-sm max-w-none">
+    <div className="container mx-auto px-6 py-12">
+      <div className="prose prose-sm max-w-none">
           <h1>Publish components through the Origin Figma library</h1>
           <p>
             This page details the process for designers to add and publish components to the Origin 
@@ -160,7 +157,6 @@ export function PublishingPage() {
           </ul>
           <p>Let's build a better, more connected design system — together!</p>
         </div>
-      </div>
-    </ContributingLayout>
+    </div>
   );
 }

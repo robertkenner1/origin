@@ -138,10 +138,12 @@ export function Navigation() {
     }
   };
 
+  const isHomePage = location.pathname === '/';
+
   return (
     <header className={cn(
-      "sticky top-0 z-50 w-full border-b-[1px] border-border/30 transition-colors duration-200",
-      isScrolled ? "bg-background" : "bg-transparent"
+      "sticky top-0 z-50 w-full transition-all duration-300",
+      isScrolled ? "bg-white border-b-[1px] border-border/30" : "bg-transparent border-b-[1px] border-transparent"
     )}>
       <div className="container mx-auto h-16 px-6 relative">
         {/* Navigation Content */}
@@ -163,13 +165,13 @@ export function Navigation() {
             {/* Animated pill indicator */}
             <div
               className={cn(
-                "absolute h-8 rounded-full",
-                isInitialized ? "transition-all duration-300 ease-out" : ""
+                "absolute h-8 rounded-full transition-all duration-300",
+                isInitialized ? "ease-out" : ""
               )}
               style={{
                 left: indicator.left,
                 width: indicator.width,
-                backgroundColor: 'var(--color-neutral-10)',
+                backgroundColor: isScrolled || !isHomePage ? 'var(--color-neutral-10)' : 'rgba(255, 255, 255, 0.3)',
               }}
             />
             
@@ -201,7 +203,12 @@ export function Navigation() {
           <div className="w-[100px] flex items-center justify-end">
             <a
               href="#"
-              className="inline-flex items-center justify-center rounded-full border border-border bg-background px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+              className={cn(
+                "inline-flex items-center justify-center rounded-full border px-3 py-1.5 text-sm font-medium transition-all duration-300",
+                isScrolled || !isHomePage
+                  ? "border-border bg-background text-foreground hover:bg-muted"
+                  : "border-white/30 bg-white/20 text-foreground hover:bg-white/30 backdrop-blur-sm"
+              )}
             >
               Support
             </a>

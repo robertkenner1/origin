@@ -1,10 +1,7 @@
-import { GettingStartedLayout } from '@/components/layout/GettingStartedLayout';
-
 export function JavaScriptPage() {
   return (
-    <GettingStartedLayout>
-      <div className="bg-white rounded-2xl p-12 shadow-sm">
-        <div className="prose prose-sm max-w-none">
+    <div className="container mx-auto px-6 py-12">
+      <div className="prose prose-sm max-w-none">
             <h1>JavaScript</h1>
             <p>
               The JavaScript library includes React components as well as tokens that can be used 
@@ -313,7 +310,6 @@ function Example() {
               <li>Grammarly Editor</li>
             </ul>
           </div>
-        </div>
-    </GettingStartedLayout>
+    </div>
   );
 }

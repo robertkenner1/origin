@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Navigation } from './Navigation';
+import { SidebarNav } from './SidebarNav';
 
 interface LayoutProps {
   children: ReactNode;
@@ -8,8 +8,8 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
-      <main>{children}</main>
+      <SidebarNav />
+      <main className="ml-[84px]">{children}</main>
     </div>
   );
 }

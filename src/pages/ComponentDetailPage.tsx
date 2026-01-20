@@ -1,5 +1,5 @@
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
+import { useState, useMemo, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { ComponentTile } from '@/components/ComponentTile';
@@ -1489,44 +1489,11 @@ function SaveButton() {
 
 export function ComponentDetailPage() {
   const { componentId } = useParams<{ componentId: string }>();
-  const location = useLocation();
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('Design');
   const [codeCopied, setCodeCopied] = useState(false);
   const [previewBg, setPreviewBg] = useState<'white' | 'transparent'>('white');
   const component = componentId ? componentData[componentId] : null;
   const controlsConfig = componentId ? componentControlsConfig[componentId] : null;
-  const modalRef = useRef<HTMLDivElement>(null);
-  
-  // Get the search params from where the user came from
-  const backToComponentsUrl = `/components${(location.state as { fromSearch?: string })?.fromSearch || ''}`;
-  
-  // Close modal handler
-  const handleClose = useCallback(() => {
-    navigate(backToComponentsUrl);
-  }, [navigate, backToComponentsUrl]);
-  
-  // Close on Escape key
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        handleClose();
-      }
-    };
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [handleClose]);
-  
-  // Prevent body scroll when modal is open - with scrollbar compensation to prevent layout shift
-  useEffect(() => {
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    document.body.style.overflow = 'hidden';
-    document.body.style.paddingRight = `${scrollbarWidth}px`;
-    return () => {
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
-    };
-  }, []);
   
   const defaultControls: ComponentControls = {
     variant: controlsConfig?.variant?.[0] || 'primary',
@@ -1781,57 +1748,15 @@ export function ComponentDetailPage() {
 
   if (!component) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center">
-        {/* Backdrop */}
-        <div 
-          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-          onClick={handleClose}
-        />
-        {/* Modal */}
-        <div className="relative z-10 w-full max-w-4xl mx-4 bg-white rounded-2xl shadow-2xl p-8">
-          <button
-            onClick={handleClose}
-            className="absolute right-4 top-4 p-2 rounded-full hover:bg-muted transition-colors"
-            aria-label="Close"
-          >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <h1 className="text-2xl font-bold">Component not found</h1>
-        </div>
+      <div className="container mx-auto px-6 py-12">
+        <h1 className="text-2xl font-bold">Component not found</h1>
       </div>
     );
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-black/60 animate-backdrop-in"
-        onClick={handleClose}
-      />
-      
-      {/* Modal */}
-      <div 
-        ref={modalRef}
-        className="relative z-10 w-full max-w-[1400px] max-h-[90vh] mx-6 bg-background rounded-2xl shadow-2xl overflow-y-auto modal-scrollbar animate-modal-in"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Close button */}
-        <button
-          onClick={handleClose}
-          className="absolute right-4 top-4 z-20 p-2 rounded-full bg-white/80 hover:bg-white border border-border/50 shadow-sm transition-colors"
-          aria-label="Close"
-        >
-          <svg className="h-5 w-5" viewBox="0 0 20 20" fill="none">
-            <g transform="translate(3.47, 3.47)">
-              <path d="M13.0605 1.06055L7.59082 6.53027L13.0605 12L12 13.0605L6.53027 7.59082L1.06055 13.0605L0 12L5.46973 6.53027L0 1.06055L1.06055 0L6.53027 5.46973L12 0L13.0605 1.06055Z" fill="currentColor"/>
-            </g>
-          </svg>
-        </button>
-        
-        <div className="p-8">
+    <div className="container mx-auto px-6 py-12">
+      <div className="max-w-[1400px] mx-auto">
         {/* Header */}
         <div className="mb-6">
           <div className="flex items-center gap-3 mb-2">
@@ -2243,7 +2168,6 @@ export function ComponentDetailPage() {
 
         {/* Related Components */}
         <RelatedComponents currentComponentId={componentId || ''} />
-        </div>
       </div>
     </div>
   );

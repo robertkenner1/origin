@@ -1,10 +1,7 @@
-import { ContributingLayout } from '@/components/layout/ContributingLayout';
-
 export function StylingPage() {
   return (
-    <ContributingLayout>
-      <div className="bg-white rounded-2xl p-12 shadow-sm">
-        <div className="prose prose-sm max-w-none">
+    <div className="container mx-auto px-6 py-12">
+      <div className="prose prose-sm max-w-none">
             <h1>Styling Custom Components with GDS</h1>
             
             <h2>Do you need a custom component?</h2>
@@ -257,7 +254,6 @@ export function StylingPage() {
               <strong>#ask-origin-design-system</strong> or sign up for our Office Hours.
             </p>
           </div>
-        </div>
-    </ContributingLayout>
+    </div>
   );
 }

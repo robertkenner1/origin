@@ -1,10 +1,7 @@
-import { GettingStartedLayout } from '@/components/layout/GettingStartedLayout';
-
 export function GettingStartedPage() {
   return (
-    <GettingStartedLayout>
-      <div className="bg-white rounded-2xl p-12 shadow-sm">
-        <div className="prose prose-sm max-w-none">
+    <div className="container mx-auto px-6 py-12">
+      <div className="prose prose-sm max-w-none">
             <h1>Overview</h1>
             <p className="text-lg text-muted-foreground">
               The Origin System provides foundational tokens and components to accelerate your work while 
@@ -43,7 +40,6 @@ export function GettingStartedPage() {
               For any questions about development or components, see our <a href="#" className="text-primary hover:underline">support guide</a>.
             </p>
           </div>
-        </div>
-    </GettingStartedLayout>
+    </div>
   );
 }

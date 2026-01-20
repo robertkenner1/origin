@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ComponentPreview } from './ComponentPreview';
 import { CodeBlock } from './ui/code-block';
 
@@ -61,14 +61,12 @@ const utilityCodeSnippets: Record<string, string> = {
 };
 
 export function ComponentTile({ name, preview, category }: ComponentTileProps) {
-  const location = useLocation();
   const isUtility = category === 'utility';
   const codeSnippet = utilityCodeSnippets[preview] || `<${name} />`;
 
   return (
     <Link 
       to={`/components/${toSlug(name)}`}
-      state={{ fromSearch: location.search }}
       className="group flex flex-col items-start gap-3 rounded-xl bg-transparent p-0 border border-transparent transition-colors duration-200 cursor-pointer"
     >
       {/* Component Preview Area */}

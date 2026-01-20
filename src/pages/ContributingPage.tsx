@@ -1,10 +1,7 @@
-import { ContributingLayout } from '@/components/layout/ContributingLayout';
-
 export function ContributingPage() {
   return (
-    <ContributingLayout>
-      <div className="bg-white rounded-2xl p-12 shadow-sm">
-        <div className="prose prose-sm max-w-none">
+    <div className="container mx-auto px-6 py-12">
+      <div className="prose prose-sm max-w-none">
           <h1>Contributing to Origin</h1>
           <p>
             We welcome and greatly appreciate contributions to Origin! Listed below are the resources 
@@ -93,7 +90,6 @@ export function ContributingPage() {
             </div>
           </div>
         </div>
-      </div>
-    </ContributingLayout>
+    </div>
   );
 }

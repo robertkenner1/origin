@@ -1,10 +1,7 @@
-import { GettingStartedLayout } from '@/components/layout/GettingStartedLayout';
-
 export function IntroductionPage() {
   return (
-    <GettingStartedLayout>
-      <div className="bg-white rounded-2xl p-12 shadow-sm">
-        <div className="prose prose-sm max-w-none">
+    <div className="container mx-auto px-6 py-12">
+      <div className="prose prose-sm max-w-none">
             <h1>Introduction to Origin</h1>
             <p>Below are some key terms we use when talking about the Origin design system.</p>
 
@@ -57,7 +54,6 @@ export function IntroductionPage() {
               and areas of expertise.
             </p>
           </div>
-        </div>
-    </GettingStartedLayout>
+    </div>
   );
 }
