@@ -401,8 +401,6 @@ export function SidebarNav({ onNavigate, onPinnedChange, onShowLabelsChange }: S
               <div className="py-2">
                 {unpinnedCollections.map((collection) => {
                   const Icon = collection.icon;
-                  const isSinglePage = collection.children.length === 1 && 
-                                      collection.children[0].title === collection.title;
                   const path = collection.children[0]?.path || '/';
                   
                   return (
