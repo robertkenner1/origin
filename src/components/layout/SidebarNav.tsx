@@ -291,7 +291,7 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -10 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute left-0 bottom-full mb-2 w-[240px] bg-background border border-border rounded-lg shadow-lg overflow-hidden z-50"
+                      className="absolute left-0 bottom-full mb-2 w-[240px] bg-background border border-border rounded-lg shadow-lg overflow-hidden z-[9999]"
                     >
                       <div className="py-2">
                         {unpinnedCollections.map((collection) => {
