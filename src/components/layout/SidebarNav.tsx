@@ -237,52 +237,71 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                 );
               })}
               
-              {/* More button - shows unpinned collections and settings */}
-              <div 
-                ref={moreButtonRef}
-                className="relative"
-                onMouseEnter={() => {
-                  if (moreButtonRef.current) {
-                    setMoreButtonRect(moreButtonRef.current.getBoundingClientRect());
-                  }
-                  setMoreMenuOpen(true);
-                }}
-                onMouseLeave={() => setMoreMenuOpen(false)}
-              >
+              {/* More/Manage button - shows unpinned collections and settings, or just settings if no unpinned */}
+              {unpinnedCollections.length === 0 ? (
                 <button
                   type="button"
+                  onClick={() => setSettingsOpen(true)}
                   className="flex flex-col items-center gap-0.5 text-foreground group transition-all"
-                  aria-label="More"
+                  aria-label="Manage collections"
                 >
-                  <div className={cn(
-                    'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
-                    moreMenuOpen
-                      ? 'bg-[var(--color-neutral-10)]'
-                      : 'group-hover:bg-[var(--color-neutral-10)]/50'
-                  )}>
-                    <MoreHorizontal className={cn(
-                      'w-5 h-5 flex-shrink-0 transition-transform',
-                      moreMenuOpen ? '' : 'opacity-80 group-hover:scale-105'
-                    )} strokeWidth={1.5} />
+                  <div className="w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all group-hover:bg-[var(--color-neutral-10)]/50">
+                    <Library className="w-5 h-5 flex-shrink-0 transition-transform opacity-80 group-hover:scale-105" strokeWidth={1.5} />
                   </div>
                   <span 
-                    className={cn(
-                      'leading-tight text-center transition-colors',
-                      moreMenuOpen ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
-                    )}
+                    className="leading-tight text-center transition-colors text-muted-foreground group-hover:text-foreground"
                     style={{ fontSize: '10.5px' }}
                   >
-                    More
+                    Manage
                   </span>
                 </button>
-              </div>
+              ) : (
+                <div 
+                  ref={moreButtonRef}
+                  className="relative"
+                  onMouseEnter={() => {
+                    if (moreButtonRef.current) {
+                      setMoreButtonRect(moreButtonRef.current.getBoundingClientRect());
+                    }
+                    setMoreMenuOpen(true);
+                  }}
+                  onMouseLeave={() => setMoreMenuOpen(false)}
+                >
+                  <button
+                    type="button"
+                    className="flex flex-col items-center gap-0.5 text-foreground group transition-all"
+                    aria-label="More"
+                  >
+                    <div className={cn(
+                      'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
+                      moreMenuOpen
+                        ? 'bg-[var(--color-neutral-10)]'
+                        : 'group-hover:bg-[var(--color-neutral-10)]/50'
+                    )}>
+                      <MoreHorizontal className={cn(
+                        'w-5 h-5 flex-shrink-0 transition-transform',
+                        moreMenuOpen ? '' : 'opacity-80 group-hover:scale-105'
+                      )} strokeWidth={1.5} />
+                    </div>
+                    <span 
+                      className={cn(
+                        'leading-tight text-center transition-colors',
+                        moreMenuOpen ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
+                      )}
+                      style={{ fontSize: '10.5px' }}
+                    >
+                      More
+                    </span>
+                  </button>
+                </div>
+              )}
             </nav>
           </div>
         </aside>
 
         {/* More Menu Dropdown */}
         <AnimatePresence>
-          {moreMenuOpen && moreButtonRect && (
+          {moreMenuOpen && moreButtonRect && unpinnedCollections.length > 0 && (
             <motion.div
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
