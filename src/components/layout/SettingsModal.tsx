@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -9,6 +9,7 @@ import {
   DialogClose,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 import { Lock } from 'lucide-react';
 import { ALL_COLLECTIONS, getDefaultCollectionIds, type Collection } from './navigationConfig';
 
@@ -37,28 +38,29 @@ const CollectionItem = ({
   const Icon = collection.icon;
 
   return (
-    <label 
-      className={`flex items-center gap-3 py-2 cursor-pointer group ${
-        isHome ? 'opacity-60 cursor-not-allowed' : 'hover:bg-[var(--color-neutral-10)]/30'
+    <div 
+      className={`flex items-center justify-between py-2 ${
+        isHome ? 'opacity-60' : ''
       }`}
     >
+      <div className="flex items-center gap-3">
+        {Icon && <Icon className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />}
+        <span className="text-sm">{collection.title}</span>
+      </div>
+      
       {isHome ? (
         <Lock 
-          className="w-4 h-4 text-muted-foreground/40 flex-shrink-0"
+          className="w-4 h-4 text-muted-foreground/40"
           strokeWidth={1.5}
         />
       ) : (
-        <input
-          type="checkbox"
+        <Switch
           checked={isEnabled}
-          onChange={() => onToggle(collection.id)}
-          disabled={isHome}
-          className="w-4 h-4 rounded border-gray-300 text-foreground focus:ring-2 focus:ring-foreground cursor-pointer"
+          onCheckedChange={() => onToggle(collection.id)}
+          aria-label={isEnabled ? 'Enabled' : 'Disabled'}
         />
       )}
-      {Icon && <Icon className="w-4 h-4 text-muted-foreground flex-shrink-0" strokeWidth={1.5} />}
-      <span className="text-sm group-hover:text-foreground transition-colors flex-1">{collection.title}</span>
-    </label>
+    </div>
   );
 };
 
@@ -128,38 +130,20 @@ export function SettingsModal({
         </DialogHeader>
 
         {/* Collections Section */}
-        <div className="pt-6 pb-6 space-y-3">
-          <div>
-            <h3 className="text-sm font-semibold mb-1">Show these collections in the navigation bar:</h3>
-            <p className="text-xs text-muted-foreground">
-              Disabled collections appear in the More menu.
-            </p>
-          </div>
-          
-          <div className="space-y-0.5">
-            {sortedCollections.map((collection, index) => {
+        <div className="pt-6 pb-6">
+          <div className="space-y-1">
+            {sortedCollections.map((collection) => {
               const isHome = collection.id === 'home';
               const isEnabled = enabledCollectionIds.has(collection.id);
               
-              // Add a divider before the first disabled collection
-              const prevCollection = index > 0 ? sortedCollections[index - 1] : null;
-              const prevEnabled = prevCollection ? enabledCollectionIds.has(prevCollection.id) : true;
-              const showDivider = !isEnabled && prevEnabled;
-              
               return (
-                <Fragment key={collection.id}>
-                  {showDivider && (
-                    <div className="pt-2 pb-1">
-                      <div className="border-t border-border" />
-                    </div>
-                  )}
-                  <CollectionItem
-                    collection={collection}
-                    isEnabled={isEnabled}
-                    isHome={isHome}
-                    onToggle={handleToggleCollection}
-                  />
-                </Fragment>
+                <CollectionItem
+                  key={collection.id}
+                  collection={collection}
+                  isEnabled={isEnabled}
+                  isHome={isHome}
+                  onToggle={handleToggleCollection}
+                />
               );
             })}
           </div>
