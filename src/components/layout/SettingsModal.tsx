@@ -153,7 +153,7 @@ export function SettingsModal({
 
           {/* Navigation Appearance Section */}
           <div className="py-6 border-t border-border space-y-3">
-            <h3 className="text-sm font-semibold">Navigation Appearance</h3>
+            <h3 className="text-sm font-medium text-muted-foreground">Navigation Appearance</h3>
             
             <div className="space-y-3">
               <label className="flex items-start gap-3 cursor-pointer group">
