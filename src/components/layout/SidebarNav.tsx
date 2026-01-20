@@ -40,8 +40,10 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
   const [pinnedItem, setPinnedItem] = useState<NavItem | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [moreMenuOpen, setMoreMenuOpen] = useState(false);
+  const [moreButtonRect, setMoreButtonRect] = useState<DOMRect | null>(null);
   const hoverTimeoutRef = useRef<number | null>(null);
   const isOverSecondaryNav = useRef(false);
+  const moreButtonRef = useRef<HTMLDivElement>(null);
   
   const handleCollectionsChange = (collectionIds: string[]) => {
     setEnabledCollections(collectionIds);
@@ -237,8 +239,14 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
               
               {/* More button - shows unpinned collections and settings */}
               <div 
+                ref={moreButtonRef}
                 className="relative"
-                onMouseEnter={() => setMoreMenuOpen(true)}
+                onMouseEnter={() => {
+                  if (moreButtonRef.current) {
+                    setMoreButtonRect(moreButtonRef.current.getBoundingClientRect());
+                  }
+                  setMoreMenuOpen(true);
+                }}
                 onMouseLeave={() => setMoreMenuOpen(false)}
               >
                 <button
@@ -274,13 +282,19 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
 
         {/* More Menu Dropdown */}
         <AnimatePresence>
-          {moreMenuOpen && (
+          {moreMenuOpen && moreButtonRect && (
             <motion.div
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -10 }}
               transition={{ duration: 0.15 }}
-              className="fixed left-[92px] bottom-16 w-[240px] bg-background border border-border rounded-lg shadow-lg overflow-hidden z-[100]"
+              className="fixed w-[240px] bg-background border border-border rounded-lg shadow-lg overflow-hidden z-[100]"
+              style={{
+                left: `${moreButtonRect.right + 8}px`,
+                top: `${moreButtonRect.top}px`,
+              }}
+              onMouseEnter={() => setMoreMenuOpen(true)}
+              onMouseLeave={() => setMoreMenuOpen(false)}
             >
               <div className="py-2">
                 {unpinnedCollections.map((collection) => {
