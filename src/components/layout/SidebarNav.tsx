@@ -209,8 +209,14 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
           </div>
 
           {/* Navigation Content */}
-          <div className="flex-1 overflow-auto py-2">
-            <nav className="flex flex-col items-center gap-3">
+          <div className={cn(
+            "flex-1 overflow-auto",
+            showLabels ? "py-2" : "py-1"
+          )}>
+            <nav className={cn(
+              "flex flex-col items-center",
+              showLabels ? "gap-3" : "gap-1"
+            )}>
               {navigationItems.map((item) => {
                 const isActive = isParentActive(item);
                 const hasChildren = !!item.children?.length;
@@ -228,7 +234,10 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                       handlePrimaryClick(item);
                     }}
                     onMouseEnter={() => handleMouseEnter(item)}
-                    className="flex flex-col items-center gap-0.5 text-foreground group transition-all"
+                    className={cn(
+                      "flex flex-col items-center text-foreground group transition-all",
+                      showLabels ? "gap-0.5" : "gap-0"
+                    )}
                     aria-label={item.title}
                   >
                     <div className={cn(
@@ -264,7 +273,10 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                 <button
                   type="button"
                   onClick={() => setSettingsOpen(true)}
-                  className="flex flex-col items-center gap-0.5 text-foreground group transition-all"
+                  className={cn(
+                    "flex flex-col items-center text-foreground group transition-all",
+                    showLabels ? "gap-0.5" : "gap-0"
+                  )}
                   aria-label="Customize sidebar"
                 >
                   <div className="w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all group-hover:bg-[var(--color-neutral-10)]/50">
@@ -293,7 +305,10 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                 >
                   <button
                     type="button"
-                    className="flex flex-col items-center gap-0.5 text-foreground group transition-all"
+                    className={cn(
+                      "flex flex-col items-center text-foreground group transition-all",
+                      showLabels ? "gap-0.5" : "gap-0"
+                    )}
                     aria-label="More"
                   >
                     <div className={cn(
