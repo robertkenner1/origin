@@ -39,7 +39,7 @@ const CollectionItem = ({
 
   return (
     <div 
-      className={`flex items-center justify-between py-2 ${
+      className={`flex items-center justify-between py-3 border-t border-border first:border-t-0 ${
         isHome ? 'opacity-60' : ''
       }`}
     >
