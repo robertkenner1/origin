@@ -152,7 +152,7 @@ export function SettingsModal({
         </div>
 
           {/* Navigation Appearance Section */}
-          <div className="py-6 border-t border-border space-y-3">
+          <div className="pt-6 pb-6 space-y-3">
             <h3 className="text-sm font-medium text-muted-foreground">Navigation Appearance</h3>
             
             <div className="space-y-3">
