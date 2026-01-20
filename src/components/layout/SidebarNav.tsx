@@ -7,6 +7,7 @@ import { SettingsModal } from './SettingsModal';
 import { cn } from '@/lib/utils';
 
 const ENABLED_COLLECTIONS_KEY = 'origin-enabled-collections';
+const SHOW_LABELS_KEY = 'origin-show-labels';
 
 type SidebarNavProps = {
   onNavigate?: (item: NavItem) => void;
@@ -24,6 +25,16 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
       return stored ? JSON.parse(stored) : getDefaultCollectionIds();
     } catch {
       return getDefaultCollectionIds();
+    }
+  });
+
+  // Load show labels preference from localStorage
+  const [showLabels, setShowLabels] = useState<boolean>(() => {
+    try {
+      const stored = localStorage.getItem(SHOW_LABELS_KEY);
+      return stored !== null ? JSON.parse(stored) : true; // Default to true
+    } catch {
+      return true;
     }
   });
   
@@ -49,6 +60,15 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
     setEnabledCollections(collectionIds);
     try {
       localStorage.setItem(ENABLED_COLLECTIONS_KEY, JSON.stringify(collectionIds));
+    } catch {
+      // Ignore localStorage errors
+    }
+  };
+
+  const handleShowLabelsChange = (show: boolean) => {
+    setShowLabels(show);
+    try {
+      localStorage.setItem(SHOW_LABELS_KEY, JSON.stringify(show));
     } catch {
       // Ignore localStorage errors
     }
@@ -224,15 +244,17 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                         isActive ? '' : 'opacity-80 group-hover:scale-105'
                       )} strokeWidth={1.5} />}
                     </div>
-                    <span 
-                      className={cn(
-                        'leading-tight text-center transition-colors',
-                        isActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
-                      )}
-                      style={{ fontSize: '10.5px' }}
-                    >
-                      {item.label || item.title}
-                    </span>
+                    {showLabels && (
+                      <span 
+                        className={cn(
+                          'leading-tight text-center transition-colors',
+                          isActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
+                        )}
+                        style={{ fontSize: '10.5px' }}
+                      >
+                        {item.label || item.title}
+                      </span>
+                    )}
                   </Link>
                 );
               })}
@@ -248,12 +270,14 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                   <div className="w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all group-hover:bg-[var(--color-neutral-10)]/50">
                     <SlidersHorizontal className="w-5 h-5 flex-shrink-0 transition-transform opacity-80 group-hover:scale-105" strokeWidth={1.5} />
                   </div>
-                  <span 
-                    className="leading-tight text-center transition-colors text-muted-foreground group-hover:text-foreground"
-                    style={{ fontSize: '10.5px' }}
-                  >
-                    Customize
-                  </span>
+                  {showLabels && (
+                    <span 
+                      className="leading-tight text-center transition-colors text-muted-foreground group-hover:text-foreground"
+                      style={{ fontSize: '10.5px' }}
+                    >
+                      Customize
+                    </span>
+                  )}
                 </button>
               ) : (
                 <div 
@@ -283,15 +307,17 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                         moreMenuOpen ? '' : 'opacity-80 group-hover:scale-105'
                       )} strokeWidth={1.5} />
                     </div>
-                    <span 
-                      className={cn(
-                        'leading-tight text-center transition-colors',
-                        moreMenuOpen ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
-                      )}
-                      style={{ fontSize: '10.5px' }}
-                    >
-                      More
-                    </span>
+                    {showLabels && (
+                      <span 
+                        className={cn(
+                          'leading-tight text-center transition-colors',
+                          moreMenuOpen ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
+                        )}
+                        style={{ fontSize: '10.5px' }}
+                      >
+                        More
+                      </span>
+                    )}
                   </button>
                 </div>
               )}
@@ -463,6 +489,8 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
         onOpenChange={setSettingsOpen}
         enabledCollections={enabledCollections}
         onCollectionsChange={handleCollectionsChange}
+        showLabels={showLabels}
+        onShowLabelsChange={handleShowLabelsChange}
       />
     </div>
   );

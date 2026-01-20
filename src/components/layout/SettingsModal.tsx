@@ -20,6 +20,8 @@ type SettingsModalProps = {
   onOpenChange: (open: boolean) => void;
   enabledCollections: string[];
   onCollectionsChange: (collectionIds: string[]) => void;
+  showLabels: boolean;
+  onShowLabelsChange: (show: boolean) => void;
 };
 
 type DraggableCollectionItemProps = {
@@ -122,6 +124,8 @@ export function SettingsModal({
   onOpenChange,
   enabledCollections,
   onCollectionsChange,
+  showLabels,
+  onShowLabelsChange,
 }: SettingsModalProps) {
   const [orderedCollectionIds, setOrderedCollectionIds] = useState<string[]>(() => {
     const allIds = ALL_COLLECTIONS.map(c => c.id);
@@ -197,6 +201,25 @@ export function SettingsModal({
               Enable or disable collections to customize your navigation bar. Disabled collections appear in the More menu. Drag to reorder.
             </DialogDescription>
           </DialogHeader>
+
+          {/* Show Labels Toggle */}
+          <div className="pt-6 pb-4 border-b border-border">
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <label htmlFor="show-labels" className="text-sm font-medium">
+                  Show labels
+                </label>
+                <p className="text-xs text-muted-foreground">
+                  Display text labels below navigation icons
+                </p>
+              </div>
+              <Switch
+                id="show-labels"
+                checked={showLabels}
+                onCheckedChange={onShowLabelsChange}
+              />
+            </div>
+          </div>
 
           <div className="pt-4 pb-6">
             <div className="space-y-1">
