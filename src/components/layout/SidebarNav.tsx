@@ -12,9 +12,10 @@ const SHOW_LABELS_KEY = 'origin-show-labels';
 type SidebarNavProps = {
   onNavigate?: (item: NavItem) => void;
   onPinnedChange?: (isPinned: boolean) => void;
+  onShowLabelsChange?: (showLabels: boolean) => void;
 };
 
-export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
+export function SidebarNav({ onNavigate, onPinnedChange, onShowLabelsChange }: SidebarNavProps) {
   const location = useLocation();
   const navigate = useNavigate();
   
@@ -67,6 +68,7 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
 
   const handleShowLabelsChange = (show: boolean) => {
     setShowLabels(show);
+    onShowLabelsChange?.(show);
     try {
       localStorage.setItem(SHOW_LABELS_KEY, JSON.stringify(show));
     } catch {
