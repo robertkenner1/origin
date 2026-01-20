@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -80,6 +80,19 @@ export function SettingsModal({
     }
   }, [open, enabledCollections]);
 
+  // Sort collections: enabled/default first, then disabled
+  const sortedCollections = [...ALL_COLLECTIONS].sort((a, b) => {
+    const aEnabled = enabledCollectionIds.has(a.id);
+    const bEnabled = enabledCollectionIds.has(b.id);
+    
+    // Enabled collections first
+    if (aEnabled && !bEnabled) return -1;
+    if (!aEnabled && bEnabled) return 1;
+    
+    // Within each group, maintain original order from ALL_COLLECTIONS
+    return 0;
+  });
+
   const handleToggleCollection = (collectionId: string) => {
     if (collectionId === 'home') return;
     
@@ -124,18 +137,29 @@ export function SettingsModal({
           </div>
           
           <div className="space-y-0.5">
-            {ALL_COLLECTIONS.map((collection) => {
+            {sortedCollections.map((collection, index) => {
               const isHome = collection.id === 'home';
               const isEnabled = enabledCollectionIds.has(collection.id);
               
+              // Add a divider before the first disabled collection
+              const prevCollection = index > 0 ? sortedCollections[index - 1] : null;
+              const prevEnabled = prevCollection ? enabledCollectionIds.has(prevCollection.id) : true;
+              const showDivider = !isEnabled && prevEnabled;
+              
               return (
-                <CollectionItem
-                  key={collection.id}
-                  collection={collection}
-                  isEnabled={isEnabled}
-                  isHome={isHome}
-                  onToggle={handleToggleCollection}
-                />
+                <Fragment key={collection.id}>
+                  {showDivider && (
+                    <div className="pt-2 pb-1">
+                      <div className="border-t border-border" />
+                    </div>
+                  )}
+                  <CollectionItem
+                    collection={collection}
+                    isEnabled={isEnabled}
+                    isHome={isHome}
+                    onToggle={handleToggleCollection}
+                  />
+                </Fragment>
               );
             })}
           </div>
