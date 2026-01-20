@@ -266,8 +266,8 @@ export function SidebarNav({ onNavigate, onPinnedChange, onShowLabelsChange }: S
                     {showLabels && (
                       <span 
                         className={cn(
-                          'leading-tight text-center transition-colors',
-                          isActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
+                          'leading-tight text-center transition-colors text-foreground',
+                          isActive ? '' : 'opacity-80 group-hover:opacity-100'
                         )}
                         style={{ fontSize: '10.5px' }}
                       >
@@ -294,7 +294,7 @@ export function SidebarNav({ onNavigate, onPinnedChange, onShowLabelsChange }: S
                   </div>
                   {showLabels && (
                     <span 
-                      className="leading-tight text-center transition-colors text-muted-foreground group-hover:text-foreground"
+                      className="leading-tight text-center transition-colors text-foreground opacity-80 group-hover:opacity-100"
                       style={{ fontSize: '10.5px' }}
                     >
                       Customize
@@ -342,8 +342,8 @@ export function SidebarNav({ onNavigate, onPinnedChange, onShowLabelsChange }: S
                     {showLabels && (
                       <span 
                         className={cn(
-                          'leading-tight text-center transition-colors',
-                          moreMenuOpen ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
+                          'leading-tight text-center transition-colors text-foreground',
+                          moreMenuOpen ? '' : 'opacity-80 group-hover:opacity-100'
                         )}
                         style={{ fontSize: '10.5px' }}
                       >
