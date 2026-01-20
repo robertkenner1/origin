@@ -307,6 +307,13 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                     if (moreButtonRef.current) {
                       setMoreButtonRect(moreButtonRef.current.getBoundingClientRect());
                     }
+                    // Close secondary nav when More menu opens
+                    setHoveredItem(null);
+                    if (isPinned) {
+                      setIsPinned(false);
+                      setPinnedItem(null);
+                      onPinnedChange?.(false);
+                    }
                     setMoreMenuOpen(true);
                   }}
                   onMouseLeave={() => setMoreMenuOpen(false)}
@@ -361,7 +368,11 @@ export function SidebarNav({ onNavigate, onPinnedChange }: SidebarNavProps) {
                 left: `${moreButtonRect.right + 8}px`,
                 top: `${moreButtonRect.top}px`,
               }}
-              onMouseEnter={() => setMoreMenuOpen(true)}
+              onMouseEnter={() => {
+                // Ensure secondary nav stays closed while More menu is open
+                setHoveredItem(null);
+                setMoreMenuOpen(true);
+              }}
               onMouseLeave={() => setMoreMenuOpen(false)}
             >
               <div className="py-2">
