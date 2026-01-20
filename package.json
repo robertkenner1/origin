@@ -21,8 +21,6 @@
     "framer-motion": "^12.27.5",
     "lucide-react": "^0.562.0",
     "react": "^19.2.0",
-    "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.11.0",
     "tailwind-merge": "^3.4.0",
