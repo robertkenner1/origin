@@ -201,10 +201,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
               <Link
                 to="/search"
                 onMouseEnter={() => setHoveredItem(null)}
-                className={cn(
-                  "flex flex-col items-center text-foreground group transition-all",
-                  showLabels ? "gap-0.5" : "gap-0"
-                )}
+                className="flex flex-col items-center text-foreground group transition-all"
                 aria-label="Search"
               >
                 <div className={cn(
@@ -218,17 +215,6 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                     location.pathname === '/search' ? '' : 'opacity-80 group-hover:scale-105'
                   )} strokeWidth={1.5} />
                 </div>
-                {showLabels && (
-                  <span
-                    className={cn(
-                      'leading-tight text-center transition-colors text-foreground',
-                      location.pathname === '/search' ? '' : 'opacity-80 group-hover:opacity-100'
-                    )}
-                    style={{ fontSize: '10px' }}
-                  >
-                    Search
-                  </span>
-                )}
               </Link>
 
               {navigationItems.map((item) => {
@@ -372,10 +358,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
               type="button"
               onClick={() => setIsDarkMode(!isDarkMode)}
               onMouseEnter={() => setHoveredItem(null)}
-              className={cn(
-                "flex flex-col items-center text-foreground group transition-all",
-                showLabels ? "gap-0.5" : "gap-0"
-              )}
+              className="flex flex-col items-center text-foreground group transition-all"
               aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
               <div className="w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all group-hover:bg-[var(--color-neutral-10)]/50">
@@ -385,14 +368,6 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                   <SunIcon className="w-5 h-5 flex-shrink-0 transition-transform opacity-80 group-hover:scale-105" />
                 )}
               </div>
-              {showLabels && (
-                <span
-                  className="leading-tight text-center transition-colors text-foreground opacity-80 group-hover:opacity-100"
-                  style={{ fontSize: '10px' }}
-                >
-                  {isDarkMode ? 'Light' : 'Dark'}
-                </span>
-              )}
             </button>
           </div>
         </aside>
