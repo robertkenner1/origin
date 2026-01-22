@@ -8,15 +8,12 @@ import { cn } from '@/lib/utils';
 
 const ENABLED_COLLECTIONS_KEY = 'origin-enabled-collections';
 const SHOW_LABELS_KEY = 'origin-show-labels';
-const NAV_MODE_KEY = 'origin-nav-mode';
 
 type SidebarNavProps = {
   onNavigate?: (item: NavItem) => void;
   onSecondaryNavChange?: (isShowing: boolean) => void;
   onShowLabelsChange?: (showLabels: boolean) => void;
 };
-
-type NavMode = 'manual-pin' | 'auto-pin';
 
 export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChange }: SidebarNavProps) {
   const location = useLocation();
@@ -42,9 +39,6 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
     }
   });
 
-  // Always use auto-pin mode
-  const navMode = 'auto-pin';
-  
   // Get navigation based on enabled collections
   const navigationItems = getNavigationFromCollections(enabledCollections);
   
