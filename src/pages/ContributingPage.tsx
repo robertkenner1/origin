@@ -1,8 +1,18 @@
+import { OverviewHeader } from '@/components/OverviewHeader';
+
 export function ContributingPage() {
   return (
-    <div className="w-full px-6 py-12">
-      <div className="prose prose-sm max-w-none">
-          <h1>Contributing to Origin</h1>
+    <div className="min-h-screen bg-background animate-fade-in">
+      <div className="w-full px-6 pt-12">
+        <OverviewHeader
+          title="Contributing"
+          description="We welcome and greatly appreciate contributions to Origin. Learn how to add components, update existing ones, and propose new designs that benefit the entire product ecosystem."
+          backgroundColor="#FFD1D0"
+        />
+      </div>
+      <div className="w-full px-6 py-4 pb-12">
+        <div className="prose prose-sm max-w-none">
+          <h2>Adding a component in code</h2>
           <p>
             We welcome and greatly appreciate contributions to Origin! Listed below are the resources 
             and guidelines for contributing.
@@ -90,6 +100,7 @@ export function ContributingPage() {
             </div>
           </div>
         </div>
+      </div>
     </div>
   );
 }

@@ -6,7 +6,7 @@ interface LayoutProps {
 }
 
 export function Layout({ children }: LayoutProps) {
-  const [isSecondaryNavPinned, setIsSecondaryNavPinned] = useState(false);
+  const [isSecondaryNavActive, setIsSecondaryNavActive] = useState(false);
   const [showLabels, setShowLabels] = useState(() => {
     try {
       const stored = localStorage.getItem('origin-show-labels');
@@ -18,8 +18,8 @@ export function Layout({ children }: LayoutProps) {
 
   const primaryNavWidth = showLabels ? 84 : 60; // 84px with labels, 60px without
   const secondaryNavWidth = 240;
-  const marginLeft = isSecondaryNavPinned 
-    ? `${primaryNavWidth + secondaryNavWidth}px` 
+  const marginLeft = isSecondaryNavActive
+    ? `${primaryNavWidth + secondaryNavWidth}px`
     : `${primaryNavWidth}px`;
   
   // Calculate content max-width: when labels are hidden, content can be wider
@@ -27,8 +27,8 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      <SidebarNav 
-        onPinnedChange={setIsSecondaryNavPinned}
+      <SidebarNav
+        onSecondaryNavChange={setIsSecondaryNavActive}
         onShowLabelsChange={setShowLabels}
       />
       <main 

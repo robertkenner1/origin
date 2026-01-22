@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import { StickyFilterBar } from '@/components/StickyFilterBar';
 import { TokenCard } from '@/components/TokenCard';
+import { OverviewHeader } from '@/components/OverviewHeader';
 
 // Superhuman Iconography - 409 production icons organized by functional category
 const iconCategories: Record<string, string[]> = {
@@ -253,9 +254,11 @@ export function IconsPage() {
   return (
     <div className="min-h-screen bg-background animate-fade-in">
       <div className="w-full px-6 pt-12">
-        <div className="mb-4">
-          <h1 className="text-3xl font-bold tracking-tight">Icons</h1>
-        </div>
+        <OverviewHeader
+          title="Icons"
+          description="Icons are visual symbols used to represent ideas, objects, or actions. They communicate messages at a glance, afford interactivity, and draw attention to important information."
+          backgroundColor="#B1F0E8"
+        />
       </div>
 
       {/* Filter Bar - content gets rendered in nav when scrolled */}

@@ -1,4 +1,4 @@
-export function BrandTypographyPage() {
+export function TokenTypographyPage() {
   return (
     <div className="min-h-screen bg-background animate-fade-in">
       <div className="w-full px-6 pt-12 pb-12">
@@ -14,7 +14,7 @@ export function BrandTypographyPage() {
             <div className="mb-8 flex h-32 w-32 items-center justify-center rounded-2xl bg-white border border-border/50">
               <span className="text-5xl font-bold text-foreground">Aa</span>
             </div>
-            <h3 className="text-xl font-semibold mb-3">Typography Guidelines Coming Soon</h3>
+            <h3 className="text-xl font-semibold mb-3">Typography Tokens Coming Soon</h3>
             <p className="text-sm text-muted-foreground max-w-md mb-6">
               This section will include type scale specifications, font family details, pairing guidelines, and accessibility recommendations.
             </p>
@@ -24,7 +24,6 @@ export function BrandTypographyPage() {
               <span className="bg-muted px-3 py-1 rounded-full">Font Weights</span>
               <span className="bg-muted px-3 py-1 rounded-full">Line Heights</span>
               <span className="bg-muted px-3 py-1 rounded-full">Letter Spacing</span>
-              <span className="bg-muted px-3 py-1 rounded-full">Web Fonts</span>
             </div>
           </div>
         </div>

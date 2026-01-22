@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ComponentTile } from '@/components/ComponentTile';
 import { StickyFilterBar } from '@/components/StickyFilterBar';
+import { OverviewHeader } from '@/components/OverviewHeader';
 import { cn } from '@/lib/utils';
 
 // Status types (kept for component info)
@@ -204,9 +205,11 @@ export function ComponentsPage() {
   return (
     <div className="min-h-screen bg-background animate-fade-in">
       <div className="w-full px-6 pt-12">
-        <div className="mb-4">
-          <h1 className="text-3xl font-bold tracking-tight">Components</h1>
-        </div>
+        <OverviewHeader
+          title="Components"
+          description="Components are interactive building blocks for creating a user interface. They can be organized into categories based on their purpose: Action, containment, communication, navigation, selection, and text input."
+          backgroundColor="#E8E0FF"
+        />
       </div>
 
       {/* Filter Bar - content gets rendered in nav when scrolled */}

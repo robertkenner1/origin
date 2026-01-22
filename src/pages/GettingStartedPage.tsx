@@ -1,13 +1,17 @@
+import { OverviewHeader } from '@/components/OverviewHeader';
+
 export function GettingStartedPage() {
   return (
-    <div className="w-full px-6 py-12">
-      <div className="prose prose-sm max-w-none">
-            <h1>Overview</h1>
-            <p className="text-lg text-muted-foreground">
-              The Origin System provides foundational tokens and components to accelerate your work while 
-              providing consistency and accessibility across Superhuman product offerings.
-            </p>
-
+    <div className="min-h-screen bg-background animate-fade-in">
+      <div className="w-full px-6 pt-12">
+        <OverviewHeader
+          title="Getting started"
+          description="Begin your journey with Origin. Learn how to install, configure, and start building with our design system and component library."
+          backgroundColor="#D1DBFE"
+        />
+      </div>
+      <div className="w-full px-6 py-4 pb-12">
+        <div className="prose prose-sm max-w-none">
             <h2>What's available</h2>
             <p>
               See <a href="#" className="text-primary hover:underline">Components Status</a> for available and upcoming components. 
@@ -39,7 +43,8 @@ export function GettingStartedPage() {
             <p>
               For any questions about development or components, see our <a href="#" className="text-primary hover:underline">support guide</a>.
             </p>
-          </div>
+        </div>
+      </div>
     </div>
   );
 }

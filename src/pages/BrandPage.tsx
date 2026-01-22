@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { OverviewHeader } from '@/components/OverviewHeader';
 
 // Sample illustration placeholders (same as IllustrationsPage)
 function IllustrationSample({ name, type }: { name: string; type: 'empty' | 'success' | 'spot' }) {
@@ -118,9 +119,12 @@ export function BrandPage() {
   return (
     <div className="min-h-screen bg-background animate-fade-in">
       <div className="w-full px-6 pt-12 pb-12">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight">Brand</h1>
-        </div>
+        <OverviewHeader
+          title="Design"
+          description="Our brand identity is built on principles of clarity, confidence, and sophistication. These design guidelines ensure consistent visual communication across all touchpoints."
+          backgroundColor="#F0B8DC"
+        />
+        <div className="mt-8"></div>
 
         <div className="grid grid-cols-2 gap-6">
           {brandCategories.map((category) => (

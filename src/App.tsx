@@ -13,6 +13,11 @@ import { BrandLogoPage } from '@/pages/brand/LogoPage';
 import { BrandTypographyPage } from '@/pages/brand/TypographyPage';
 import { BrandColorPage } from '@/pages/brand/ColorPage';
 import { TokensPage } from '@/pages/TokensPage';
+import { TokenColorPage } from '@/pages/tokens/ColorPage';
+import { TokenTypographyPage } from '@/pages/tokens/TypographyPage';
+import { TokenSpacingPage } from '@/pages/tokens/SpacingPage';
+import { TokenShadowsPage } from '@/pages/tokens/ShadowsPage';
+import { TokenRadiusPage } from '@/pages/tokens/RadiusPage';
 import { AccessibilityOverviewPage } from '@/pages/accessibility/OverviewPage';
 import { LiveAnnouncerPage } from '@/pages/accessibility/LiveAnnouncerPage';
 import { PortalContainerPage } from '@/pages/accessibility/PortalContainerPage';
@@ -30,6 +35,7 @@ import { StylingPage } from '@/pages/contributing/StylingPage';
 import { PublishingPage } from '@/pages/contributing/PublishingPage';
 import { NavigationHistoryProvider } from '@/context/NavigationHistoryContext';
 import { StickyFilterProvider } from '@/context/StickyFilterContext';
+import { SearchPage } from '@/pages/SearchPage';
 
 
 function App() {
@@ -40,6 +46,7 @@ function App() {
           <Layout>
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/search" element={<SearchPage />} />
               <Route path="/getting-started" element={<GettingStartedPage />} />
               <Route path="/getting-started/introduction" element={<IntroductionPage />} />
               <Route path="/getting-started/javascript" element={<JavaScriptPage />} />
@@ -52,6 +59,11 @@ function App() {
               <Route path="/brand/typography" element={<BrandTypographyPage />} />
               <Route path="/brand/color" element={<BrandColorPage />} />
               <Route path="/tokens" element={<TokensPage />} />
+              <Route path="/tokens/color" element={<TokenColorPage />} />
+              <Route path="/tokens/typography" element={<TokenTypographyPage />} />
+              <Route path="/tokens/spacing" element={<TokenSpacingPage />} />
+              <Route path="/tokens/shadows" element={<TokenShadowsPage />} />
+              <Route path="/tokens/radius" element={<TokenRadiusPage />} />
               <Route path="/accessibility" element={<AccessibilityOverviewPage />} />
               <Route path="/accessibility/live-announcer" element={<LiveAnnouncerPage />} />
               <Route path="/accessibility/portal-container" element={<PortalContainerPage />} />

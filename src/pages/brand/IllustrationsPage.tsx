@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { StickyFilterBar } from '@/components/StickyFilterBar';
 import { TokenCard } from '@/components/TokenCard';
@@ -176,15 +175,6 @@ export function BrandIllustrationsPage() {
     <div className="min-h-screen bg-background animate-fade-in">
       <div className="w-full px-6 pt-12">
         <div className="mb-4">
-          <Link 
-            to="/brand" 
-            className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4"
-          >
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to Brand
-          </Link>
           <h1 className="text-3xl font-bold tracking-tight">Illustrations</h1>
         </div>
       </div>
