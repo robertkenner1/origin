@@ -3,7 +3,7 @@ import { OverviewHeader } from '@/components/OverviewHeader';
 export function ContributingPage() {
   return (
     <div className="min-h-screen bg-background animate-fade-in">
-      <div className="w-full px-6 pt-12">
+      <div className="w-full px-6 pt-3">
         <OverviewHeader
           title="Contributing"
           description="We welcome and greatly appreciate contributions to Origin. Learn how to add components, update existing ones, and propose new designs that benefit the entire product ecosystem."

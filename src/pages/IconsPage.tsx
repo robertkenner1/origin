@@ -253,7 +253,7 @@ export function IconsPage() {
 
   return (
     <div className="min-h-screen bg-background animate-fade-in">
-      <div className="w-full px-6 pt-12">
+      <div className="w-full px-6 pt-3">
         <OverviewHeader
           title="Icons"
           description="Icons are visual symbols used to represent ideas, objects, or actions. They communicate messages at a glance, afford interactivity, and draw attention to important information."

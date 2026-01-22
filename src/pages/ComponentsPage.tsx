@@ -204,7 +204,7 @@ export function ComponentsPage() {
 
   return (
     <div className="min-h-screen bg-background animate-fade-in">
-      <div className="w-full px-6 pt-12">
+      <div className="w-full px-6 pt-3">
         <OverviewHeader
           title="Components"
           description="Components are interactive building blocks for creating a user interface. They can be organized into categories based on their purpose: Action, containment, communication, navigation, selection, and text input."

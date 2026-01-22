@@ -2190,7 +2190,7 @@ function RelatedComponents({ currentComponentId }: { currentComponentId: string 
   if (relatedComponents.length === 0) return null;
 
   return (
-    <div className="pt-12 pb-4">
+    <div className="pt-3 pb-4">
       <h2 className="text-xl font-semibold text-foreground mb-6">Related components</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {relatedComponents.map((comp) => (

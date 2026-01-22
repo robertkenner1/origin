@@ -71,7 +71,7 @@ const tokenCategories = [
 export function TokensPage() {
   return (
     <div className="min-h-screen bg-background animate-fade-in">
-      <div className="w-full px-6 pt-12 pb-12">
+      <div className="w-full px-6 pt-3 pb-12">
         <OverviewHeader
           title="Tokens"
           description="Design tokens are the visual design atoms of the design system — specifically, they are named entities that store visual design attributes. We use them in place of hard-coded values to ensure flexibility and unity across all product experiences."

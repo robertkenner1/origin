@@ -257,7 +257,7 @@ export function TokenColorPage() {
 
   return (
     <div className="min-h-screen bg-background animate-fade-in">
-      <div className="w-full px-6 pt-12">
+      <div className="w-full px-6 pt-3">
         <div className="mb-4">
           <h1 className="text-3xl font-bold tracking-tight">Color</h1>
         </div>

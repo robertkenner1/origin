@@ -118,7 +118,7 @@ const brandCategories = [
 export function BrandPage() {
   return (
     <div className="min-h-screen bg-background animate-fade-in">
-      <div className="w-full px-6 pt-12 pb-12">
+      <div className="w-full px-6 pt-3 pb-12">
         <OverviewHeader
           title="Design"
           description="Our brand identity is built on principles of clarity, confidence, and sophistication. These design guidelines ensure consistent visual communication across all touchpoints."

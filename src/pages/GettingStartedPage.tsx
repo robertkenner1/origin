@@ -3,7 +3,7 @@ import { OverviewHeader } from '@/components/OverviewHeader';
 export function GettingStartedPage() {
   return (
     <div className="min-h-screen bg-background animate-fade-in">
-      <div className="w-full px-6 pt-12">
+      <div className="w-full px-6 pt-3">
         <OverviewHeader
           title="Getting started"
           description="Begin your journey with Origin. Learn how to install, configure, and start building with our design system and component library."

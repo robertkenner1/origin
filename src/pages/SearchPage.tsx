@@ -5,7 +5,7 @@ export function SearchPage() {
 
   return (
     <div className="min-h-screen bg-background animate-fade-in">
-      <div className="w-full px-6 pt-12 pb-12">
+      <div className="w-full px-6 pt-3 pb-12">
         <div className="w-full">
           <input
             type="text"

@@ -49,7 +49,7 @@ export function TokenSpacingPage() {
 
   return (
     <div className="min-h-screen bg-background animate-fade-in">
-      <div className="w-full px-6 pt-12">
+      <div className="w-full px-6 pt-3">
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-3xl font-bold tracking-tight">Spacing</h1>
 
