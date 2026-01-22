@@ -1,6 +1,6 @@
 export function JavaScriptPage() {
   return (
-    <div className="w-full px-6 py-12">
+    <div className="w-full px-6 pt-3 pb-12">
       <div className="prose prose-sm max-w-none">
             <h1>JavaScript</h1>
             <p>
