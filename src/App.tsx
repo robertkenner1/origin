@@ -1,9 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { HomePage } from '@/pages/HomePage';
-import { Origin101Page } from '@/pages/Origin101Page';
 import { IntroductionPage } from '@/pages/getting-started/IntroductionPage';
-import { GlossaryPage } from '@/pages/origin-101/GlossaryPage';
 import { JavaScriptPage } from '@/pages/getting-started/JavaScriptPage';
 import { ComponentsPage } from '@/pages/ComponentsPage';
 import { ComponentDetailPage } from '@/pages/ComponentDetailPage';

@@ -1745,7 +1745,6 @@ export function ComponentDetailPage() {
   const componentInfo = componentsList.find(
     c => c.name.toLowerCase().replace(/\s+/g, '-') === componentId
   );
-  const status = componentInfo?.status;
 
   if (!component) {
     return (

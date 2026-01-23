@@ -162,7 +162,6 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange }: SidebarNavProps
             {/* Render groups with accordion */}
             {item.groups.map((group) => {
               const isOpen = openGroups.has(group.title);
-              const hasActiveChild = group.children.some(child => location.pathname === child.path);
 
               return (
                 <div key={group.title} className="space-y-0.5">

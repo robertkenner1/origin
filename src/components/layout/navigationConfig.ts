@@ -6,7 +6,6 @@ import {
   IconsIcon,
   DesignIcon,
   GettingStartedIcon,
-  ContributingIcon,
   AccessibilityIcon,
   PatternsIcon,
   ContentIcon,
