@@ -221,22 +221,6 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                     backgroundOrigin: 'padding-box, border-box',
                     backgroundClip: 'padding-box, border-box'
                   } : undefined}
-                  onMouseEnter={(e) => {
-                    if (location.pathname !== '/search') {
-                      e.currentTarget.style.backgroundImage = '';
-                      e.currentTarget.style.border = '';
-                      e.currentTarget.style.background = '#EBEBEB';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (location.pathname !== '/search') {
-                      e.currentTarget.style.background = '';
-                      e.currentTarget.style.border = '1px solid transparent';
-                      e.currentTarget.style.backgroundImage = 'linear-gradient(white, white), linear-gradient(45deg, rgba(188, 188, 188, 0.4) 0%, rgba(255, 255, 255, 0.6) 41%, rgba(188, 188, 188, 0.3) 100%)';
-                      e.currentTarget.style.backgroundOrigin = 'padding-box, border-box';
-                      e.currentTarget.style.backgroundClip = 'padding-box, border-box';
-                    }
-                  }}
                 >
                   <SearchIcon
                     className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
