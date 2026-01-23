@@ -103,7 +103,12 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
 
     // Only show hover menu if item has multiple children (more than 1)
     if (item.children && item.children.length > 1) {
-      setHoveredItem(item);
+      // Don't set hover state if this is the active parent (it already has pinned nav)
+      if (activeParentItem?.title !== item.title) {
+        setHoveredItem(item);
+      } else {
+        setHoveredItem(null);
+      }
     } else {
       // Clear hover state for items without children
       setHoveredItem(null);
