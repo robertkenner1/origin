@@ -167,7 +167,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
               className={cn(
                 'block w-full text-left px-3 py-2 rounded-md transition-colors text-sm',
                 isChildActive
-                  ? 'bg-[#D9D9D9] font-medium'
+                  ? 'bg-[#EBEBEB] font-medium'
                   : 'text-muted-foreground hover:bg-[var(--color-neutral-10)]/50 hover:text-foreground'
               )}
               style={isChildActive ? { color: '#1C1C1C' } : undefined}
@@ -213,7 +213,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                 <div className={cn(
                   'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
                   location.pathname === '/search'
-                    ? 'bg-[#D9D9D9]'
+                    ? 'bg-[#EBEBEB]'
                     : 'group-hover:bg-[var(--color-neutral-10)]/50'
                 )}>
                   <SearchIcon
@@ -249,7 +249,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                     <div className={cn(
                       'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
                       isActive
-                        ? 'bg-[#D9D9D9]'
+                        ? 'bg-[#EBEBEB]'
                         : isShowingInSecondaryNav
                         ? 'bg-[var(--color-neutral-10)]/50'
                         : 'group-hover:bg-[var(--color-neutral-10)]/50'
@@ -335,7 +335,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                     <div className={cn(
                       'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
                       moreMenuOpen
-                        ? 'bg-[#D9D9D9]'
+                        ? 'bg-[#EBEBEB]'
                         : 'group-hover:bg-[var(--color-neutral-10)]/50'
                     )}>
                       <MoreIcon
