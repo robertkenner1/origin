@@ -3,6 +3,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { ComponentPreview } from '@/components/ComponentPreview';
 import { ComponentTile } from '@/components/ComponentTile';
+import { OverviewHeader } from '@/components/OverviewHeader';
 import type { ComponentControls } from '@/components/ComponentPreview';
 import { components as componentsList } from './ComponentsPage';
 
@@ -1489,7 +1490,7 @@ function SaveButton() {
 
 export function ComponentDetailPage() {
   const { componentId } = useParams<{ componentId: string }>();
-  const [activeTab, setActiveTab] = useState('Design');
+  const [activeTab, setActiveTab] = useState('Preview');
   const [codeCopied, setCodeCopied] = useState(false);
   const [previewBg, setPreviewBg] = useState<'white' | 'transparent'>('white');
   const component = componentId ? componentData[componentId] : null;
@@ -1758,89 +1759,134 @@ export function ComponentDetailPage() {
     <div className="w-full px-6 pt-3 pb-12">
       <div className="max-w-[1400px] mx-auto">
         {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center gap-3 mb-2">
-            <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-              {component.name}
-            </h1>
-            {status && (
-              <span className="inline-flex items-center rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
-                v{status.lastUpdate}
-              </span>
-            )}
+        <OverviewHeader
+          title={component.name}
+          description={component.description || "Interactive component for building user interfaces."}
+          backgroundColor="#E8E0FF"
+        />
+
+        {/* Tabs - Full Width Row */}
+        <div className="mt-8 border-b border-border">
+          <div className="flex gap-2">
+            {[
+              { name: 'Preview', icon: (
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              )},
+              { name: 'API', icon: (
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+              )},
+              { name: 'Design', icon: (
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                </svg>
+              )},
+              { name: 'Accessibility', icon: (
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              )},
+              { name: 'Content', icon: (
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              )},
+            ].map((tab) => (
+              <button
+                key={tab.name}
+                onClick={() => setActiveTab(tab.name)}
+                className={cn(
+                  "flex items-center gap-2 px-6 py-3 text-base font-medium transition-colors relative",
+                  activeTab === tab.name
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {tab.icon}
+                {tab.name}
+                {activeTab === tab.name && (
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-foreground" />
+                )}
+              </button>
+            ))}
           </div>
-          <p className="text-muted-foreground text-sm leading-relaxed">
-            {component.description}
-          </p>
         </div>
 
-        {/* Full-width Preview with floating Props Panel */}
-        <div className="rounded-xl border border-border overflow-hidden">
-          <div className="relative">
-            <div 
-              className={cn(
-                "flex min-h-[400px] items-center justify-center p-8 transition-all duration-150",
-                previewBg === 'white' && "bg-white"
-              )}
-              style={previewBg === 'transparent' ? {
-                // Checkerboard pattern
-                backgroundImage: `linear-gradient(45deg, #f7f7f7 25%, transparent 25%), 
-                                  linear-gradient(-45deg, #f7f7f7 25%, transparent 25%), 
-                                  linear-gradient(45deg, transparent 75%, #f7f7f7 75%), 
-                                  linear-gradient(-45deg, transparent 75%, #f7f7f7 75%)`,
-                backgroundSize: '16px 16px',
-                backgroundPosition: '0 0, 0 8px, 8px -8px, -8px 0px',
-                backgroundColor: '#ffffff',
-                // Dots pattern (alternative):
-                // backgroundImage: `radial-gradient(#d5d5d5 1px, transparent 1px)`,
-                // backgroundSize: '24px 24px',
-                // backgroundPosition: '0 0',
-              } : undefined}
-            >
-              <ComponentPreview type={component.preview} controls={controls} />
-            </div>
-            
-            {/* Background toggle */}
-            <div className="absolute left-6 top-6 flex items-center gap-0.5 rounded-lg bg-white border border-border/50 px-2 py-1.5">
-              <button 
-                onClick={() => setPreviewBg(previewBg === 'white' ? 'transparent' : 'white')}
-                className="p-1 rounded text-muted-foreground/50 hover:text-foreground hover:bg-border/50 transition-colors"
-              >
-                <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <span className="w-20 text-center text-xs font-medium text-foreground">
-                {previewBg}
-              </span>
-              <button 
-                onClick={() => setPreviewBg(previewBg === 'white' ? 'transparent' : 'white')}
-                className="p-1 rounded text-muted-foreground/50 hover:text-foreground hover:bg-border/50 transition-colors"
-              >
-                <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
+        {/* Tab Content */}
+        <div className="py-8">
+          {activeTab === 'Preview' && (
+            <div>
+              {/* Full-width Preview with floating Props Panel */}
+              <div className="rounded-xl border border-border overflow-hidden">
+                <div className="relative">
+                  <div
+                    className={cn(
+                      "flex min-h-[400px] items-center justify-center p-8 transition-all duration-150",
+                      previewBg === 'white' && "bg-white"
+                    )}
+                    style={previewBg === 'transparent' ? {
+                      // Checkerboard pattern
+                      backgroundImage: `linear-gradient(45deg, #f7f7f7 25%, transparent 25%),
+                                        linear-gradient(-45deg, #f7f7f7 25%, transparent 25%),
+                                        linear-gradient(45deg, transparent 75%, #f7f7f7 75%),
+                                        linear-gradient(-45deg, transparent 75%, #f7f7f7 75%)`,
+                      backgroundSize: '16px 16px',
+                      backgroundPosition: '0 0, 0 8px, 8px -8px, -8px 0px',
+                      backgroundColor: '#ffffff',
+                      // Dots pattern (alternative):
+                      // backgroundImage: `radial-gradient(#d5d5d5 1px, transparent 1px)`,
+                      // backgroundSize: '24px 24px',
+                      // backgroundPosition: '0 0',
+                    } : undefined}
+                  >
+                    <ComponentPreview type={component.preview} controls={controls} />
+                  </div>
 
-            {/* Floating Props Panel */}
-            {component.props.length > 0 && (() => {
-              // Only show controllable/visual props
-              const controllableProps = ['variant', 'size', 'text', 'isDisabled', 'disabled', 'isLoading', 'width'];
-              const excludedProps = ['type', 'onClick', 'onChange', 'onSubmit', 'accessibilityLabel', 'children', 'iconStart', 'iconEnd', 'shortcut'];
-              const visualProps = component.props.filter(p => 
-                !excludedProps.includes(p.name) && (
-                  controllableProps.includes(p.name) || 
-                  (p.type.includes('|') && !p.type.includes('=>') && p.type.split('|').length <= 10)
-                )
-              );
-              
-              if (visualProps.length === 0) return null;
-              
-              return (
-              <div className="absolute right-6 top-6 w-56 rounded-lg bg-white border border-border/50 max-h-[360px] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-border px-4 py-2.5">
-                <div>
-                  {visualProps.map((prop) => {
+                  {/* Background toggle */}
+                  <div className="absolute left-6 top-6 flex items-center gap-0.5 rounded-lg bg-white border border-border/50 px-2 py-1.5">
+                    <button
+                      onClick={() => setPreviewBg(previewBg === 'white' ? 'transparent' : 'white')}
+                      className="p-1 rounded text-muted-foreground/50 hover:text-foreground hover:bg-border/50 transition-colors"
+                    >
+                      <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+                    <span className="w-20 text-center text-xs font-medium text-foreground">
+                      {previewBg}
+                    </span>
+                    <button
+                      onClick={() => setPreviewBg(previewBg === 'white' ? 'transparent' : 'white')}
+                      className="p-1 rounded text-muted-foreground/50 hover:text-foreground hover:bg-border/50 transition-colors"
+                    >
+                      <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Floating Props Panel */}
+                  {component.props.length > 0 && (() => {
+                    // Only show controllable/visual props
+                    const controllableProps = ['variant', 'size', 'text', 'isDisabled', 'disabled', 'isLoading', 'width'];
+                    const excludedProps = ['type', 'onClick', 'onChange', 'onSubmit', 'accessibilityLabel', 'children', 'iconStart', 'iconEnd', 'shortcut'];
+                    const visualProps = component.props.filter(p =>
+                      !excludedProps.includes(p.name) && (
+                        controllableProps.includes(p.name) ||
+                        (p.type.includes('|') && !p.type.includes('=>') && p.type.split('|').length <= 10)
+                      )
+                    );
+
+                    if (visualProps.length === 0) return null;
+
+                    return (
+                      <div className="absolute right-6 top-6 w-56 rounded-lg bg-white border border-border/50 max-h-[360px] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-border px-4 py-2.5">
+                        <div>
+                          {visualProps.map((prop) => {
                     const isUnionType = prop.type.includes('|') && !prop.type.includes('=>');
                     const isBoolean = prop.type === 'boolean';
                     
@@ -1887,89 +1933,84 @@ export function ComponentDetailPage() {
                     
                     const currentIndex = options.indexOf(currentValue);
                     
-                    return (
-                      <PropCarouselRow
-                        key={prop.name}
-                        propName={prop.name}
-                        options={options}
-                        currentIndex={currentIndex}
-                        currentValue={currentValue}
-                        onChange={handleChange}
-                      />
+                            return (
+                              <PropCarouselRow
+                                key={prop.name}
+                                propName={prop.name}
+                                options={options}
+                                currentIndex={currentIndex}
+                                currentValue={currentValue}
+                                onChange={handleChange}
+                              />
+                            );
+                          })}
+                        </div>
+
+                        {/* Copy code button */}
+                        <button
+                          onClick={async () => {
+                            if (codeCopied) return;
+                            try {
+                              await navigator.clipboard.writeText(generateUsageCode());
+                              setCodeCopied(true);
+                              setTimeout(() => setCodeCopied(false), 1200);
+                            } catch (err) {
+                              console.error('Failed to copy:', err);
+                            }
+                          }}
+                          className={cn(
+                            "w-full mt-3 flex items-center justify-center rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200",
+                            codeCopied
+                              ? "bg-secondary text-secondary-foreground"
+                              : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                          )}
+                        >
+                          {codeCopied ? 'Copied!' : 'Copy code'}
+                        </button>
+                      </div>
                     );
-                  })}
+                  })()}
                 </div>
-                
-                {/* Copy code button */}
-                <button
-                  onClick={async () => {
-                    if (codeCopied) return;
-                    try {
-                      await navigator.clipboard.writeText(generateUsageCode());
-                      setCodeCopied(true);
-                      setTimeout(() => setCodeCopied(false), 1200);
-                    } catch (err) {
-                      console.error('Failed to copy:', err);
-                    }
-                  }}
-                  className={cn(
-                    "w-full mt-3 flex items-center justify-center rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200",
-                    codeCopied 
-                      ? "bg-secondary text-secondary-foreground" 
-                      : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                  )}
-                >
-                  {codeCopied ? 'Copied!' : 'Copy code'}
-                </button>
               </div>
-              );
-            })()}
-          </div>
-        </div>
+            </div>
+          )}
 
-        {/* Tabs - Full Width Row */}
-        <div className="mt-12 border-b border-border">
-          <div className="flex justify-center gap-2">
-            {[
-              { name: 'Design', icon: (
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                </svg>
-              )},
-              { name: 'Accessibility', icon: (
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              )},
-              { name: 'Content', icon: (
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              )},
-            ].map((tab) => (
-              <button
-                key={tab.name}
-                onClick={() => setActiveTab(tab.name)}
-                className={cn(
-                  "flex items-center gap-2 px-6 py-3 text-base font-medium transition-colors relative",
-                  activeTab === tab.name
-                    ? "text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                )}
-              >
-                {tab.icon}
-                {tab.name}
-                {activeTab === tab.name && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-foreground" />
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
+          {activeTab === 'API' && (
+            <div>
+              <h2 className="text-xl font-semibold text-foreground mb-4">API Reference</h2>
+              <p className="text-sm text-muted-foreground mb-6">
+                Component props and their usage.
+              </p>
 
-        {/* Tab Content */}
-        <div className="py-8">
-              {activeTab === 'Design' && (
+              <div className="rounded-xl border border-border overflow-hidden">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="bg-muted/30 border-b border-border">
+                      <th className="text-left font-semibold text-foreground px-4 py-3 w-40">Prop</th>
+                      <th className="text-left font-semibold text-foreground px-4 py-3 w-48">Type</th>
+                      <th className="text-left font-semibold text-foreground px-4 py-3">Description</th>
+                      <th className="text-left font-semibold text-foreground px-4 py-3 w-32">Default</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {component.props.map((prop, index) => (
+                      <tr key={prop.name} className={cn(
+                        "border-b border-border",
+                        index % 2 === 1 && "bg-muted/10"
+                      )}>
+                        <td className="px-4 py-3 font-mono text-xs text-foreground font-medium">{prop.name}</td>
+                        <td className="px-4 py-3 font-mono text-xs text-muted-foreground">{prop.type}</td>
+                        <td className="px-4 py-3 text-muted-foreground">{prop.description || '—'}</td>
+                        <td className="px-4 py-3 font-mono text-xs text-muted-foreground">{prop.default || '—'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'Design' && (
                 <div className="space-y-10">
                   {/* Variants */}
                   <div>
