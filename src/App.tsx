@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { HomePage } from '@/pages/HomePage';
-import { GettingStartedPage } from '@/pages/GettingStartedPage';
+import { Origin101Page } from '@/pages/Origin101Page';
 import { IntroductionPage } from '@/pages/getting-started/IntroductionPage';
+import { GlossaryPage } from '@/pages/origin-101/GlossaryPage';
 import { JavaScriptPage } from '@/pages/getting-started/JavaScriptPage';
 import { ComponentsPage } from '@/pages/ComponentsPage';
 import { ComponentDetailPage } from '@/pages/ComponentDetailPage';
@@ -30,9 +31,9 @@ import { FormsPage } from '@/pages/patterns/FormsPage';
 import { EmptyStatesPage } from '@/pages/patterns/EmptyStatesPage';
 import { DisabledStatesPage } from '@/pages/patterns/DisabledStatesPage';
 import { ProPlanPage } from '@/pages/patterns/ProPlanPage';
-import { ContributingPage } from '@/pages/ContributingPage';
-import { StylingPage } from '@/pages/contributing/StylingPage';
-import { PublishingPage } from '@/pages/contributing/PublishingPage';
+import { ContentPage } from '@/pages/ContentPage';
+import { SupportPage } from '@/pages/SupportPage';
+import { WhatsNewPage } from '@/pages/WhatsNewPage';
 import { NavigationHistoryProvider } from '@/context/NavigationHistoryContext';
 import { StickyFilterProvider } from '@/context/StickyFilterContext';
 import { SearchPage } from '@/pages/SearchPage';
@@ -47,9 +48,8 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/search" element={<SearchPage />} />
-              <Route path="/getting-started" element={<GettingStartedPage />} />
-              <Route path="/getting-started/introduction" element={<IntroductionPage />} />
-              <Route path="/getting-started/javascript" element={<JavaScriptPage />} />
+              <Route path="/origin-101" element={<IntroductionPage />} />
+              <Route path="/origin-101/installing" element={<JavaScriptPage />} />
               <Route path="/components" element={<ComponentsPage />} />
               <Route path="/components/:componentId" element={<ComponentDetailPage />} />
               <Route path="/icons" element={<IconsPage />} />
@@ -64,6 +64,7 @@ function App() {
               <Route path="/tokens/spacing" element={<TokenSpacingPage />} />
               <Route path="/tokens/shadows" element={<TokenShadowsPage />} />
               <Route path="/tokens/radius" element={<TokenRadiusPage />} />
+              <Route path="/content" element={<ContentPage />} />
               <Route path="/accessibility" element={<AccessibilityOverviewPage />} />
               <Route path="/accessibility/live-announcer" element={<LiveAnnouncerPage />} />
               <Route path="/accessibility/portal-container" element={<PortalContainerPage />} />
@@ -76,9 +77,8 @@ function App() {
               <Route path="/patterns/empty-states" element={<EmptyStatesPage />} />
               <Route path="/patterns/disabled-states" element={<DisabledStatesPage />} />
               <Route path="/patterns/pro-plan" element={<ProPlanPage />} />
-              <Route path="/contributing" element={<ContributingPage />} />
-              <Route path="/contributing/styling" element={<StylingPage />} />
-              <Route path="/contributing/publishing" element={<PublishingPage />} />
+              <Route path="/support" element={<SupportPage />} />
+              <Route path="/whats-new" element={<WhatsNewPage />} />
             </Routes>
           </Layout>
         </StickyFilterProvider>

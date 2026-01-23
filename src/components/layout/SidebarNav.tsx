@@ -1,93 +1,44 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getNavigationFromCollections, getDefaultCollectionIds, ALL_COLLECTIONS, type NavItem } from './navigationConfig';
-import { SettingsModal } from './SettingsModal';
-import { MoreIcon, CustomizeIcon, SunIcon, MoonIcon, SearchIcon } from '@/components/icons/CustomIcons';
+import { ChevronRight } from 'lucide-react';
+import { getNavigationFromCollections, getDefaultCollectionIds, type NavItem } from './navigationConfig';
+import { SunIcon, MoonIcon, SearchIcon } from '@/components/icons/CustomIcons';
 import { cn } from '@/lib/utils';
-
-const ENABLED_COLLECTIONS_KEY = 'origin-enabled-collections';
-const SHOW_LABELS_KEY = 'origin-show-labels';
 
 type SidebarNavProps = {
   onNavigate?: (item: NavItem) => void;
   onSecondaryNavChange?: (isShowing: boolean) => void;
-  onShowLabelsChange?: (showLabels: boolean) => void;
 };
 
-export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChange }: SidebarNavProps) {
+export function SidebarNav({ onNavigate, onSecondaryNavChange }: SidebarNavProps) {
   const location = useLocation();
   const navigate = useNavigate();
-  
-  // Load enabled collections from localStorage
-  const [enabledCollections, setEnabledCollections] = useState<string[]>(() => {
-    try {
-      const stored = localStorage.getItem(ENABLED_COLLECTIONS_KEY);
-      return stored ? JSON.parse(stored) : getDefaultCollectionIds();
-    } catch {
-      return getDefaultCollectionIds();
-    }
-  });
 
-  // Load show labels preference from localStorage
-  const [showLabels, setShowLabels] = useState<boolean>(() => {
-    try {
-      const stored = localStorage.getItem(SHOW_LABELS_KEY);
-      return stored !== null ? JSON.parse(stored) : true; // Default to true
-    } catch {
-      return true;
-    }
-  });
+  // Always show labels
+  const showLabels = true;
 
-  // Get navigation based on enabled collections
-  const navigationItems = getNavigationFromCollections(enabledCollections);
-  
-  // Get unpinned collections for the More menu
-  const unpinnedCollections = ALL_COLLECTIONS.filter(
-    collection => !enabledCollections.includes(collection.id)
-  );
+  // Get all navigation items (all collections that are defaultVisible)
+  const navigationItems = getNavigationFromCollections(getDefaultCollectionIds());
 
   const [hoveredItem, setHoveredItem] = useState<NavItem | null>(null);
-  const [settingsOpen, setSettingsOpen] = useState(false);
-  const [moreMenuOpen, setMoreMenuOpen] = useState(false);
-  const [moreButtonRect, setMoreButtonRect] = useState<DOMRect | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [openGroups, setOpenGroups] = useState<Set<string>>(new Set());
   const hoverTimeoutRef = useRef<number | null>(null);
-  const moreMenuTimeoutRef = useRef<number | null>(null);
-  const moreButtonRef = useRef<HTMLDivElement>(null);
-  const navContainerRef = useRef<HTMLDivElement>(null);
-  
-  const handleCollectionsChange = (collectionIds: string[]) => {
-    setEnabledCollections(collectionIds);
-    try {
-      localStorage.setItem(ENABLED_COLLECTIONS_KEY, JSON.stringify(collectionIds));
-    } catch {
-      // Ignore localStorage errors
-    }
-  };
-
-  const handleShowLabelsChange = (show: boolean) => {
-    setShowLabels(show);
-    onShowLabelsChange?.(show);
-    try {
-      localStorage.setItem(SHOW_LABELS_KEY, JSON.stringify(show));
-    } catch {
-      // Ignore localStorage errors
-    }
-  };
 
 
 
   const handlePrimaryClick = (item: NavItem) => {
     // Auto-pin mode: just navigate, secondary nav will appear based on route
-    if (!item.children?.length || item.children.length === 1) {
+    // Only navigate without showing secondary nav if item has no groups and less than 2 children
+    if ((!item.children?.length || item.children.length === 1) && !item.groups) {
       const targetPath = item.children?.[0]?.path || item.path;
       navigate(targetPath);
       onNavigate?.(item.children?.[0] || item);
       setHoveredItem(null);
     } else {
       // Navigate to first child
-      const firstChild = item.children[0];
+      const firstChild = item.children?.[0];
       if (firstChild) {
         navigate(firstChild.path);
         onNavigate?.(firstChild);
@@ -102,8 +53,8 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
       clearTimeout(hoverTimeoutRef.current);
     }
 
-    // Only show hover menu if item has multiple children (more than 1)
-    if (item.children && item.children.length > 1) {
+    // Show hover menu if item has multiple children (more than 1) OR has groups
+    if ((item.children && item.children.length > 1) || item.groups) {
       setHoveredItem(item);
     } else {
       // Clear hover state for items without children
@@ -139,7 +90,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
   const activeParentItem = getActiveParentItem();
 
   // Determine which item to show in secondary nav: hovered takes priority, then active
-  const secondaryNavItem = hoveredItem || (activeParentItem && activeParentItem.children && activeParentItem.children.length > 1 ? activeParentItem : null);
+  const secondaryNavItem = hoveredItem || (activeParentItem && ((activeParentItem.children && activeParentItem.children.length > 1) || activeParentItem.groups) ? activeParentItem : null);
   const shouldShowSecondaryNav = !!secondaryNavItem;
 
   // Notify parent when secondary nav visibility changes
@@ -147,38 +98,161 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
     onSecondaryNavChange?.(shouldShowSecondaryNav);
   }, [shouldShowSecondaryNav, onSecondaryNavChange]);
 
-  // Helper function to render secondary nav list content (children only)
-  const renderSecondaryNavList = (item: NavItem) => (
-    <motion.div
-      key={item.title}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.15, ease: 'easeInOut' }}
-      className="overflow-auto flex-1 px-3 pt-3 pb-3"
-    >
-      <nav className="space-y-0.5">
-        {item.children?.map((child) => {
-          const isChildActive = location.pathname === child.path;
-          return (
-            <Link
-              key={child.path}
-              to={child.path}
-              className={cn(
-                'block w-full text-left px-3 py-2 rounded-md transition-colors text-sm',
-                isChildActive
-                  ? 'bg-[#EBEBEB] font-medium'
-                  : 'text-muted-foreground hover:bg-[#EBEBEB] hover:text-foreground'
-              )}
-              style={isChildActive ? { color: '#1C1C1C' } : undefined}
-            >
-              <span className="text-[13.5px]">{child.title}</span>
-            </Link>
-          );
-        })}
-      </nav>
-    </motion.div>
-  );
+  // Auto-expand groups that contain the current page
+  useEffect(() => {
+    if (secondaryNavItem?.groups) {
+      const groupsToOpen = new Set<string>();
+      secondaryNavItem.groups.forEach((group) => {
+        if (group.children.some(child => child.path === location.pathname)) {
+          groupsToOpen.add(group.title);
+        }
+      });
+      if (groupsToOpen.size > 0) {
+        setOpenGroups(prev => new Set([...prev, ...groupsToOpen]));
+      }
+    }
+  }, [location.pathname, secondaryNavItem]);
+
+  const toggleGroup = (groupTitle: string) => {
+    setOpenGroups(prev => {
+      const next = new Set(prev);
+      if (next.has(groupTitle)) {
+        next.delete(groupTitle);
+      } else {
+        next.add(groupTitle);
+      }
+      return next;
+    });
+  };
+
+  // Helper function to render secondary nav list content (children and/or groups)
+  const renderSecondaryNavList = (item: NavItem) => {
+    // If item has groups, render accordion UI
+    if (item.groups) {
+      return (
+        <motion.div
+          key={item.title}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.15, ease: 'easeInOut' }}
+          className="overflow-auto flex-1 px-3 pt-3 pb-3"
+        >
+          <nav className="space-y-0.5">
+            {/* Render any top-level children first (like "Component overview") */}
+            {item.children?.map((child) => {
+              const isChildActive = location.pathname === child.path;
+              return (
+                <Link
+                  key={child.path}
+                  to={child.path}
+                  className={cn(
+                    'block w-full text-left px-3 py-2 rounded-md transition-colors text-sm',
+                    isChildActive
+                      ? 'bg-[#EBEBEB] font-medium'
+                      : 'text-muted-foreground hover:bg-[#EBEBEB] hover:text-foreground'
+                  )}
+                  style={isChildActive ? { color: '#1C1C1C' } : undefined}
+                >
+                  <span className="text-[13.5px]">{child.title}</span>
+                </Link>
+              );
+            })}
+
+            {/* Render groups with accordion */}
+            {item.groups.map((group) => {
+              const isOpen = openGroups.has(group.title);
+              const hasActiveChild = group.children.some(child => location.pathname === child.path);
+
+              return (
+                <div key={group.title} className="space-y-0.5">
+                  <button
+                    type="button"
+                    onClick={() => toggleGroup(group.title)}
+                    className="flex items-center justify-between w-full text-left px-3 py-2 rounded-md transition-colors text-sm text-muted-foreground hover:bg-[#EBEBEB] hover:text-foreground"
+                  >
+                    <span className="text-[13.5px] font-medium">{group.title}</span>
+                    <ChevronRight
+                      className={cn(
+                        'w-4 h-4 transition-transform',
+                        isOpen && 'rotate-90'
+                      )}
+                    />
+                  </button>
+
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pl-3 space-y-0.5">
+                          {group.children.map((child) => {
+                            const isChildActive = location.pathname === child.path;
+                            return (
+                              <Link
+                                key={child.path}
+                                to={child.path}
+                                className={cn(
+                                  'block w-full text-left px-3 py-2 rounded-md transition-colors text-sm',
+                                  isChildActive
+                                    ? 'bg-[#EBEBEB] font-medium'
+                                    : 'text-muted-foreground hover:bg-[#EBEBEB] hover:text-foreground'
+                                )}
+                                style={isChildActive ? { color: '#1C1C1C' } : undefined}
+                              >
+                                <span className="text-[13.5px]">{child.title}</span>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </nav>
+        </motion.div>
+      );
+    }
+
+    // Otherwise render flat children
+    return (
+      <motion.div
+        key={item.title}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.15, ease: 'easeInOut' }}
+        className="overflow-auto flex-1 px-3 pt-3 pb-3"
+      >
+        <nav className="space-y-0.5">
+          {item.children?.map((child) => {
+            const isChildActive = location.pathname === child.path;
+            return (
+              <Link
+                key={child.path}
+                to={child.path}
+                className={cn(
+                  'block w-full text-left px-3 py-2 rounded-md transition-colors text-sm',
+                  isChildActive
+                    ? 'bg-[#EBEBEB] font-medium'
+                    : 'text-muted-foreground hover:bg-[#EBEBEB] hover:text-foreground'
+                )}
+                style={isChildActive ? { color: '#1C1C1C' } : undefined}
+              >
+                <span className="text-[13.5px]">{child.title}</span>
+              </Link>
+            );
+          })}
+        </nav>
+      </motion.div>
+    );
+  };
 
   return (
     <div className="fixed left-0 top-0 z-50">
@@ -271,89 +345,6 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                   </Link>
                 );
               })}
-              
-              {/* More/Manage button - shows unpinned collections and settings, or just settings if no unpinned */}
-              {unpinnedCollections.length === 0 ? (
-                <button
-                  type="button"
-                  onClick={() => setSettingsOpen(true)}
-                  onMouseEnter={() => setHoveredItem(null)}
-                  className={cn(
-                    "flex flex-col items-center group transition-all",
-                    showLabels ? "gap-0.5" : "gap-0"
-                  )}
-                  aria-label="Customize sidebar"
-                >
-                  <div className="w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all group-hover:bg-[#EBEBEB]">
-                    <CustomizeIcon
-                      className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
-                      style={{ color: '#73716D' }}
-                    />
-                  </div>
-                  {showLabels && (
-                    <span
-                      className="leading-tight text-center transition-colors"
-                      style={{ fontSize: '10px', color: '#73716D' }}
-                    >
-                      Customize
-                    </span>
-                  )}
-                </button>
-              ) : (
-                <div
-                  ref={moreButtonRef}
-                  className="relative"
-                  onMouseEnter={() => {
-                    if (moreMenuTimeoutRef.current) {
-                      clearTimeout(moreMenuTimeoutRef.current);
-                    }
-                    if (moreButtonRef.current) {
-                      const rect = moreButtonRef.current.getBoundingClientRect();
-                      setMoreButtonRect(rect);
-                    }
-                    setHoveredItem(null);
-                    setMoreMenuOpen(true);
-                  }}
-                  onMouseLeave={() => {
-                    if (moreMenuTimeoutRef.current) {
-                      clearTimeout(moreMenuTimeoutRef.current);
-                    }
-                    moreMenuTimeoutRef.current = setTimeout(() => {
-                      setMoreMenuOpen(false);
-                      setMoreButtonRect(null);
-                    }, 100);
-                  }}
-                >
-                  <button
-                    type="button"
-                    className={cn(
-                      "flex flex-col items-center group transition-all",
-                      showLabels ? "gap-0.5" : "gap-0"
-                    )}
-                    aria-label="More"
-                  >
-                    <div className={cn(
-                      'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
-                      moreMenuOpen
-                        ? 'bg-[#EBEBEB]'
-                        : 'group-hover:bg-[#EBEBEB]'
-                    )}>
-                      <MoreIcon
-                        className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
-                        style={{ color: moreMenuOpen ? '#1C1C1C' : '#73716D' }}
-                      />
-                    </div>
-                    {showLabels && (
-                      <span
-                        className="leading-tight text-center transition-colors"
-                        style={{ fontSize: '10px', color: '#73716D' }}
-                      >
-                        More
-                      </span>
-                    )}
-                  </button>
-                </div>
-              )}
             </nav>
           </div>
 
@@ -383,76 +374,6 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
           </div>
         </aside>
 
-        {/* More Menu Dropdown */}
-        <AnimatePresence>
-          {moreMenuOpen && moreButtonRect && (
-            <motion.div
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -10 }}
-              transition={{ duration: 0.15 }}
-              className="fixed w-auto min-w-[220px] bg-background border border-border rounded-xl shadow-lg overflow-hidden z-[100]"
-              style={{
-                left: `${moreButtonRect.right + 8}px`,
-                top: `${moreButtonRect.top}px`,
-              }}
-              onMouseEnter={() => {
-                if (moreMenuTimeoutRef.current) {
-                  clearTimeout(moreMenuTimeoutRef.current);
-                }
-                setHoveredItem(null);
-                setMoreMenuOpen(true);
-              }}
-              onMouseLeave={() => {
-                if (moreMenuTimeoutRef.current) {
-                  clearTimeout(moreMenuTimeoutRef.current);
-                }
-                moreMenuTimeoutRef.current = setTimeout(() => {
-                  setMoreMenuOpen(false);
-                  setMoreButtonRect(null);
-                }, 100);
-              }}
-            >
-              <div className="py-2 px-2">
-                {unpinnedCollections.map((collection) => {
-                  const Icon = collection.icon;
-                  const path = collection.children[0]?.path || '/';
-
-                  return (
-                    <Link
-                      key={collection.id}
-                      to={path}
-                      onClick={() => setMoreMenuOpen(false)}
-                      className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-[#EBEBEB] transition-colors"
-                    >
-                      {Icon && <Icon className="w-5 h-5 text-muted-foreground" strokeWidth={1.5} />}
-                      <span className="text-sm font-normal text-[13.5px]">{collection.title}</span>
-                    </Link>
-                  );
-                })}
-
-                {/* Divider if there are unpinned collections */}
-                {unpinnedCollections.length > 0 && (
-                  <div className="my-2 border-t border-border -mx-2" />
-                )}
-
-                {/* Customize sidebar option */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSettingsOpen(true);
-                    setMoreMenuOpen(false);
-                  }}
-                  className="flex items-center gap-3 px-3 py-2 w-full rounded-md hover:bg-[#EBEBEB] transition-colors text-left"
-                >
-                  <CustomizeIcon className="w-5 h-5 text-muted-foreground" />
-                  <span className="text-sm font-normal text-[13.5px]">Customize sidebar</span>
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
         {/* Single Secondary Navigation - shows for hover or active selection */}
         {shouldShowSecondaryNav && secondaryNavItem && (
           <div
@@ -473,15 +394,6 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
           </div>
         )}
       </div>
-
-      <SettingsModal
-        open={settingsOpen}
-        onOpenChange={setSettingsOpen}
-        enabledCollections={enabledCollections}
-        onCollectionsChange={handleCollectionsChange}
-        showLabels={showLabels}
-        onShowLabelsChange={handleShowLabelsChange}
-      />
     </div>
   );
 }
