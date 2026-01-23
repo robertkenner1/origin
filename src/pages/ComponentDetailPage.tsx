@@ -1741,11 +1741,6 @@ export function ComponentDetailPage() {
     }
   };
 
-  // Get component status from the components list
-  const componentInfo = componentsList.find(
-    c => c.name.toLowerCase().replace(/\s+/g, '-') === componentId
-  );
-
   if (!component) {
     return (
       <div className="w-full px-6 pt-3 pb-12">
