@@ -149,7 +149,14 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
 
   // Helper function to render secondary nav list content (children only)
   const renderSecondaryNavList = (item: NavItem) => (
-    <div className="overflow-auto flex-1 px-3 pt-3 pb-3">
+    <motion.div
+      key={item.title}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.15, ease: 'easeInOut' }}
+      className="overflow-auto flex-1 px-3 pt-3 pb-3"
+    >
       <nav className="space-y-0.5">
         {item.children?.map((child) => {
           const isChildActive = location.pathname === child.path;
@@ -169,7 +176,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
           );
         })}
       </nav>
-    </div>
+    </motion.div>
   );
 
   return (
@@ -441,29 +448,24 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
         </AnimatePresence>
 
         {/* Single Secondary Navigation - shows for hover or active selection */}
-        <AnimatePresence mode="wait">
-          {shouldShowSecondaryNav && secondaryNavItem && (
-            <motion.div
-              key={secondaryNavItem.title}
-              className="w-[240px] h-full flex flex-col flex-shrink-0 bg-background"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.1, ease: 'easeInOut' }}
-              onMouseEnter={() => {
-                if (hoverTimeoutRef.current) {
-                  clearTimeout(hoverTimeoutRef.current);
-                }
-              }}
-              onMouseLeave={() => {
-                handleMouseLeave();
-              }}
-            >
-              {/* Tab-specific content */}
+        {shouldShowSecondaryNav && secondaryNavItem && (
+          <div
+            className="w-[240px] h-full flex flex-col flex-shrink-0 bg-background"
+            onMouseEnter={() => {
+              if (hoverTimeoutRef.current) {
+                clearTimeout(hoverTimeoutRef.current);
+              }
+            }}
+            onMouseLeave={() => {
+              handleMouseLeave();
+            }}
+          >
+            {/* Tab-specific content with fade transition */}
+            <AnimatePresence mode="wait">
               {renderSecondaryNavList(secondaryNavItem)}
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </AnimatePresence>
+          </div>
+        )}
       </div>
 
       <SettingsModal
