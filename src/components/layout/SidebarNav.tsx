@@ -212,21 +212,23 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
               >
                 <div
                   className={cn(
-                    'w-[36px] h-[36px] flex items-center justify-center rounded-md bg-white',
-                    location.pathname === '/search' && '!bg-[#EBEBEB]'
+                    'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all duration-300',
+                    location.pathname === '/search' && 'bg-[#EBEBEB]'
                   )}
                   style={location.pathname !== '/search' ? {
-                    boxShadow: 'inset 2px 2px 4px rgba(0, 0, 0, 0.1), inset -2px -2px 4px rgba(255, 255, 255, 0.9)',
-                    transition: 'box-shadow 0.3s ease-in-out'
+                    border: '1px solid transparent',
+                    backgroundImage: 'linear-gradient(white, white), linear-gradient(45deg, rgba(188, 188, 188, 0.4) 0%, rgba(255, 255, 255, 0.6) 41%, rgba(188, 188, 188, 0.3) 100%)',
+                    backgroundOrigin: 'padding-box, border-box',
+                    backgroundClip: 'padding-box, border-box'
                   } : undefined}
                   onMouseEnter={(e) => {
                     if (location.pathname !== '/search') {
-                      e.currentTarget.style.boxShadow = 'inset -2px -2px 4px rgba(0, 0, 0, 0.1), inset 2px 2px 4px rgba(255, 255, 255, 0.9)';
+                      e.currentTarget.style.backgroundImage = 'linear-gradient(white, white), linear-gradient(225deg, rgba(188, 188, 188, 0.3) 0%, rgba(255, 255, 255, 0.6) 59%, rgba(188, 188, 188, 0.4) 100%)';
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (location.pathname !== '/search') {
-                      e.currentTarget.style.boxShadow = 'inset 2px 2px 4px rgba(0, 0, 0, 0.1), inset -2px -2px 4px rgba(255, 255, 255, 0.9)';
+                      e.currentTarget.style.backgroundImage = 'linear-gradient(white, white), linear-gradient(45deg, rgba(188, 188, 188, 0.4) 0%, rgba(255, 255, 255, 0.6) 41%, rgba(188, 188, 188, 0.3) 100%)';
                     }
                   }}
                 >
