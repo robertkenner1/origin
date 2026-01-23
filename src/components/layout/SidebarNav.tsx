@@ -206,7 +206,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
               <Link
                 to="/search"
                 onMouseEnter={() => setHoveredItem(null)}
-                className="flex flex-col items-center text-foreground group transition-all"
+                className="flex flex-col items-center group transition-all"
                 aria-label="Search"
               >
                 <div className={cn(
@@ -215,10 +215,11 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                     ? 'bg-[var(--color-neutral-10)]'
                     : 'group-hover:bg-[var(--color-neutral-10)]/50'
                 )}>
-                  <SearchIcon className={cn(
-                    'w-5 h-5 flex-shrink-0 transition-transform',
-                    location.pathname === '/search' ? '' : 'opacity-80 group-hover:scale-105'
-                  )} strokeWidth={1.5} />
+                  <SearchIcon
+                    className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
+                    strokeWidth={1.5}
+                    style={{ color: '#73716D' }}
+                  />
                 </div>
               </Link>
 
@@ -239,7 +240,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                     }}
                     onMouseEnter={() => handleMouseEnter(item)}
                     className={cn(
-                      "flex flex-col items-center text-foreground group transition-all",
+                      "flex flex-col items-center group transition-all",
                       showLabels ? "gap-0.5" : "gap-0"
                     )}
                     aria-label={item.title}
@@ -252,18 +253,16 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                         ? 'bg-[var(--color-neutral-10)]/50'
                         : 'group-hover:bg-[var(--color-neutral-10)]/50'
                     )}>
-                      {Icon && <Icon className={cn(
-                        'w-5 h-5 flex-shrink-0 transition-transform',
-                        isActive ? '' : 'opacity-80 group-hover:scale-105'
-                      )} strokeWidth={1.5} />}
+                      {Icon && <Icon
+                        className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
+                        strokeWidth={1.5}
+                        style={{ color: '#73716D' }}
+                      />}
                     </div>
                     {showLabels && (
-                      <span 
-                        className={cn(
-                          'leading-tight text-center transition-colors text-foreground',
-                          isActive ? '' : 'opacity-80 group-hover:opacity-100'
-                        )}
-                        style={{ fontSize: '10px' }}
+                      <span
+                        className="leading-tight text-center transition-colors"
+                        style={{ fontSize: '10px', color: '#73716D' }}
                       >
                         {item.label || item.title}
                       </span>
@@ -279,18 +278,21 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                   onClick={() => setSettingsOpen(true)}
                   onMouseEnter={() => setHoveredItem(null)}
                   className={cn(
-                    "flex flex-col items-center text-foreground group transition-all",
+                    "flex flex-col items-center group transition-all",
                     showLabels ? "gap-0.5" : "gap-0"
                   )}
                   aria-label="Customize sidebar"
                 >
                   <div className="w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all group-hover:bg-[var(--color-neutral-10)]/50">
-                    <CustomizeIcon className="w-5 h-5 flex-shrink-0 transition-transform opacity-80 group-hover:scale-105" />
+                    <CustomizeIcon
+                      className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
+                      style={{ color: '#73716D' }}
+                    />
                   </div>
                   {showLabels && (
-                    <span 
-                      className="leading-tight text-center transition-colors text-foreground opacity-80 group-hover:opacity-100"
-                      style={{ fontSize: '10px' }}
+                    <span
+                      className="leading-tight text-center transition-colors"
+                      style={{ fontSize: '10px', color: '#73716D' }}
                     >
                       Customize
                     </span>
@@ -324,7 +326,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                   <button
                     type="button"
                     className={cn(
-                      "flex flex-col items-center text-foreground group transition-all",
+                      "flex flex-col items-center group transition-all",
                       showLabels ? "gap-0.5" : "gap-0"
                     )}
                     aria-label="More"
@@ -335,18 +337,15 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                         ? 'bg-[var(--color-neutral-10)]'
                         : 'group-hover:bg-[var(--color-neutral-10)]/50'
                     )}>
-                      <MoreIcon className={cn(
-                        'w-5 h-5 flex-shrink-0 transition-transform',
-                        moreMenuOpen ? '' : 'opacity-80 group-hover:scale-105'
-                      )} />
+                      <MoreIcon
+                        className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
+                        style={{ color: '#73716D' }}
+                      />
                     </div>
                     {showLabels && (
-                      <span 
-                        className={cn(
-                          'leading-tight text-center transition-colors text-foreground',
-                          moreMenuOpen ? '' : 'opacity-80 group-hover:opacity-100'
-                        )}
-                        style={{ fontSize: '10px' }}
+                      <span
+                        className="leading-tight text-center transition-colors"
+                        style={{ fontSize: '10px', color: '#73716D' }}
                       >
                         More
                       </span>
@@ -363,14 +362,20 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
               type="button"
               onClick={() => setIsDarkMode(!isDarkMode)}
               onMouseEnter={() => setHoveredItem(null)}
-              className="flex flex-col items-center text-foreground group transition-all"
+              className="flex flex-col items-center group transition-all"
               aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
               <div className="w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all group-hover:bg-[var(--color-neutral-10)]/50">
                 {isDarkMode ? (
-                  <MoonIcon className="w-5 h-5 flex-shrink-0 transition-transform opacity-80 group-hover:scale-105" />
+                  <MoonIcon
+                    className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
+                    style={{ color: '#73716D' }}
+                  />
                 ) : (
-                  <SunIcon className="w-5 h-5 flex-shrink-0 transition-transform opacity-80 group-hover:scale-105" />
+                  <SunIcon
+                    className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
+                    style={{ color: '#73716D' }}
+                  />
                 )}
               </div>
             </button>
