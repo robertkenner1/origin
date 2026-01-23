@@ -167,9 +167,10 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
               className={cn(
                 'block w-full text-left px-3 py-2 rounded-md transition-colors text-sm',
                 isChildActive
-                  ? 'bg-[var(--color-neutral-10)] text-foreground font-medium'
+                  ? 'bg-[#D9D9D9] font-medium'
                   : 'text-muted-foreground hover:bg-[var(--color-neutral-10)]/50 hover:text-foreground'
               )}
+              style={isChildActive ? { color: '#1C1C1C' } : undefined}
             >
               <span className="text-[13.5px]">{child.title}</span>
             </Link>
@@ -212,13 +213,13 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                 <div className={cn(
                   'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
                   location.pathname === '/search'
-                    ? 'bg-[var(--color-neutral-10)]'
+                    ? 'bg-[#D9D9D9]'
                     : 'group-hover:bg-[var(--color-neutral-10)]/50'
                 )}>
                   <SearchIcon
                     className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
                     strokeWidth={1.5}
-                    style={{ color: '#73716D' }}
+                    style={{ color: location.pathname === '/search' ? '#1C1C1C' : '#73716D' }}
                   />
                 </div>
               </Link>
@@ -248,7 +249,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                     <div className={cn(
                       'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
                       isActive
-                        ? 'bg-[var(--color-neutral-10)]'
+                        ? 'bg-[#D9D9D9]'
                         : isShowingInSecondaryNav
                         ? 'bg-[var(--color-neutral-10)]/50'
                         : 'group-hover:bg-[var(--color-neutral-10)]/50'
@@ -256,7 +257,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                       {Icon && <Icon
                         className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
                         strokeWidth={1.5}
-                        style={{ color: '#73716D' }}
+                        style={{ color: isActive ? '#1C1C1C' : '#73716D' }}
                       />}
                     </div>
                     {showLabels && (
@@ -334,12 +335,12 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                     <div className={cn(
                       'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
                       moreMenuOpen
-                        ? 'bg-[var(--color-neutral-10)]'
+                        ? 'bg-[#D9D9D9]'
                         : 'group-hover:bg-[var(--color-neutral-10)]/50'
                     )}>
                       <MoreIcon
                         className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
-                        style={{ color: '#73716D' }}
+                        style={{ color: moreMenuOpen ? '#1C1C1C' : '#73716D' }}
                       />
                     </div>
                     {showLabels && (
