@@ -219,7 +219,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                   <SearchIcon
                     className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
                     strokeWidth={1.5}
-                    style={{ color: location.pathname === '/search' ? '#1C1C1C' : '#73716D' }}
+                    style={{ color: location.pathname === '/search' ? '#1C1C1C' : '#A8A8A8' }}
                   />
                 </div>
               </Link>
@@ -257,13 +257,13 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                       {Icon && <Icon
                         className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
                         strokeWidth={1.5}
-                        style={{ color: isActive ? '#1C1C1C' : '#73716D' }}
+                        style={{ color: isActive ? '#1C1C1C' : '#A8A8A8' }}
                       />}
                     </div>
                     {showLabels && (
                       <span
                         className="leading-tight text-center transition-colors"
-                        style={{ fontSize: '10px', color: '#73716D' }}
+                        style={{ fontSize: '10px', color: '#A8A8A8' }}
                       >
                         {item.label || item.title}
                       </span>
@@ -287,13 +287,13 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                   <div className="w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all group-hover:bg-[#EBEBEB]">
                     <CustomizeIcon
                       className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
-                      style={{ color: '#73716D' }}
+                      style={{ color: '#A8A8A8' }}
                     />
                   </div>
                   {showLabels && (
                     <span
                       className="leading-tight text-center transition-colors"
-                      style={{ fontSize: '10px', color: '#73716D' }}
+                      style={{ fontSize: '10px', color: '#A8A8A8' }}
                     >
                       Customize
                     </span>
@@ -340,13 +340,13 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                     )}>
                       <MoreIcon
                         className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
-                        style={{ color: moreMenuOpen ? '#1C1C1C' : '#73716D' }}
+                        style={{ color: moreMenuOpen ? '#1C1C1C' : '#A8A8A8' }}
                       />
                     </div>
                     {showLabels && (
                       <span
                         className="leading-tight text-center transition-colors"
-                        style={{ fontSize: '10px', color: '#73716D' }}
+                        style={{ fontSize: '10px', color: '#A8A8A8' }}
                       >
                         More
                       </span>
@@ -370,12 +370,12 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                 {isDarkMode ? (
                   <MoonIcon
                     className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
-                    style={{ color: '#73716D' }}
+                    style={{ color: '#A8A8A8' }}
                   />
                 ) : (
                   <SunIcon
                     className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
-                    style={{ color: '#73716D' }}
+                    style={{ color: '#A8A8A8' }}
                   />
                 )}
               </div>
