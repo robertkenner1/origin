@@ -168,7 +168,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                 'block w-full text-left px-3 py-2 rounded-md transition-colors text-sm',
                 isChildActive
                   ? 'bg-[#EBEBEB] font-medium'
-                  : 'text-muted-foreground hover:bg-[var(--color-neutral-10)]/50 hover:text-foreground'
+                  : 'text-muted-foreground hover:bg-[#EBEBEB] hover:text-foreground'
               )}
               style={isChildActive ? { color: '#1C1C1C' } : undefined}
             >
@@ -214,7 +214,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                   'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
                   location.pathname === '/search'
                     ? 'bg-[#EBEBEB]'
-                    : 'group-hover:bg-[var(--color-neutral-10)]/50'
+                    : 'group-hover:bg-[#EBEBEB]'
                 )}>
                   <SearchIcon
                     className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
@@ -251,8 +251,8 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                       isActive
                         ? 'bg-[#EBEBEB]'
                         : isShowingInSecondaryNav
-                        ? 'bg-[var(--color-neutral-10)]/50'
-                        : 'group-hover:bg-[var(--color-neutral-10)]/50'
+                        ? 'bg-[#EBEBEB]'
+                        : 'group-hover:bg-[#EBEBEB]'
                     )}>
                       {Icon && <Icon
                         className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
@@ -284,7 +284,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                   )}
                   aria-label="Customize sidebar"
                 >
-                  <div className="w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all group-hover:bg-[var(--color-neutral-10)]/50">
+                  <div className="w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all group-hover:bg-[#EBEBEB]">
                     <CustomizeIcon
                       className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
                       style={{ color: '#73716D' }}
@@ -336,7 +336,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                       'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
                       moreMenuOpen
                         ? 'bg-[#EBEBEB]'
-                        : 'group-hover:bg-[var(--color-neutral-10)]/50'
+                        : 'group-hover:bg-[#EBEBEB]'
                     )}>
                       <MoreIcon
                         className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
@@ -366,7 +366,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
               className="flex flex-col items-center group transition-all"
               aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
-              <div className="w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all group-hover:bg-[var(--color-neutral-10)]/50">
+              <div className="w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all group-hover:bg-[#EBEBEB]">
                 {isDarkMode ? (
                   <MoonIcon
                     className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
@@ -423,7 +423,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                       key={collection.id}
                       to={path}
                       onClick={() => setMoreMenuOpen(false)}
-                      className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-[var(--color-neutral-10)]/50 transition-colors"
+                      className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-[#EBEBEB] transition-colors"
                     >
                       {Icon && <Icon className="w-5 h-5 text-muted-foreground" strokeWidth={1.5} />}
                       <span className="text-sm font-normal text-[13.5px]">{collection.title}</span>
@@ -443,7 +443,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                     setSettingsOpen(true);
                     setMoreMenuOpen(false);
                   }}
-                  className="flex items-center gap-3 px-3 py-2 w-full rounded-md hover:bg-[var(--color-neutral-10)]/50 transition-colors text-left"
+                  className="flex items-center gap-3 px-3 py-2 w-full rounded-md hover:bg-[#EBEBEB] transition-colors text-left"
                 >
                   <CustomizeIcon className="w-5 h-5 text-muted-foreground" />
                   <span className="text-sm font-normal text-[13.5px]">Customize sidebar</span>
