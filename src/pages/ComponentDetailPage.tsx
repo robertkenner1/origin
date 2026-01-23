@@ -5,7 +5,6 @@ import { ComponentPreview } from '@/components/ComponentPreview';
 import { ComponentTile } from '@/components/ComponentTile';
 import { OverviewHeader } from '@/components/OverviewHeader';
 import type { ComponentControls } from '@/components/ComponentPreview';
-import { components as componentsList } from './ComponentsPage';
 
 // Prop carousel row with wheel-like slide animation
 function PropCarouselRow({
