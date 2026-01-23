@@ -450,6 +450,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
         {/* Secondary Navigation - Auto-pinned based on active route */}
         {shouldShowSecondaryNav && activeParentItem && (
           <motion.div
+            key={activeParentItem.title}
             className="w-[240px] h-full flex flex-col flex-shrink-0 bg-background"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
