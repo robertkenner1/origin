@@ -214,7 +214,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                   'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
                   location.pathname === '/search'
                     ? 'bg-[#EBEBEB]'
-                    : 'bg-white group-hover:bg-[#EBEBEB]'
+                    : 'bg-[#DDD9F9] group-hover:bg-[#EBEBEB]'
                 )}>
                   <SearchIcon
                     className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
