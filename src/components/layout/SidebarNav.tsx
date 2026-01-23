@@ -217,7 +217,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                   )}
                   style={location.pathname !== '/search' ? {
                     border: '1px solid transparent',
-                    backgroundImage: 'linear-gradient(white, white), linear-gradient(45deg, rgba(188, 188, 188, 0.4) 0%, rgba(255, 255, 255, 0.6) 41%, rgba(188, 188, 188, 0.3) 100%)',
+                    backgroundImage: 'linear-gradient(white, white), linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, transparent 50%, rgba(255, 255, 255, 0.8) 100%)',
                     backgroundOrigin: 'padding-box, border-box',
                     backgroundClip: 'padding-box, border-box'
                   } : undefined}
@@ -227,7 +227,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                       className="absolute inset-0 rounded-md opacity-0 transition-opacity duration-300"
                       style={{
                         border: '1px solid transparent',
-                        backgroundImage: 'linear-gradient(white, white), linear-gradient(225deg, rgba(188, 188, 188, 0.3) 0%, rgba(255, 255, 255, 0.6) 59%, rgba(188, 188, 188, 0.4) 100%)',
+                        backgroundImage: 'linear-gradient(white, white), linear-gradient(315deg, rgba(0, 0, 0, 0.1) 0%, transparent 50%, rgba(255, 255, 255, 0.8) 100%)',
                         backgroundOrigin: 'padding-box, border-box',
                         backgroundClip: 'padding-box, border-box',
                         pointerEvents: 'none'
