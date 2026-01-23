@@ -212,7 +212,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
               >
                 <div
                   className={cn(
-                    'w-[36px] h-[36px] flex items-center justify-center rounded-md relative',
+                    'w-[36px] h-[36px] flex items-center justify-center rounded-md',
                     location.pathname === '/search' && 'bg-[#EBEBEB]'
                   )}
                   style={location.pathname !== '/search' ? {
@@ -222,31 +222,6 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                     backgroundClip: 'padding-box, border-box'
                   } : undefined}
                 >
-                  {location.pathname !== '/search' && (
-                    <div
-                      className="absolute inset-0 rounded-md opacity-0 transition-opacity duration-300"
-                      style={{
-                        border: '1px solid transparent',
-                        backgroundImage: 'linear-gradient(white, white), linear-gradient(315deg, rgba(0, 0, 0, 0.1) 0%, transparent 50%, rgba(255, 255, 255, 0.8) 100%)',
-                        backgroundOrigin: 'padding-box, border-box',
-                        backgroundClip: 'padding-box, border-box',
-                        pointerEvents: 'none'
-                      }}
-                      ref={(el) => {
-                        if (el) {
-                          const parent = el.parentElement;
-                          if (parent) {
-                            parent.addEventListener('mouseenter', () => {
-                              el.style.opacity = '1';
-                            });
-                            parent.addEventListener('mouseleave', () => {
-                              el.style.opacity = '0';
-                            });
-                          }
-                        }
-                      }}
-                    />
-                  )}
                   <SearchIcon
                     className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
                     strokeWidth={1.5}
