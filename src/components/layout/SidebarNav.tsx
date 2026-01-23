@@ -210,12 +210,25 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                 className="flex flex-col items-center group transition-all"
                 aria-label="Search"
               >
-                <div className={cn(
-                  'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
-                  location.pathname === '/search'
-                    ? 'bg-[#EBEBEB]'
-                    : 'bg-[#DDD9F9] group-hover:bg-[#EBEBEB]'
-                )}>
+                <div
+                  className={cn(
+                    'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
+                    location.pathname === '/search' && 'bg-[#EBEBEB]'
+                  )}
+                  style={location.pathname !== '/search' ? {
+                    background: 'linear-gradient(to right, #FFE5D9 0%, #F8D5E8 30%, #E5D5F8 60%, #D5E0FF 100%)'
+                  } : undefined}
+                  onMouseEnter={(e) => {
+                    if (location.pathname !== '/search') {
+                      e.currentTarget.style.background = '#EBEBEB';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (location.pathname !== '/search') {
+                      e.currentTarget.style.background = 'linear-gradient(to right, #FFE5D9 0%, #F8D5E8 30%, #E5D5F8 60%, #D5E0FF 100%)';
+                    }
+                  }}
+                >
                   <SearchIcon
                     className="w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-105"
                     strokeWidth={1.5}
