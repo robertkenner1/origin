@@ -441,7 +441,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
         </AnimatePresence>
 
         {/* Single Secondary Navigation - shows for hover or active selection */}
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {shouldShowSecondaryNav && secondaryNavItem && (
             <motion.div
               key={secondaryNavItem.title}
@@ -449,7 +449,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.15, ease: 'easeInOut' }}
+              transition={{ duration: 0.1, ease: 'easeInOut' }}
               onMouseEnter={() => {
                 if (hoverTimeoutRef.current) {
                   clearTimeout(hoverTimeoutRef.current);
