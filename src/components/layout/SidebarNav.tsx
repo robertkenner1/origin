@@ -55,6 +55,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
   const hoverTimeoutRef = useRef<number | null>(null);
   const moreMenuTimeoutRef = useRef<number | null>(null);
   const moreButtonRef = useRef<HTMLDivElement>(null);
+  const navContainerRef = useRef<HTMLDivElement>(null);
   
   const handleCollectionsChange = (collectionIds: string[]) => {
     setEnabledCollections(collectionIds);
@@ -103,12 +104,7 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
 
     // Only show hover menu if item has multiple children (more than 1)
     if (item.children && item.children.length > 1) {
-      // Don't set hover state if this is the active parent (it already has pinned nav)
-      if (activeParentItem?.title !== item.title) {
-        setHoveredItem(item);
-      } else {
-        setHoveredItem(null);
-      }
+      setHoveredItem(item);
     } else {
       // Clear hover state for items without children
       setHoveredItem(null);
@@ -120,10 +116,6 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
       clearTimeout(hoverTimeoutRef.current);
     }
     hoverTimeoutRef.current = setTimeout(() => {
-      // In auto-pin mode: Don't clear hover if it's the active parent item
-      if (activeParentItem && hoveredItem?.title === activeParentItem.title) {
-        return;
-      }
       setHoveredItem(null);
     }, 100);
   };
@@ -139,19 +131,20 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
     return false;
   };
 
-  // Get the currently active parent item (for simple mode)
+  // Get the currently active parent item
   const getActiveParentItem = () => {
     return navigationItems.find(item => isParentActive(item));
   };
 
-  // Determine which item should show its secondary nav based on active route
   const activeParentItem = getActiveParentItem();
-  const shouldShowSecondaryNav = activeParentItem &&
-    activeParentItem.children && activeParentItem.children.length > 1;
+
+  // Determine which item to show in secondary nav: hovered takes priority, then active
+  const secondaryNavItem = hoveredItem || (activeParentItem && activeParentItem.children && activeParentItem.children.length > 1 ? activeParentItem : null);
+  const shouldShowSecondaryNav = !!secondaryNavItem;
 
   // Notify parent when secondary nav visibility changes
   useEffect(() => {
-    onSecondaryNavChange?.(!!shouldShowSecondaryNav);
+    onSecondaryNavChange?.(shouldShowSecondaryNav);
   }, [shouldShowSecondaryNav, onSecondaryNavChange]);
 
   // Helper function to render secondary nav list content (children only)
@@ -196,8 +189,8 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
         <aside className={cn(
           "h-screen flex flex-col flex-shrink-0 relative z-20 border-r transition-all duration-150",
           showLabels ? "w-[84px]" : "w-[60px]",
-          // Show border only when no secondary nav (hover or active) is visible
-          !hoveredItem && !shouldShowSecondaryNav && !(activeParentItem?.children && activeParentItem.children.length > 1) ? 'border-border' : 'border-transparent'
+          // Show border only when no secondary nav is visible
+          !shouldShowSecondaryNav ? 'border-border' : 'border-transparent'
         )}>
           {/* Navigation Content */}
           <div className="flex-1 overflow-auto py-3">
@@ -226,8 +219,8 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                 const isActive = isParentActive(item);
                 const hasChildren = !!item.children?.length;
                 const Icon = item.icon;
-                // Show hover state when hovering over non-active items
-                const isShowingChildren = hoveredItem?.title === item.title && activeParentItem?.title !== item.title;
+                // Show highlight if this item is currently showing in secondary nav
+                const isShowingInSecondaryNav = secondaryNavItem?.title === item.title;
 
                 return (
                   <Link
@@ -246,9 +239,9 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
                   >
                     <div className={cn(
                       'w-[36px] h-[36px] flex items-center justify-center rounded-md transition-all',
-                      isActive 
-                        ? 'bg-[var(--color-neutral-10)]' 
-                        : isShowingChildren
+                      isActive
+                        ? 'bg-[var(--color-neutral-10)]'
+                        : isShowingInSecondaryNav
                         ? 'bg-[var(--color-neutral-10)]/50'
                         : 'group-hover:bg-[var(--color-neutral-10)]/50'
                     )}>
@@ -447,54 +440,31 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange, onShowLabelsChang
           )}
         </AnimatePresence>
 
-        {/* Secondary Navigation - Auto-pinned based on active route */}
-        {shouldShowSecondaryNav && activeParentItem && (
-          <motion.div
-            key={activeParentItem.title}
-            className="w-[240px] h-full flex flex-col flex-shrink-0 bg-background"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15, ease: 'easeInOut' }}
-          >
-            {/* Tab-specific content */}
-            {renderSecondaryNavList(activeParentItem)}
-          </motion.div>
-        )}
+        {/* Single Secondary Navigation - shows for hover or active selection */}
+        <AnimatePresence>
+          {shouldShowSecondaryNav && secondaryNavItem && (
+            <motion.div
+              key={secondaryNavItem.title}
+              className="w-[240px] h-full flex flex-col flex-shrink-0 bg-background"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15, ease: 'easeInOut' }}
+              onMouseEnter={() => {
+                if (hoverTimeoutRef.current) {
+                  clearTimeout(hoverTimeoutRef.current);
+                }
+              }}
+              onMouseLeave={() => {
+                handleMouseLeave();
+              }}
+            >
+              {/* Tab-specific content */}
+              {renderSecondaryNavList(secondaryNavItem)}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-
-      {/* Secondary Navigation - Hover flyout (absolute positioned outside container) */}
-      <AnimatePresence>
-        {/* Show hover when hovering over any item with children, but not if it's the active parent */}
-        {hoveredItem && hoveredItem.children && hoveredItem.children.length > 1 && hoveredItem?.title !== activeParentItem?.title && (
-          <motion.div
-            className={cn(
-              "absolute top-0 h-screen w-[240px] z-30 flex flex-col bg-background overflow-hidden transition-all duration-200",
-              showLabels ? "left-[84px]" : "left-[60px]"
-            )}
-            style={{
-              boxShadow: '4px 0 12px -2px rgba(0, 0, 0, 0.08)',
-              borderRight: '1px solid var(--color-border)',
-              clipPath: 'inset(0 -20px 0 0)'
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15, ease: 'easeInOut' }}
-            onMouseEnter={() => {
-              if (hoverTimeoutRef.current) {
-                clearTimeout(hoverTimeoutRef.current);
-              }
-            }}
-            onMouseLeave={() => {
-              handleMouseLeave();
-            }}
-          >
-          {/* Tab-specific content */}
-          {renderSecondaryNavList(hoveredItem)}
-        </motion.div>
-        )}
-      </AnimatePresence>
 
       <SettingsModal
         open={settingsOpen}
