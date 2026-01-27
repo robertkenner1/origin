@@ -17,14 +17,18 @@ export interface ComponentStatusInfo {
   lastUpdate: string;
 }
 
-// Component categories
-type ComponentCategory = 
-  | 'Inputs'
+// Component categories matching navigation groups
+type ComponentCategory =
+  | 'Actions'
   | 'Feedback'
-  | 'Data Display'
+  | 'Form'
+  | 'Images'
+  | 'Indicators'
+  | 'Content structure'
+  | 'Loaders'
   | 'Navigation'
-  | 'Overlay'
-  | 'Layout'
+  | 'Overlays'
+  | 'Typography'
   | 'Utilities';
 
 export interface ComponentInfo {
@@ -34,72 +38,84 @@ export interface ComponentInfo {
   category: ComponentCategory;
 }
 
-// Component data from the Origin Design Toolkit (ordered by popularity within each category)
+// Component data from the Origin Design Toolkit (ordered by category to match navigation)
 export const components: ComponentInfo[] = [
-  // Inputs (by popularity)
-  { name: 'Button', preview: 'button', category: 'Inputs', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.0.1', lastUpdate: '6.1.0' } },
-  { name: 'Checkbox', preview: 'checkbox', category: 'Inputs', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.3.0', lastUpdate: '7.0-beta.2' } },
-  { name: 'Icon Button', preview: 'icon-button', category: 'Inputs', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.0.1', lastUpdate: '6.1.0' } },
-  { name: 'Text Field', preview: 'text-field', category: 'Inputs', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.0.1', lastUpdate: '6.24.0' } },
-  { name: 'Switch', preview: 'switch', category: 'Inputs', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.1.0', lastUpdate: '6.1.0' } },
-  { name: 'Select', preview: 'select', category: 'Inputs', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.15.0', lastUpdate: '6.15.0' } },
-  { name: 'Combobox', preview: 'combobox', category: 'Inputs', status: { figma: 'available', react: 'in-progress', docs: 'available', a11y: 'available', since: '6.4.0', lastUpdate: '6.1.0' } },
-  { name: 'Radio Group', preview: 'radio-group', category: 'Inputs', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '4.0.0', lastUpdate: '6.1.0' } },
-  { name: 'Textarea', preview: 'textarea', category: 'Inputs', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.3.0', lastUpdate: '6.34.0' } },
-  { name: 'Search Field', preview: 'search', category: 'Inputs', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.0.1', lastUpdate: '7.0-beta.2' } },
-  { name: 'Checkbox Group', preview: 'checkbox-group', category: 'Inputs', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.18.0', lastUpdate: '6.19.0' } },
-  { name: 'Rating', preview: 'rating', category: 'Inputs', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.36.0', lastUpdate: '6.36.0' } },
-  { name: 'Verification Code', preview: 'verification', category: 'Inputs', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.20.0', lastUpdate: '6.24.0' } },
-  
-  // Feedback (by popularity)
-  { name: 'Toast', preview: 'toast', category: 'Feedback', status: { figma: 'available', react: 'in-progress', docs: 'available', a11y: 'in-progress', since: '6.2.0', lastUpdate: '6.19.0' } },
-  { name: 'Circular Loader', preview: 'circular-loader', category: 'Feedback', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.18.0', lastUpdate: '6.19.0' } },
-  { name: 'Skeleton Loader', preview: 'skeleton', category: 'Feedback', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.13.0', lastUpdate: '6.27.0' } },
-  { name: 'Branded Loader', preview: 'loader', category: 'Feedback', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.18.0', lastUpdate: '6.19.0' } },
-  
-  // Data Display (by popularity)
-  { name: 'Icon', preview: 'icon', category: 'Data Display', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.0.1', lastUpdate: '6.2.0' } },
-  { name: 'Badge', preview: 'badge', category: 'Data Display', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '4.0.0', lastUpdate: '6.25.0' } },
-  { name: 'Logo', preview: 'logo', category: 'Data Display', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.42.0', lastUpdate: '6.43.0' } },
-  { name: 'Tag', preview: 'tag', category: 'Data Display', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '4.0.0', lastUpdate: '6.34.0' } },
-  { name: 'Plan Tag', preview: 'plan-tag', category: 'Data Display', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.16.0', lastUpdate: '6.29.0' } },
-  { name: 'Illustration', preview: 'illustration', category: 'Data Display', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.26.0', lastUpdate: '6.47.0' } },
-  { name: 'Sticker', preview: 'sticker', category: 'Data Display', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.18.0', lastUpdate: '6.25.0' } },
-  
-  // Navigation (by popularity)
-  { name: 'Menu', preview: 'menu', category: 'Navigation', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.20.0', lastUpdate: '6.42.0' } },
-  { name: 'Tabs', preview: 'tabs', category: 'Navigation', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.6.0', lastUpdate: '6.22.0' } },
+  // Actions
+  { name: 'Button', preview: 'button', category: 'Actions', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.0.1', lastUpdate: '6.1.0' } },
+  { name: 'ButtonAsLink', preview: 'button-link', category: 'Actions', status: { figma: 'not-applicable', react: 'available', docs: 'available', a11y: 'available', since: '6.19.0', lastUpdate: '7.0-beta.2' } },
+  { name: 'Icon Button', preview: 'icon-button', category: 'Actions', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.0.1', lastUpdate: '6.1.0' } },
+
+  // Feedback
+  { name: 'Rating', preview: 'rating', category: 'Feedback', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.36.0', lastUpdate: '6.36.0' } },
+  { name: 'Verification Code', preview: 'verification', category: 'Feedback', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.20.0', lastUpdate: '6.24.0' } },
+
+  // Form
+  { name: 'Checkbox', preview: 'checkbox', category: 'Form', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.3.0', lastUpdate: '7.0-beta.2' } },
+  { name: 'Checkbox Group', preview: 'checkbox-group', category: 'Form', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.18.0', lastUpdate: '6.19.0' } },
+  { name: 'Combobox', preview: 'combobox', category: 'Form', status: { figma: 'available', react: 'in-progress', docs: 'available', a11y: 'available', since: '6.4.0', lastUpdate: '6.1.0' } },
+  { name: 'Radio Group', preview: 'radio-group', category: 'Form', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '4.0.0', lastUpdate: '6.1.0' } },
+  { name: 'Search Field', preview: 'search', category: 'Form', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.0.1', lastUpdate: '7.0-beta.2' } },
+  { name: 'Select', preview: 'select', category: 'Form', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.15.0', lastUpdate: '6.15.0' } },
+  { name: 'Switch', preview: 'switch', category: 'Form', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.1.0', lastUpdate: '6.1.0' } },
+  { name: 'Text Field', preview: 'text-field', category: 'Form', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.0.1', lastUpdate: '6.24.0' } },
+  { name: 'Textarea', preview: 'textarea', category: 'Form', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.3.0', lastUpdate: '6.34.0' } },
+
+  // Images
+  { name: 'Icon', preview: 'icon', category: 'Images', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.0.1', lastUpdate: '6.2.0' } },
+  { name: 'Illustration', preview: 'illustration', category: 'Images', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.26.0', lastUpdate: '6.47.0' } },
+  { name: 'Logo', preview: 'logo', category: 'Images', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.42.0', lastUpdate: '6.43.0' } },
+  { name: 'Sticker', preview: 'sticker', category: 'Images', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.18.0', lastUpdate: '6.25.0' } },
+
+  // Indicators
+  { name: 'Badge', preview: 'badge', category: 'Indicators', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '4.0.0', lastUpdate: '6.25.0' } },
+  { name: 'Plan Tag', preview: 'plan-tag', category: 'Indicators', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.16.0', lastUpdate: '6.29.0' } },
+  { name: 'Tag', preview: 'tag', category: 'Indicators', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '4.0.0', lastUpdate: '6.34.0' } },
+
+  // Content structure
+  { name: 'Accordion', preview: 'accordion', category: 'Content structure', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.30.0', lastUpdate: '6.30.0' } },
+  { name: 'Box', preview: 'box', category: 'Content structure', status: { figma: 'not-applicable', react: 'available', docs: 'available', a11y: 'not-applicable', since: '5.0.0', lastUpdate: '6.0.0' } },
+  { name: 'Flex', preview: 'flex', category: 'Content structure', status: { figma: 'not-applicable', react: 'available', docs: 'available', a11y: 'not-applicable', since: '5.0.0', lastUpdate: '6.0.0' } },
+  { name: 'Tabs', preview: 'tabs', category: 'Content structure', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.6.0', lastUpdate: '6.22.0' } },
+
+  // Loaders
+  { name: 'Branded Loader', preview: 'loader', category: 'Loaders', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.18.0', lastUpdate: '6.19.0' } },
+  { name: 'Circular Loader', preview: 'circular-loader', category: 'Loaders', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.18.0', lastUpdate: '6.19.0' } },
+  { name: 'Skeleton Loader', preview: 'skeleton', category: 'Loaders', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.13.0', lastUpdate: '6.27.0' } },
+
+  // Navigation
   { name: 'Link', preview: 'link', category: 'Navigation', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.7.0', lastUpdate: '6.2.0' } },
-  { name: 'ButtonAsLink', preview: 'button-link', category: 'Navigation', status: { figma: 'not-applicable', react: 'available', docs: 'available', a11y: 'available', since: '6.19.0', lastUpdate: '7.0-beta.2' } },
-  
-  // Overlay (by popularity)
-  { name: 'Tooltip', preview: 'tooltip', category: 'Overlay', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '4.0.0', lastUpdate: '6.33.3' } },
-  { name: 'Modal', preview: 'modal', category: 'Overlay', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.3.0', lastUpdate: '6.39.0' } },
-  { name: 'Popover', preview: 'popover', category: 'Overlay', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.10.0', lastUpdate: '6.15.0' } },
-  
-  // Layout (by popularity)
-  { name: 'Accordion', preview: 'accordion', category: 'Layout', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.30.0', lastUpdate: '6.30.0' } },
-  { name: 'Form', preview: 'form', category: 'Layout', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.3.0', lastUpdate: '6.14.0' } },
-  
-  // Utilities (by popularity)
-  { name: 'Box', preview: 'box', category: 'Utilities', status: { figma: 'not-applicable', react: 'available', docs: 'available', a11y: 'not-applicable', since: '5.0.0', lastUpdate: '6.0.0' } },
-  { name: 'Heading', preview: 'heading', category: 'Utilities', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.0.0', lastUpdate: '6.34.0' } },
-  { name: 'Text', preview: 'text', category: 'Utilities', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.0.0', lastUpdate: '6.34.0' } },
-  { name: 'Flex', preview: 'flex', category: 'Utilities', status: { figma: 'not-applicable', react: 'available', docs: 'available', a11y: 'not-applicable', since: '5.0.0', lastUpdate: '6.0.0' } },
-  { name: 'ThemeProvider', preview: 'theme-provider', category: 'Utilities', status: { figma: 'not-applicable', react: 'available', docs: 'available', a11y: 'not-applicable', since: '5.0.0', lastUpdate: '6.0.0' } },
-  { name: 'PortalContainerProvider', preview: 'portal-provider', category: 'Utilities', status: { figma: 'not-applicable', react: 'available', docs: 'available', a11y: 'not-applicable', since: '6.0.0', lastUpdate: '6.0.0' } },
+  { name: 'Menu', preview: 'menu', category: 'Navigation', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.20.0', lastUpdate: '6.42.0' } },
+
+  // Overlays
+  { name: 'Modal', preview: 'modal', category: 'Overlays', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.3.0', lastUpdate: '6.39.0' } },
+  { name: 'Popover', preview: 'popover', category: 'Overlays', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '6.10.0', lastUpdate: '6.15.0' } },
+  { name: 'Toast', preview: 'toast', category: 'Overlays', status: { figma: 'available', react: 'in-progress', docs: 'available', a11y: 'in-progress', since: '6.2.0', lastUpdate: '6.19.0' } },
+  { name: 'Tooltip', preview: 'tooltip', category: 'Overlays', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '4.0.0', lastUpdate: '6.33.3' } },
+
+  // Typography
+  { name: 'Heading', preview: 'heading', category: 'Typography', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.0.0', lastUpdate: '6.34.0' } },
+  { name: 'Text', preview: 'text', category: 'Typography', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.0.0', lastUpdate: '6.34.0' } },
+
+  // Utilities
+  { name: 'Form', preview: 'form', category: 'Utilities', status: { figma: 'available', react: 'available', docs: 'available', a11y: 'available', since: '5.3.0', lastUpdate: '6.14.0' } },
   { name: 'LiveAnnouncer', preview: 'live-announcer', category: 'Utilities', status: { figma: 'not-applicable', react: 'available', docs: 'available', a11y: 'available', since: '6.0.0', lastUpdate: '6.0.0' } },
+  { name: 'PortalContainerProvider', preview: 'portal-provider', category: 'Utilities', status: { figma: 'not-applicable', react: 'available', docs: 'available', a11y: 'not-applicable', since: '6.0.0', lastUpdate: '6.0.0' } },
   { name: 'ScreenReaderOnly', preview: 'screen-reader-only', category: 'Utilities', status: { figma: 'not-applicable', react: 'available', docs: 'available', a11y: 'available', since: '6.0.0', lastUpdate: '6.0.0' } },
+  { name: 'ThemeProvider', preview: 'theme-provider', category: 'Utilities', status: { figma: 'not-applicable', react: 'available', docs: 'available', a11y: 'not-applicable', since: '5.0.0', lastUpdate: '6.0.0' } },
 ];
 
-// All available categories
+// All available categories matching navigation groups
 const categories: ComponentCategory[] = [
-  'Inputs',
-  'Feedback', 
-  'Data Display',
+  'Actions',
+  'Feedback',
+  'Form',
+  'Images',
+  'Indicators',
+  'Content structure',
+  'Loaders',
   'Navigation',
-  'Overlay',
-  'Layout',
+  'Overlays',
+  'Typography',
   'Utilities',
 ];
 

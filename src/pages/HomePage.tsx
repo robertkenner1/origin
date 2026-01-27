@@ -73,7 +73,7 @@ export function HomePage() {
         <section className="mb-16">
           <h2 className="text-xs font-semibold mb-6 uppercase tracking-wide text-muted-foreground">System essentials</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Foundations Card */}
+            {/* Design Card */}
             <a href="#" className="group flex flex-col rounded-3xl bg-[#F5F5F5] p-8 transition-colors hover:bg-[#EBEBEB]">
               <div className="w-[52px] h-[52px] rounded-[15px] flex items-center justify-center p-2.5 mb-6 relative" style={{
                 background: 'rgba(255, 255, 255, 0.8)',
@@ -89,9 +89,9 @@ export function HomePage() {
                   <path d="M24.0001 4.40008V8.00008H27.6001V10.4001H24.0001V14.0001H21.6001V10.4001H18.0001V8.00008H21.6001V4.40008H24.0001Z" fill="#545454"/>
                 </svg>
               </div>
-              <h3 className="text-2xl font-semibold mb-3">Foundations</h3>
+              <h3 className="text-2xl font-semibold mb-3">Design</h3>
               <p className="text-sm text-muted-foreground mb-8 flex-grow">
-                Foundations are the basic building blocks of our interface—colors, typography, elevation, and icons
+                Design foundations are the basic building blocks of our interface—colors, typography, elevation, and icons
               </p>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17.625 7.61816C19.4583 8.67664 19.4583 11.3234 17.625 12.3818L10.375 16.5674L9.625 15.2686L16.875 11.082C17.0292 10.993 17.1548 10.8793 17.252 10.75H1V9.25H17.252C17.1548 9.12055 17.0293 9.0061 16.875 8.91699L9.625 4.73145L10.375 3.43262L17.625 7.61816Z" fill="#1C1C1C"/>
