@@ -1135,3 +1135,13 @@
 .not-prose * {
   all: revert;
 }
+
+/* Hide scrollbar for filter carousel */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { getNavigationFromCollections, getDefaultCollectionIds, type NavItem } from './navigationConfig';
@@ -7,13 +7,11 @@ import { SunIcon, MoonIcon, SearchIcon } from '@/components/icons/CustomIcons';
 import { cn } from '@/lib/utils';
 
 type SidebarNavProps = {
-  onNavigate?: (item: NavItem) => void;
   onSecondaryNavChange?: (isShowing: boolean) => void;
 };
 
-export function SidebarNav({ onNavigate, onSecondaryNavChange }: SidebarNavProps) {
+export function SidebarNav({ onSecondaryNavChange }: SidebarNavProps) {
   const location = useLocation();
-  const navigate = useNavigate();
 
   // Always show labels
   const showLabels = true;
@@ -25,27 +23,6 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange }: SidebarNavProps
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [openGroups, setOpenGroups] = useState<Set<string>>(new Set());
   const hoverTimeoutRef = useRef<number | null>(null);
-
-
-
-  const handlePrimaryClick = (item: NavItem) => {
-    // Auto-pin mode: just navigate, secondary nav will appear based on route
-    // Only navigate without showing secondary nav if item has no groups and less than 2 children
-    if ((!item.children?.length || item.children.length === 1) && !item.groups) {
-      const targetPath = item.children?.[0]?.path || item.path;
-      navigate(targetPath);
-      onNavigate?.(item.children?.[0] || item);
-      setHoveredItem(null);
-    } else {
-      // Navigate to first child
-      const firstChild = item.children?.[0];
-      if (firstChild) {
-        navigate(firstChild.path);
-        onNavigate?.(firstChild);
-      }
-      // Don't clear hoveredItem - let it transition naturally as the flyout won't show when it becomes active parent
-    }
-  };
 
   const handleMouseEnter = (item: NavItem) => {
     // Clear any existing timeout
@@ -308,10 +285,6 @@ export function SidebarNav({ onNavigate, onSecondaryNavChange }: SidebarNavProps
                   <Link
                     key={item.path}
                     to={hasChildren && item.children?.[0] ? item.children[0].path : item.path}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handlePrimaryClick(item);
-                    }}
                     onMouseEnter={() => handleMouseEnter(item)}
                     className={cn(
                       "flex flex-col items-center group transition-all",

@@ -38,10 +38,10 @@ import { SearchPage } from '@/pages/SearchPage';
 
 // Wrapper to force remount when componentId or location changes
 function ComponentDetailPageWrapper() {
-  const { componentId } = useParams<{ componentId: string }>();
   const location = useLocation();
-  // Use location.pathname as key to force complete remount on any route change
-  return <ComponentDetailPage key={location.pathname} />;
+  // Use location.pathname + timestamp as key to force complete remount on any route change
+  // This ensures even same-path navigations trigger a remount
+  return <ComponentDetailPage key={`${location.pathname}-${location.key}`} />;
 }
 
 

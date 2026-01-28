@@ -122,7 +122,8 @@ const categories: ComponentCategory[] = [
 export function ComponentsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const inputRef = useRef<HTMLInputElement>(null);
-  
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
   // Get filter state from URL params
   const searchQuery = searchParams.get('search') || '';
   const activeCategory = (searchParams.get('category') as ComponentCategory | 'All') || 'All';
@@ -154,6 +155,19 @@ export function ComponentsPage() {
     const matchesCategory = activeCategory === 'All' || component.category === activeCategory;
     return matchesSearch && matchesCategory;
   });
+
+  // Scroll carousel functions
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+    }
+  };
 
   // Focus search field on "/" key press
   useEffect(() => {
@@ -198,22 +212,48 @@ export function ComponentsPage() {
         />
       </div>
 
-      {/* Category Filters */}
-      <div className="flex items-center gap-2">
-        {categories.map((category) => (
-          <button
-            key={category}
-            onClick={() => setActiveCategory(activeCategory === category ? 'All' : category)}
-            className={cn(
-              "inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 bg-white border-2",
-              activeCategory === category
-                ? "text-foreground border-foreground"
-                : "text-muted-foreground border-transparent hover:text-foreground hover:border-foreground"
-            )}
-          >
-            {category}
-          </button>
-        ))}
+      {/* Category Filters Carousel */}
+      <div className="flex items-center gap-2 flex-1 min-w-0">
+        <button
+          onClick={scrollLeft}
+          className="flex-shrink-0 p-1.5 rounded-md hover:bg-[#EBEBEB] transition-colors"
+          aria-label="Scroll left"
+        >
+          <svg className="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <div
+          ref={scrollContainerRef}
+          className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide flex-1"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setActiveCategory(activeCategory === category ? 'All' : category)}
+              className={cn(
+                "inline-flex items-center whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition-colors duration-200 bg-white border-2 flex-shrink-0",
+                activeCategory === category
+                  ? "text-foreground border-foreground"
+                  : "text-muted-foreground border-transparent hover:text-foreground hover:border-foreground"
+              )}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        <button
+          onClick={scrollRight}
+          className="flex-shrink-0 p-1.5 rounded-md hover:bg-[#EBEBEB] transition-colors"
+          aria-label="Scroll right"
+        >
+          <svg className="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
       </div>
     </div>
   );
