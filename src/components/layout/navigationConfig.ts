@@ -117,7 +117,7 @@ export const ALL_COLLECTIONS: Collection[] = [
         title: 'Actions',
         children: [
           { title: 'Button', path: '/components/button' },
-          { title: 'Button as link', path: '/components/button-link' },
+          { title: 'Button as link', path: '/components/button-as-link' },
           { title: 'Icon button', path: '/components/icon-button' },
         ],
       },
@@ -125,7 +125,7 @@ export const ALL_COLLECTIONS: Collection[] = [
         title: 'Feedback',
         children: [
           { title: 'Rating', path: '/components/rating' },
-          { title: 'Verification code', path: '/components/verification' },
+          { title: 'Verification code', path: '/components/verification-code' },
         ],
       },
       {
@@ -135,7 +135,7 @@ export const ALL_COLLECTIONS: Collection[] = [
           { title: 'Checkbox group', path: '/components/checkbox-group' },
           { title: 'Combobox', path: '/components/combobox' },
           { title: 'Radio group', path: '/components/radio-group' },
-          { title: 'Search field', path: '/components/search' },
+          { title: 'Search field', path: '/components/search-field' },
           { title: 'Select', path: '/components/select' },
           { title: 'Switch', path: '/components/switch' },
           { title: 'Text field', path: '/components/text-field' },
@@ -171,9 +171,9 @@ export const ALL_COLLECTIONS: Collection[] = [
       {
         title: 'Loaders',
         children: [
-          { title: 'Branded loader', path: '/components/loader' },
+          { title: 'Branded loader', path: '/components/branded-loader' },
           { title: 'Circular loader', path: '/components/circular-loader' },
-          { title: 'Skeleton loader', path: '/components/skeleton' },
+          { title: 'Skeleton loader', path: '/components/skeleton-loader' },
         ],
       },
       {

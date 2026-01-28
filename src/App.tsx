@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useParams, useLocation } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { HomePage } from '@/pages/HomePage';
 import { IntroductionPage } from '@/pages/getting-started/IntroductionPage';
@@ -36,6 +36,14 @@ import { NavigationHistoryProvider } from '@/context/NavigationHistoryContext';
 import { StickyFilterProvider } from '@/context/StickyFilterContext';
 import { SearchPage } from '@/pages/SearchPage';
 
+// Wrapper to force remount when componentId or location changes
+function ComponentDetailPageWrapper() {
+  const { componentId } = useParams<{ componentId: string }>();
+  const location = useLocation();
+  // Use location.pathname as key to force complete remount on any route change
+  return <ComponentDetailPage key={location.pathname} />;
+}
+
 
 function App() {
   return (
@@ -49,7 +57,7 @@ function App() {
               <Route path="/origin-101" element={<IntroductionPage />} />
               <Route path="/origin-101/installing" element={<JavaScriptPage />} />
               <Route path="/components" element={<ComponentsPage />} />
-              <Route path="/components/:componentId" element={<ComponentDetailPage />} />
+              <Route path="/components/:componentId" element={<ComponentDetailPageWrapper />} />
               <Route path="/icons" element={<IconsPage />} />
               <Route path="/brand" element={<BrandPage />} />
               <Route path="/brand/illustrations" element={<BrandIllustrationsPage />} />

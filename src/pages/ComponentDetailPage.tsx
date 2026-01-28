@@ -239,7 +239,8 @@ const componentControlsConfig: Record<string, {
     state: ['rest', 'focus', 'disabled'] 
   },
   'rating': {},
-  'search-field': { 
+  'search-field': {
+    size: ['medium', 'large', 'xlarge'],
     state: ['rest', 'focus', 'disabled', 'error'],
   },
   'select': { 
@@ -249,9 +250,10 @@ const componentControlsConfig: Record<string, {
   'sticker': { 
     variant: ['default', 'inverse'],
   },
-  'switch': { 
-    state: ['rest', 'focus', 'disabled'], 
-    defaultLabel: 'Enable notifications' 
+  'switch': {
+    size: ['small', 'medium', 'large', 'xlarge'],
+    state: ['rest', 'focus', 'disabled'],
+    defaultLabel: 'Enable notifications'
   },
   'tabs': { 
     size: ['small', 'medium', 'large', 'xlarge', 'auto'],
@@ -260,7 +262,8 @@ const componentControlsConfig: Record<string, {
     variant: ['neutral', 'premium', 'pro', 'tip', 'addition', 'warning', 'deletion'],
     defaultLabel: 'Label' 
   },
-  'text-field': { 
+  'text-field': {
+    size: ['medium', 'large', 'xlarge'],
     state: ['rest', 'focus', 'disabled', 'error'],
   },
   'textarea': { 
@@ -277,8 +280,12 @@ const componentControlsConfig: Record<string, {
   // Utilities - no visual controls, code-only
   'box': {},
   'flex': {},
-  'text': {},
-  'heading': {},
+  'text': {
+    size: ['xsmall', 'small', 'medium', 'large', 'xlarge'],
+  },
+  'heading': {
+    size: ['small', 'medium', 'large', 'xlarge', '2xlarge', '3xlarge'],
+  },
   'theme-provider': {},
   'portal-provider': {},
   'screen-reader-only': {},
